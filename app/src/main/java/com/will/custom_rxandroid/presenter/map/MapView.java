@@ -1,6 +1,6 @@
-package com.will.custom_rxandroid.presenter.elementary;
+package com.will.custom_rxandroid.presenter.map;
 
-import com.will.custom_rxandroid.pojo.elementary.ZhuangBiImage;
+import com.will.custom_rxandroid.pojo.map.GankBean;
 import com.will.custom_rxandroid.presenter.base.BaseView;
 
 import java.util.List;
@@ -9,10 +9,10 @@ import java.util.List;
  * Created by will on 16/9/7.
  */
 
-public interface ElementaryView extends BaseView {
-    void refresh_success(List<ZhuangBiImage> data);
+public interface MapView extends BaseView {
+    void refresh_success(List<GankBean> data);
 
-    void loadmore_success(List<ZhuangBiImage> data);
+    void loadmore_success(List<GankBean> data);
 
     void set_loadmore_complete(boolean is_complete);
 

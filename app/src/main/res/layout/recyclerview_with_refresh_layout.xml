@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.andview.refreshview.XRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rc_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</com.andview.refreshview.XRefreshView>

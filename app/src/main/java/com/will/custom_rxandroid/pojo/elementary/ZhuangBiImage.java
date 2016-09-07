@@ -1,4 +1,4 @@
-package com.will.custom_rxandroid.pojo;
+package com.will.custom_rxandroid.pojo.elementary;
 
 /**
  * Created by will on 16/9/6.

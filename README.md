@@ -2,3 +2,4 @@
  * 2.mvp mode
  * 3.load_data by RxJava+Retrofit
  * 4.bind_view by ButterKnife
+ * 5.load_image by glide

@@ -1,8 +1,8 @@
-package com.will.custom_rxandroid.presenter.elementary;
+package com.will.custom_rxandroid.presenter.map;
 
 
 import com.will.custom_rxandroid.http.BaseApi;
-import com.will.custom_rxandroid.pojo.elementary.ZhuangBiImage;
+import com.will.custom_rxandroid.pojo.map.GankBean;
 import com.will.custom_rxandroid.presenter.base.BasePresenter;
 
 import java.util.List;
@@ -15,19 +15,26 @@ import rx.schedulers.Schedulers;
  * Created by will on 16/9/7.
  */
 
-public class ElementaryPresenter extends BasePresenter<ElementaryView> {
-
-    public ElementaryPresenter(ElementaryView mvpView) {
-        this.mvpView = mvpView;
+public class MapPresenter extends BasePresenter<MapView> {
+    public MapPresenter(MapView mapView) {
+        this.mvpView = mapView;
     }
 
-    public void search(String des, final boolean is_refresh, int current_page) {
+    /**
+     * 加载数据
+     *
+     * @param page_count
+     * @param current_page
+     * @param is_refresh
+     */
+    public void load_data(int page_count, int current_page, final boolean is_refresh) {
         mvpView.show_loading();
-//        mvpView.show_toast("loading page---" + current_page); //only for debug
-        subscription = BaseApi.getZhuangBiApi().search(des)
+        subscription = BaseApi.getGankApi()
+                .get_gank(page_count, current_page)
+                .map(new GankResult2GankBeanUtils())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<ZhuangBiImage>>() {
+                .subscribe(new Observer<List<GankBean>>() {
                     @Override
                     public void onCompleted() {
                         mvpView.hide_loading();
@@ -35,25 +42,27 @@ public class ElementaryPresenter extends BasePresenter<ElementaryView> {
 
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
                         mvpView.show_error(e.getMessage());
                     }
 
-                    public void onNext(List<ZhuangBiImage> zhuangBiImage) {
+                    @Override
+                    public void onNext(List<GankBean> images) {
                         if (is_refresh) {
                             mvpView.stop_refresh();
-                            if (zhuangBiImage.size() > 0) {
+                            if (images.size() > 0) {
                                 mvpView.set_loadmore_complete(false);
-                                mvpView.refresh_success(zhuangBiImage);
+                                mvpView.refresh_success(images);
                             } else {
                                 mvpView.show_empty();
                             }
                         } else {
                             mvpView.stop_loadmore();
-                            if (zhuangBiImage.size() > 0)
+                            if (images.size() > 0)
                                 mvpView.set_loadmore_complete(false);
                             else
                                 mvpView.set_loadmore_complete(true);
-                            mvpView.loadmore_success(zhuangBiImage);
+                            mvpView.loadmore_success(images);
                         }
                     }
                 });

@@ -3,6 +3,7 @@
     package="com.will.custom_rxandroid">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".BaseApp"
         android:allowBackup="true"
@@ -20,7 +21,8 @@
         <activity
             android:name=".ui.elementary.ElementaryActivity"
             android:label="@string/title_activity_base"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.map.MapActivity"></activity>
     </application>
 
 </manifest>

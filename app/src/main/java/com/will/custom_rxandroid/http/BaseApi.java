@@ -12,9 +12,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class BaseApi {
+    public static String GANK_API = "http://gank.io/api/";
     public static String ZHUANGBI_API = "http://zhuangbi.info/";
 
     private static ZhuangBiApi zhuangBiApi;
+    private static GankApi gankApi;
     private static OkHttpClient okHttpClient = new OkHttpClient();
     private static Converter.Factory convert_factory = GsonConverterFactory.create();
     private static CallAdapter.Factory calladapter_factory = RxJavaCallAdapterFactory.create();
@@ -34,5 +36,21 @@ public class BaseApi {
             zhuangBiApi = retrofit.create(ZhuangBiApi.class);
         }
         return zhuangBiApi;
+    }
+
+    /**
+     * get instance of GankApi
+     *
+     * @return
+     */
+    public static GankApi getGankApi() {
+        if (gankApi == null) {
+            Retrofit retrofit = new Retrofit.Builder().client(okHttpClient)
+                    .addConverterFactory(convert_factory)
+                    .addCallAdapterFactory(calladapter_factory)
+                    .baseUrl(GANK_API).build();
+            gankApi = retrofit.create(GankApi.class);
+        }
+        return gankApi;
     }
 }

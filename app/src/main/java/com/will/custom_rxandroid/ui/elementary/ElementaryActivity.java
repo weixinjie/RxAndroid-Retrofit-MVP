@@ -15,7 +15,7 @@ import com.will.custom_rxandroid.presenter.elementary.ElementaryPresenter;
 import com.will.custom_rxandroid.ui.base.BaseActivity;
 import com.will.custom_rxandroid.R;
 import com.will.custom_rxandroid.adapter.elementary.ElementaryAdapter;
-import com.will.custom_rxandroid.pojo.ZhuangBiImage;
+import com.will.custom_rxandroid.pojo.elementary.ZhuangBiImage;
 import com.will.custom_rxandroid.presenter.elementary.ElementaryView;
 import com.will.custom_rxandroid.utils.ToastUtils;
 
@@ -77,7 +77,7 @@ public class ElementaryActivity extends BaseActivity implements ElementaryView {
         elementaryAdapter.setOnItemClickListener(new Custom_BaseRecyclerAdapter.OnItemClickListener<ZhuangBiImage>() {
             @Override
             public void onItemClick(View view, int position, ZhuangBiImage model) {
-                ToastUtils.showToast(BaseApp.getInstance(), "position-" + position + "model.getDesc-" + model.getDescription());
+                ToastUtils.showToast("position-" + position + "model.getDesc-" + model.getDescription());
             }
 
             @Override
@@ -124,12 +124,12 @@ public class ElementaryActivity extends BaseActivity implements ElementaryView {
 
     @Override
     public void show_error(String message) {
-        ToastUtils.showToast(BaseApp.getInstance(), message);
+        ToastUtils.showToast(message);
     }
 
     @Override
     public void show_empty() {
-        ToastUtils.showToast(BaseApp.getInstance(), "empty");
+        ToastUtils.showToast("empty");
     }
 
     @Override
@@ -145,16 +145,16 @@ public class ElementaryActivity extends BaseActivity implements ElementaryView {
 
     @Override
     public void show_toast(String message) {
-        ToastUtils.showToast(BaseApp.getInstance(), message);
+        ToastUtils.showToast(message);
     }
 
     @Override
     public void show_loading() {
-        ToastUtils.showToast(BaseApp.getInstance(), "show loading");
+        ToastUtils.showToast("loading...");
     }
 
     @Override
     public void hide_loading() {
-        ToastUtils.showToast(BaseApp.getInstance(), "hide loading");
+        ToastUtils.showToast("hide loading...");
     }
 }

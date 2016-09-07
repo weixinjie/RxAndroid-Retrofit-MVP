@@ -1,6 +1,6 @@
 package com.will.custom_rxandroid.http;
 
-import com.will.custom_rxandroid.pojo.ZhuangBiImage;
+import com.will.custom_rxandroid.pojo.elementary.ZhuangBiImage;
 
 import java.util.List;
 

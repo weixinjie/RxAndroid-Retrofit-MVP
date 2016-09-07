@@ -10,10 +10,7 @@ import com.bumptech.glide.Glide;
 import com.will.custom_rxandroid.R;
 import com.will.custom_rxandroid.adapter.base.Custom_BaseRecyclerAdapter;
 import com.will.custom_rxandroid.adapter.base.Custom_BaseRecyclerViewHolder;
-import com.will.custom_rxandroid.pojo.ZhuangBiImage;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.will.custom_rxandroid.pojo.elementary.ZhuangBiImage;
 
 /**
  * Created by will on 16/9/7.
@@ -43,7 +40,7 @@ public class ElementaryAdapter extends Custom_BaseRecyclerAdapter<ZhuangBiImage>
 
     @Override
     public Custom_BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType, boolean isItem) {
-        View item_view = mInflater.inflate(R.layout.item_baseadapter, parent, false);
+        View item_view = mInflater.inflate(R.layout.item_elementadapter, parent, false);
         ElementaryHolder holder = new ElementaryHolder(item_view, true);
         return holder;
     }
