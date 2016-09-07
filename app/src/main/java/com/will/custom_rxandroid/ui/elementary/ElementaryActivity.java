@@ -26,12 +26,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 1.pull_to_refresh and loadmore (https://github.com/huxq17/XRefreshView)
- * 2.mvp mode
- * 3.load_data by RxJava+Retrofit
- * 4.bind_view by ButterKnife
+ * basic function
  */
-
 public class ElementaryActivity extends BaseActivity implements ElementaryView {
 
     @BindView(R.id.et_base)
