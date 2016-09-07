@@ -1,4 +1,4 @@
-package com.will.custom_rxandroid.base;
+package com.will.custom_rxandroid.elementary;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,7 +22,7 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class Custom_BaseActivity extends com.will.custom_rxandroid.BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class ElementaryActivity extends com.will.custom_rxandroid.BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.et_base)
     EditText et_base;
@@ -33,7 +33,7 @@ public class Custom_BaseActivity extends com.will.custom_rxandroid.BaseActivity 
     @BindView(R.id.lv_base)
     ListView lv_base;
 
-    Custom_BaseAdapter baseAdapter;
+    ElementaryAdapter baseAdapter;
     List<ZhuangBiImage> zhuangBiImages;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class Custom_BaseActivity extends com.will.custom_rxandroid.BaseActivity 
         setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
         zhuangBiImages = new ArrayList<>();
-        baseAdapter = new Custom_BaseAdapter(this);
+        baseAdapter = new ElementaryAdapter(this);
         baseAdapter.setData(zhuangBiImages);
         sr_base.setOnRefreshListener(this);
         lv_base.setAdapter(baseAdapter);

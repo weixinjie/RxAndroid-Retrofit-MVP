@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".base.Custom_BaseActivity"
+            android:name=".elementary.ElementaryActivity"
             android:label="@string/title_activity_base"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

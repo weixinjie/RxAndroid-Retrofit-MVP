@@ -37,4 +37,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.huxq17.xrefreshview:xrefreshview:3.5.2'
 }

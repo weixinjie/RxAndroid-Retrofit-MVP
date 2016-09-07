@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.will.custom_rxandroid.base.Custom_BaseActivity">
+    tools:context="com.will.custom_rxandroid.elementary.ElementaryActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

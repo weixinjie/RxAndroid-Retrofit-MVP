@@ -1,4 +1,4 @@
-package com.will.custom_rxandroid.base;
+package com.will.custom_rxandroid.elementary;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,11 +18,11 @@ import java.util.List;
  * Created by will on 16/9/6.
  */
 
-public class Custom_BaseAdapter extends android.widget.BaseAdapter {
+public class ElementaryAdapter extends android.widget.BaseAdapter {
     List<ZhuangBiImage> data;
     Context context;
 
-    public Custom_BaseAdapter(Context context) {
+    public ElementaryAdapter(Context context) {
         this.context = context;
     }
 

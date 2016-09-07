@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.will.custom_rxandroid.base.Custom_BaseActivity;
+import com.will.custom_rxandroid.elementary.ElementaryActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_base:
-                startActivity(new Intent(this, Custom_BaseActivity.class));
+                startActivity(new Intent(this, ElementaryActivity.class));
                 break;
         }
     }
