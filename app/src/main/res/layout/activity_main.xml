@@ -9,7 +9,7 @@
     tools:context="com.will.custom_rxandroid.ui.MainActivity">
 
     <Button
-        android:id="@+id/bt_base"
+        android:id="@+id/bt_elementary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="RxJava基本操作" />

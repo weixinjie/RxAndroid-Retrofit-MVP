@@ -9,29 +9,24 @@ import android.widget.Button;
 import com.will.custom_rxandroid.R;
 import com.will.custom_rxandroid.ui.elementary.ElementaryActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-    Button bt_base;
+public class MainActivity extends AppCompatActivity {
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViews();
-        setClick();
+        ButterKnife.bind(this);
     }
 
-    private void findViews() {
-        bt_base = (Button) findViewById(R.id.bt_base);
-    }
 
-    private void setClick() {
-        bt_base.setOnClickListener(this);
-    }
-
-    @Override
+    @OnClick(R.id.bt_elementary)
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.bt_base:
+            case R.id.bt_elementary:
                 startActivity(new Intent(this, ElementaryActivity.class));
                 break;
         }
