@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.will.custom_rxandroid.elementary.ElementaryActivity">
+    tools:context=".ui.elementary.ElementaryActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,8 @@
             android:id="@+id/et_base"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1000" />
+            android:layout_weight="1000"
+            android:hint="for example:装逼" />
 
         <Button
             android:id="@+id/bt_base_search"
@@ -24,15 +25,15 @@
             android:text="search" />
     </LinearLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/sr_base"
+    <com.andview.refreshview.XRefreshView
+        android:id="@+id/xf_base"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1000">
+        android:layout_height="0dp"
+        android:layout_weight="10000">
 
-        <ListView
-            android:id="@+id/lv_base"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_base"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.andview.refreshview.XRefreshView>
 </LinearLayout>

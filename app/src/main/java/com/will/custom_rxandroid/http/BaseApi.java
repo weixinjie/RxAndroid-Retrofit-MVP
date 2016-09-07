@@ -20,7 +20,7 @@ public class BaseApi {
     private static CallAdapter.Factory calladapter_factory = RxJavaCallAdapterFactory.create();
 
     /**
-     * 获取ZhuangBiApi的实例
+     * get instance of ZhuangBiApi
      *
      * @return
      */
