@@ -30,6 +30,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.huxq17.xrefreshview:xrefreshview:3.5.2'

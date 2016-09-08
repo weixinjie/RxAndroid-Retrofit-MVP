@@ -1,6 +1,7 @@
 package com.will.custom_rxandroid.http;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
@@ -17,7 +18,6 @@ public class BaseApi {
 
     private static ZhuangBiApi zhuangBiApi;
     private static GankApi gankApi;
-    private static OkHttpClient okHttpClient = new OkHttpClient();
     private static Converter.Factory convert_factory = GsonConverterFactory.create();
     private static CallAdapter.Factory calladapter_factory = RxJavaCallAdapterFactory.create();
 
@@ -28,6 +28,9 @@ public class BaseApi {
      */
     public static ZhuangBiApi getZhuangBiApi() {
         if (zhuangBiApi == null) {
+            HttpLoggingInterceptor inteceptor = new HttpLoggingInterceptor();
+            inteceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(inteceptor).build();
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
                     .addConverterFactory(convert_factory)
@@ -45,6 +48,9 @@ public class BaseApi {
      */
     public static GankApi getGankApi() {
         if (gankApi == null) {
+            HttpLoggingInterceptor inteceptor = new HttpLoggingInterceptor();
+            inteceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(inteceptor).build();
             Retrofit retrofit = new Retrofit.Builder().client(okHttpClient)
                     .addConverterFactory(convert_factory)
                     .addCallAdapterFactory(calladapter_factory)
