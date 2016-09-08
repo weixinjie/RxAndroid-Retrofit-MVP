@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-
     @OnClick({R.id.bt_elementary, R.id.bt_map})
     public void onClick(View v) {
         switch (v.getId()) {

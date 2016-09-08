@@ -77,8 +77,6 @@ public class MapActivity extends BaseActivity implements MapView {
                 presenter.load_data(PAGE_COUNT, current_page, false);
             }
         });
-
-
     }
 
     @Override
