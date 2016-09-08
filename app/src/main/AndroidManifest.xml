@@ -22,7 +22,8 @@
             android:name=".ui.elementary.ElementaryActivity"
             android:label="@string/title_activity_base"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.map.MapActivity"></activity>
+        <activity android:name=".ui.map.MapActivity" />
+        <activity android:name=".ui.zip.ZipActivity"></activity>
     </application>
 
 </manifest>
