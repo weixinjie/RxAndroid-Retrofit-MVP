@@ -3,7 +3,6 @@ package com.will.custom_rxandroid.ui.map;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,6 +22,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 很多公司服务端返回数据的时候数据格式会带上一些调试信息。for example
+ * {
+ * "error": false,
+ * "results": [something, something]}
+ * 这些调试信息对判断数据的正确性很有用,但是不会显示在界面上。
+ * 这时候可以使用rxjava中的map来对数据进行转换(剥离无用数据)
+ */
 public class MapActivity extends BaseActivity implements MapView {
 
     public static int PAGE_COUNT = 6;
