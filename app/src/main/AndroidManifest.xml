@@ -23,7 +23,8 @@
             android:label="@string/title_activity_base"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.map.MapActivity" />
-        <activity android:name=".ui.zip.ZipActivity"></activity>
+        <activity android:name=".ui.zip.ZipActivity" />
+        <activity android:name=".ui.token.TokenActivity"></activity>
     </application>
 
 </manifest>

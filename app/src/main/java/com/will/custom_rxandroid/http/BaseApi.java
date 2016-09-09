@@ -18,6 +18,7 @@ public class BaseApi {
 
     private static ZhuangBiApi zhuangBiApi;
     private static GankApi gankApi;
+    private static VirtualApi virtualApi;
     private static Converter.Factory convert_factory = GsonConverterFactory.create();
     private static CallAdapter.Factory calladapter_factory = RxJavaCallAdapterFactory.create();
 
@@ -59,4 +60,17 @@ public class BaseApi {
         }
         return gankApi;
     }
+
+    /**
+     * get instance of VirtualApi
+     *
+     * @return
+     */
+    public static VirtualApi getVirtualApi() {
+        if (virtualApi == null) {
+            virtualApi = new VirtualApi();
+        }
+        return virtualApi;
+    }
+
 }

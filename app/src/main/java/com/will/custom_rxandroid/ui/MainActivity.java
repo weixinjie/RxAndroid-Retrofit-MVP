@@ -8,6 +8,7 @@ import android.view.View;
 import com.will.custom_rxandroid.R;
 import com.will.custom_rxandroid.ui.elementary.ElementaryActivity;
 import com.will.custom_rxandroid.ui.map.MapActivity;
+import com.will.custom_rxandroid.ui.token.TokenActivity;
 import com.will.custom_rxandroid.ui.zip.ZipActivity;
 
 import butterknife.ButterKnife;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.bt_elementary, R.id.bt_map, R.id.bt_zip})
+    @OnClick({R.id.bt_elementary, R.id.bt_map, R.id.bt_zip, R.id.bt_token})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_elementary:
@@ -33,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_zip:
                 startActivity(new Intent(this, ZipActivity.class));
+                break;
+            case R.id.bt_token:
+                startActivity(new Intent(this, TokenActivity.class));
                 break;
         }
     }
