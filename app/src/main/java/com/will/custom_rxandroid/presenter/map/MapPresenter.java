@@ -43,6 +43,8 @@ public class MapPresenter extends BasePresenter<MapView> {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        mvpView.stop_refresh();
+                        mvpView.stop_loadmore();
                         mvpView.show_error(e.getMessage());
                     }
 

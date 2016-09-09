@@ -106,7 +106,7 @@ public class ZipActivity extends BaseActivity implements ZipView {
                 show_success_view();
                 refresh_view.stopRefresh();
                 refresh_view.stopLoadMore();
-                
+
                 refresh_view.startRefresh();
             }
         });

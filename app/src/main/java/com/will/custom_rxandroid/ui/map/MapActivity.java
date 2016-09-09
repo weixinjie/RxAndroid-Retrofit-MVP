@@ -140,7 +140,6 @@ public class MapActivity extends BaseActivity implements MapView {
             @Override
             public void onClick(View v) {
                 setView(true, false, false);
-                current_page = 1;
                 refresh_view.startRefresh();
             }
         });
