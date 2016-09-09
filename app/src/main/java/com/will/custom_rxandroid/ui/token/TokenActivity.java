@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.andview.refreshview.XRefreshView;
-import com.andview.refreshview.XRefreshViewFooter;
 import com.will.custom_rxandroid.R;
 import com.will.custom_rxandroid.pojo.token.TokenDataBean;
 import com.will.custom_rxandroid.presenter.token.TokenPresenter;
@@ -19,6 +17,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 出于安全性、性能等方面的考虑，多数服务器会有一些接口需要传入 token 才能正确返回结果，而 token 是需要从另一个接口获取的，
+ * 这就需要使用两步连续的请求才能获取数据（①token -> ②目标数据）。
+ * 使用 flatMap() 可以用较为清晰的代码实现这种连续请求，避免 Callback 嵌套的结构
+ * 注意:这里的所有数据均为伪代码伪造
+ */
 public class TokenActivity extends BaseActivity implements TokenView {
     @BindView(R.id.tv_token)
     TextView tv_token;
