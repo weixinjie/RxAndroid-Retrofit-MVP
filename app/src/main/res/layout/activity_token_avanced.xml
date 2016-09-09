@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_token_avanced"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.will.custom_rxandroid.ui.token_avanced.TokenAvancedActivity">
+
+    <com.andview.refreshview.XRefreshView
+        android:id="@+id/refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/token_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context="com.will.custom_rxandroid.ui.token.TokenActivity">
+
+            <TextView
+                android:id="@+id/tv_token"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent" />
+
+            <Button
+                android:id="@+id/bt_token"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="请求数据" />
+
+            <Button
+                android:id="@+id/bt_clear_token"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="清理token" />
+
+        </LinearLayout>
+    </com.andview.refreshview.XRefreshView>
+
+    <include
+        layout="@layout/error_layout"
+        android:visibility="gone" />
+</FrameLayout>

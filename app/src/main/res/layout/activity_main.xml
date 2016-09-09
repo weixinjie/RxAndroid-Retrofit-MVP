@@ -33,4 +33,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="token基本操作" />
+
+    <Button
+        android:id="@+id/bt_token_avanced"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="token高级操作" />
 </LinearLayout>

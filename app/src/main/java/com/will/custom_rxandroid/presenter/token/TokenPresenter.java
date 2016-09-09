@@ -41,7 +41,7 @@ public class TokenPresenter extends BasePresenter<TokenView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        mvpView.show_error();
+                        mvpView.show_error(e.getMessage());
                     }
 
                     @Override

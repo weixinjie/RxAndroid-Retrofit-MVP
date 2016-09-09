@@ -24,7 +24,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.map.MapActivity" />
         <activity android:name=".ui.zip.ZipActivity" />
-        <activity android:name=".ui.token.TokenActivity"></activity>
+        <activity android:name=".ui.token.TokenActivity" />
+        <activity android:name=".ui.token_avanced.TokenAvancedActivity"></activity>
     </application>
 
 </manifest>

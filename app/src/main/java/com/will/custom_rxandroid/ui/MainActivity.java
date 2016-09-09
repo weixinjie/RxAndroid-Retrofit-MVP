@@ -9,6 +9,8 @@ import com.will.custom_rxandroid.R;
 import com.will.custom_rxandroid.ui.elementary.ElementaryActivity;
 import com.will.custom_rxandroid.ui.map.MapActivity;
 import com.will.custom_rxandroid.ui.token.TokenActivity;
+import com.will.custom_rxandroid.ui.token_avanced.TokenAvancedActivity;
+import com.will.custom_rxandroid.ui.token_avanced.TokenAvancedActivity_ViewBinding;
 import com.will.custom_rxandroid.ui.zip.ZipActivity;
 
 import butterknife.ButterKnife;
@@ -23,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.bt_elementary, R.id.bt_map, R.id.bt_zip, R.id.bt_token})
+    @OnClick({R.id.bt_elementary, R.id.bt_map, R.id.bt_zip, R.id.bt_token, R.id.bt_token_avanced})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_elementary:
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_token:
                 startActivity(new Intent(this, TokenActivity.class));
+                break;
+            case R.id.bt_token_avanced:
+                startActivity(new Intent(this, TokenAvancedActivity.class));
                 break;
         }
     }
