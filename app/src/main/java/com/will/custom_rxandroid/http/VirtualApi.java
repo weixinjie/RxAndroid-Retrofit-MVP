@@ -23,7 +23,7 @@ public class VirtualApi {
      * @param user_name
      * @return
      */
-    Observable<TokenBean> get_token(String user_name) {
+    public Observable<TokenBean> get_token(String user_name) {
         return Observable.just(user_name).map(new Func1<String, TokenBean>() {
             @Override
             public TokenBean call(String s) {
@@ -55,7 +55,7 @@ public class VirtualApi {
      * @param token
      * @return
      */
-    Observable<TokenDataBean> get_user_data(TokenBean token) {
+    public Observable<TokenDataBean> get_user_data(TokenBean token) {
         return Observable.just(token).map(new Func1<TokenBean, TokenDataBean>() {
             @Override
             public TokenDataBean call(TokenBean tokenBean) {
