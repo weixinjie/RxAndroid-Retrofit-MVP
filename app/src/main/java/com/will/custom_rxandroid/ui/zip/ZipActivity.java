@@ -1,6 +1,5 @@
 package com.will.custom_rxandroid.ui.zip;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.andview.refreshview.XRefreshView;
-import com.andview.refreshview.XRefreshViewFooter;
 import com.will.custom_rxandroid.R;
 import com.will.custom_rxandroid.adapter.zip.ZipAdapter;
 import com.will.custom_rxandroid.pojo.map.GankBean;
@@ -25,7 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- *
+ * 有的时候，app 中会需要同时访问不同接口，然后将结果糅合后转为统一的格式后输出
+ * （例如将第三方广告 API 的广告夹杂进自家平台返回的数据 List 中）。
+ * 这种并行的异步处理比较麻烦，不过用了 zip() 之后就会简单得多
  */
 public class ZipActivity extends BaseActivity implements ZipView {
 
