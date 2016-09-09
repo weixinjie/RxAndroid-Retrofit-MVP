@@ -19,6 +19,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 有的 token 并非一次性的，而是可以多次使用，直到它超时或被销毁（多数 token 都是这样的）。
+ * 这样的 token 处理起来比较麻烦：需要把它保存起来，并且在发现它失效的时候要能够自动重新获取新的 token 并继续访问之前由于 token 失效而失败的请求。
+ * 如果项目中有多处的接口请求都需要这样的自动修复机制，使用传统的 Callback 形式需要写出非常复杂的代码。
+ * 而使用 RxJava ，可以用 retryWhen() 来轻松地处理这样的问题。
+ */
 public class TokenAvancedActivity extends BaseActivity implements TokenAvancedView {
 
     TokenAvancedPresenter presenter;
