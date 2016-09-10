@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_cache"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.will.custom_rxandroid.ui.cache.CacheActivity">
+
+    <TextView
+        android:id="@+id/tv_load_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/colorAccent" />
+
+    <Button
+        android:id="@+id/bt_clear_memory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="clear memory" />
+
+    <Button
+        android:id="@+id/bt_clear_disk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="clear disk" />
+
+    <include layout="@layout/recyclerview_with_refresh_layout" />
+
+    <include
+        layout="@layout/error_layout"
+        android:visibility="gone" />
+
+    <include
+        layout="@layout/empty_layout"
+        android:visibility="gone" />
+</LinearLayout>

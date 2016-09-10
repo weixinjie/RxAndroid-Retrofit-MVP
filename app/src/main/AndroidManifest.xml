@@ -3,6 +3,7 @@
     package="com.will.custom_rxandroid">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".BaseApp"
@@ -25,7 +26,8 @@
         <activity android:name=".ui.map.MapActivity" />
         <activity android:name=".ui.zip.ZipActivity" />
         <activity android:name=".ui.token.TokenActivity" />
-        <activity android:name=".ui.token_avanced.TokenAvancedActivity"></activity>
+        <activity android:name=".ui.token_avanced.TokenAvancedActivity" />
+        <activity android:name=".ui.cache.CacheActivity"></activity>
     </application>
 
 </manifest>
