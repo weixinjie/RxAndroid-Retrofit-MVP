@@ -25,6 +25,7 @@ import butterknife.OnClick;
 /**
  * RxJava 中有一个较少被人用到的类叫做 Subject，它是一种『既是 Observable，
  * 又是 Observer』的东西，因此可以被用作中间件来做数据传递。例如，可以用它的子类 BehaviorSubject 来制作缓存。
+ * Warning:本页的内存缓存仍然有问题,具体请看CacheData中的注释掉的代码
  */
 public class CacheActivity extends BaseActivity implements CacheView {
     @BindView(R.id.tv_load_message)
