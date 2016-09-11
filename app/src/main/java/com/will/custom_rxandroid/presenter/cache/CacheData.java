@@ -20,19 +20,17 @@ import rx.subjects.BehaviorSubject;
 
 /**
  * Created by will on 16/9/9.
- * 请注意,内存缓存还有一定的问题,硬盘缓存跟网络获取已经没有问题了
  */
 
 public class CacheData {
     private static CacheData instance;
     private static final int SOURCE_DISK = 1; //硬盘缓存
     private static final int SOURCE_NET = 2; //网络获取
-//    private static final int SOURCE_MEMORY = 3; //内存缓存
+    private static final int SOURCE_MEMORY = 3; //内存缓存
 
     int data_source;
 
-    @IntDef({SOURCE_DISK, SOURCE_NET})
-//    @IntDef({SOURCE_DISK, SOURCE_NET, SOURCE_MEMORY})
+    @IntDef({SOURCE_DISK, SOURCE_NET, SOURCE_MEMORY})
     @interface DataSource {
     }
 
@@ -62,9 +60,9 @@ public class CacheData {
             case SOURCE_NET:
                 data_source_str = "网络加载";
                 break;
-//            case SOURCE_MEMORY:
-//                data_source_str = "内存加载";
-//            break;
+            case SOURCE_MEMORY:
+                data_source_str = "内存加载";
+                break;
             default:
                 data_source_str = "网络加载";
         }
@@ -73,27 +71,27 @@ public class CacheData {
 
 
     public Subscription subscribeData(@NonNull Observer<List<GankBean>> observer) {
-//        if (cache == null) {
-        cache = BehaviorSubject.create();
-        Observable.create(new Observable.OnSubscribe<List<GankBean>>() {
-            @Override
-            public void call(Subscriber<? super List<GankBean>> subscriber) {
-                List<GankBean> items = CacheDB.getInstance().readItems();
-                if (items == null) {
-                    set_data_source(SOURCE_NET);
-                    load_form_net();
-                } else {
-                    set_data_source(SOURCE_DISK);
-                    cache.onNext(items);
+        if (cache == null) {
+            cache = BehaviorSubject.create();
+            Observable.create(new Observable.OnSubscribe<List<GankBean>>() {
+                @Override
+                public void call(Subscriber<? super List<GankBean>> subscriber) {
+                    List<GankBean> items = CacheDB.getInstance().readItems();
+                    if (items == null) {
+                        set_data_source(SOURCE_NET);
+                        load_form_net();
+                    } else {
+                        set_data_source(SOURCE_DISK);
+                        cache.onNext(items);
+                    }
                 }
-            }
-        })
-                .subscribeOn(Schedulers.io())
-                .subscribe(cache);
+            })
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(cache);
 
-//        } else {
-//            set_data_source(SOURCE_MEMORY);
-//        }
+        } else {
+            set_data_source(SOURCE_MEMORY);
+        }
         return cache.observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
     }
 

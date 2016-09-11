@@ -71,7 +71,7 @@ public abstract class Custom_BaseRecyclerAdapter<T> extends
 
     public void setData(List<T> list) {
         if (list != null) {
-            clear();
+//            clear();
             mDatas = list;
             notifyDataSetChanged();
         }
@@ -93,10 +93,11 @@ public abstract class Custom_BaseRecyclerAdapter<T> extends
         notifyDataSetChanged();
     }
 
-    public void clear() {
-        if (mDatas != null)
-            clear(mDatas);
-    }
+//    public void clear() {
+//        if (mDatas != null) {
+//            clear(mDatas);
+//        }
+//    }
 
     public List<T> getDatas() {
         return mDatas;
