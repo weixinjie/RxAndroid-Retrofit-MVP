@@ -1,58 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.will.custom_rxandroid.ui.MainActivity">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/bt_elementary"
+    <LinearLayout
+        android:id="@+id/activity_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="RxJava基本操作" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.will.custom_rxandroid.ui.MainActivity">
 
-    <Button
-        android:id="@+id/bt_map"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Map转换" />
+        <Button
+            android:id="@+id/bt_elementary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RxJava基本操作" />
 
-    <Button
-        android:id="@+id/bt_zip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Zip压合" />
+        <Button
+            android:id="@+id/bt_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Map转换" />
 
-    <Button
-        android:id="@+id/bt_token"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="token基本操作" />
+        <Button
+            android:id="@+id/bt_zip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Zip压合" />
 
-    <Button
-        android:id="@+id/bt_token_avanced"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="token高级操作" />
+        <Button
+            android:id="@+id/bt_token"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="token基本操作" />
 
-    <Button
-        android:id="@+id/bt_cache"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="cache缓存" />
+        <Button
+            android:id="@+id/bt_token_avanced"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="token高级操作" />
 
-    <Button
-        android:id="@+id/bt_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="time轮询操作" />
+        <Button
+            android:id="@+id/bt_cache"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="cache缓存" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/bt_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="time轮询操作" />
+
+        <Button
+            android:id="@+id/bt_operator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="RxJava操作符" />
+
+        <Button
+            android:id="@+id/bt_subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Subject" />
+
+    </LinearLayout>
+</ScrollView>

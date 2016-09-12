@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_operator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.will.custom_rxandroid.ui.some_operator.OperatorActivity">
+
+    <Button
+        android:id="@+id/just"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="just" />
+
+    <Button
+        android:id="@+id/from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="from" />
+
+    <Button
+        android:id="@+id/defer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="defer" />
+</LinearLayout>

@@ -28,7 +28,9 @@
         <activity android:name=".ui.token.TokenActivity" />
         <activity android:name=".ui.token_avanced.TokenAvancedActivity" />
         <activity android:name=".ui.cache.CacheActivity" />
-        <activity android:name=".ui.time.TimeActivity"></activity>
+        <activity android:name=".ui.time.TimeActivity" />
+        <activity android:name=".ui.some_operator.OperatorActivity" />
+        <activity android:name=".ui.subject.SubjectActivity"></activity>
     </application>
 
 </manifest>
