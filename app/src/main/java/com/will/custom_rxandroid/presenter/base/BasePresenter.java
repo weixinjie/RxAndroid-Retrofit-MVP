@@ -24,6 +24,7 @@ public class BasePresenter<V> implements Presenter<V> {
         }
         if (this.subscription != null) {
             subscription.unsubscribe();
+            subscription = null;
         }
     }
 

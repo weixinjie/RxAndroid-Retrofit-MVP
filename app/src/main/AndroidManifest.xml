@@ -27,7 +27,8 @@
         <activity android:name=".ui.zip.ZipActivity" />
         <activity android:name=".ui.token.TokenActivity" />
         <activity android:name=".ui.token_avanced.TokenAvancedActivity" />
-        <activity android:name=".ui.cache.CacheActivity"></activity>
+        <activity android:name=".ui.cache.CacheActivity" />
+        <activity android:name=".ui.time.TimeActivity"></activity>
     </application>
 
 </manifest>

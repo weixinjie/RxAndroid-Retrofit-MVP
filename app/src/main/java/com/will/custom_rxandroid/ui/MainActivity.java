@@ -10,6 +10,7 @@ import com.will.custom_rxandroid.presenter.cache.CachePresenter;
 import com.will.custom_rxandroid.ui.cache.CacheActivity;
 import com.will.custom_rxandroid.ui.elementary.ElementaryActivity;
 import com.will.custom_rxandroid.ui.map.MapActivity;
+import com.will.custom_rxandroid.ui.time.TimeActivity;
 import com.will.custom_rxandroid.ui.token.TokenActivity;
 import com.will.custom_rxandroid.ui.token_avanced.TokenAvancedActivity;
 import com.will.custom_rxandroid.ui.token_avanced.TokenAvancedActivity_ViewBinding;
@@ -27,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.bt_elementary, R.id.bt_map, R.id.bt_zip, R.id.bt_token, R.id.bt_token_avanced, R.id.bt_cache})
+    @OnClick({R.id.bt_elementary, R.id.bt_map, R.id.bt_zip, R.id.bt_token
+            , R.id.bt_token_avanced, R.id.bt_cache, R.id.bt_time})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_elementary:
@@ -47,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_cache:
                 startActivity(new Intent(this, CacheActivity.class));
+                break;
+            case R.id.bt_time:
+                startActivity(new Intent(this, TimeActivity.class));
                 break;
         }
     }
