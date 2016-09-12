@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="5dp">
 
     <LinearLayout
         android:id="@+id/activity_main"
@@ -58,6 +59,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="time轮询操作" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="以下为RxJava基础部分"
+            android:textColor="@color/colorAccent" />
 
         <Button
             android:id="@+id/bt_operator"
