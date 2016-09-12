@@ -113,7 +113,7 @@ public class CacheData {
                 .get_gank(100, 1)
                 .subscribeOn(Schedulers.io())
                 .map(new GankResult2GankBeanUtils())
-                .doOnNext(new Action1<List<GankBean>>() {
+                .doOnNext(new Action1<List<GankBean>>() {//允许我们在每次输出一个元素之前做一些额外的事情，比如将items缓存到文件系统
                     @Override
                     public void call(List<GankBean> items) {
                         CacheDB.getInstance().writeItems(items);
