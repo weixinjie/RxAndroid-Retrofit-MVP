@@ -22,6 +22,7 @@ public class TimePresenter extends BasePresenter<TimeView> {
     }
 
     /**
+     * 在做App的时候，有些地方我们可能会时不时的去请求服务器，以至于客户端的数据是最新的，在RxJava中可以这样做
      * 开始轮询操作
      */
     public void start_circle() {
