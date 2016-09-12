@@ -20,4 +20,11 @@
         android:layout_marginLeft="20dp"
         android:layout_toRightOf="@id/bt_start"
         android:text="停止轮询" />
+
+    <Button
+        android:id="@+id/bt_start_count_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bt_start"
+        android:text="2S之后弹出toast" />
 </RelativeLayout>

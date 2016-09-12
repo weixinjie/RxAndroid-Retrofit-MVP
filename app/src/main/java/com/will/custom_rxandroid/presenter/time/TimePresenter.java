@@ -1,6 +1,7 @@
 package com.will.custom_rxandroid.presenter.time;
 
 import com.will.custom_rxandroid.presenter.base.BasePresenter;
+import com.will.custom_rxandroid.presenter.base.BaseView;
 import com.will.custom_rxandroid.utils.ToastUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -14,10 +15,10 @@ import rx.schedulers.Schedulers;
  * Created by will on 16/9/12.
  */
 
-public class TimePresenter extends BasePresenter<TimeView> {
+public class TimePresenter extends BasePresenter<BaseView> {
     long start_time = System.currentTimeMillis();
 
-    public TimePresenter(TimeView timeView) {
+    public TimePresenter(BaseView timeView) {
         this.mvpView = timeView;
     }
 
@@ -32,8 +33,8 @@ public class TimePresenter extends BasePresenter<TimeView> {
                     public void call(Long aLong) {
                         long current_time = System.currentTimeMillis();
                         long seconds = (current_time - start_time) / 1000;
-                        ToastUtils.showToast("间隔时间为: " + seconds + "S");
                         start_time = current_time;
+                        mvpView.show_toast("间隔时间为: " + seconds + "S");
                     }
                 });
     }
@@ -45,4 +46,5 @@ public class TimePresenter extends BasePresenter<TimeView> {
         if (subscription != null)
             subscription.unsubscribe();
     }
+
 }
