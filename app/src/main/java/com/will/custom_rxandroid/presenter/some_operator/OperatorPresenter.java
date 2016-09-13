@@ -520,4 +520,34 @@ public class OperatorPresenter extends BasePresenter {
             }
         });
     }
+
+    /**
+     * gnoreElements操作符忽略所有源Observable产生的结果，只把Observable的onCompleted和onError事件通知给订阅者。
+     * ignoreElements操作符适用于不太关心Observable产生的结果，只是在Observable结束时(onCompleted)或者出现错误时能够收到通知。
+     */
+    public void ignoreElements() {
+        subscription = Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                subscriber.onNext(1);
+                subscriber.onNext(3);
+                subscriber.onError(new Throwable("custom error"));
+            }
+        }).ignoreElements().subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
 }

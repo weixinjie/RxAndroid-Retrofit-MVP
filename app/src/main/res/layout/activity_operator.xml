@@ -137,5 +137,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="single" />
+
+        <Button
+            android:id="@+id/ignoreelements"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ignore elements" />
     </LinearLayout>
 </ScrollView>
