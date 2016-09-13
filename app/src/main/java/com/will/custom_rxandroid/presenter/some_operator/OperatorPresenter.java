@@ -164,6 +164,7 @@ public class OperatorPresenter extends BasePresenter {
 
     /**
      * buffer操作符是分批将数据一次性的发送出去,例如下面的例子就会打印出:{1,2,3},{4,5}两组
+     * 即将数据分割成data.size/3组(如果不整除则为data.size/3+1)
      */
     public void buffer() {
 
@@ -313,6 +314,69 @@ public class OperatorPresenter extends BasePresenter {
                 LogUtils.e(s);
             }
         });
+    }
+
+    /**
+     * Window is similar to Buffer(没搞懂,请补充)
+     */
+    public void window() {
+        subscription = Observable.interval(1, TimeUnit.SECONDS).take(12)
+                .window(3, TimeUnit.SECONDS)
+                .subscribe(new Action1<Observable<Long>>() {
+                    @Override
+                    public void call(Observable<Long> observable) {
+                        LogUtils.e("subdivide begin......");
+                        observable.subscribe(new Action1<Long>() {
+                            @Override
+                            public void call(Long aLong) {
+                                LogUtils.e("Next:" + aLong);
+                            }
+                        });
+                    }
+                });
+    }
+
+    //---------------------------Filtering Observables(以下为过滤操作符)--------------------------//
+
+    /**
+     * debounce操作符对源Observable每产生一个结果后，如果在规定的间隔时间内没有别的结果产生，则把这个结果提交给订阅者处理，否则忽略该结果。
+     * 值得注意的是，如果源Observable产生的最后一个结果后在规定的时间间隔内调用了onCompleted，那么通过debounce操作符也会把这个结果提交给订阅者。
+     */
+    public void debounce() {
+        subscription = Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                if (subscriber.isUnsubscribed())
+                    return;
+                for (int i = 0; i < 10; i++) {
+                    try {
+                        subscriber.onNext(i);
+                        Thread.sleep(i * 1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                subscriber.onCompleted();
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .debounce(4, TimeUnit.SECONDS)
+                .subscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.e("onComplete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        LogUtils.e(String.valueOf(integer));
+                    }
+                });
     }
 
 

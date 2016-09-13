@@ -76,5 +76,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="scan" />
+
+        <Button
+            android:id="@+id/window"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="window" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="以下为过滤操作符"
+            android:textColor="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/debounce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="debounce" />
     </LinearLayout>
 </ScrollView>

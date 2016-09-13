@@ -33,7 +33,7 @@ public class OperatorActivity extends BaseActivity {
     @OnClick({R.id.just, R.id.from, R.id.defer,
             R.id.inteveal, R.id.repeat, R.id.repeat_when,
             R.id.buffer, R.id.flatmap, R.id.group_by,
-            R.id.map, R.id.scan})
+            R.id.map, R.id.scan, R.id.window, R.id.debounce})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.just:
@@ -68,6 +68,12 @@ public class OperatorActivity extends BaseActivity {
                 break;
             case R.id.scan:
                 operatorPresenter.scan();
+                break;
+            case R.id.window:
+                operatorPresenter.window();
+                break;
+            case R.id.debounce:
+                operatorPresenter.debounce();
                 break;
         }
     }
