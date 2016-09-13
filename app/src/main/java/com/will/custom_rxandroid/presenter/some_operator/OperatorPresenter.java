@@ -308,7 +308,11 @@ public class OperatorPresenter extends BasePresenter {
     }
 
     /**
-     *
+     * groupBy操作符是对源Observable产生的结果进行分组，形成一个类型为GroupedObservable的结果集，
+     * GroupedObservable中存在一个方法为getKey()，可以通过该方法获取结果集的Key值（类似于HashMap的key)。
+     * 值得注意的是，由于结果集中的GroupedObservable是把分组结果缓存起来，
+     * 如果对每一个GroupedObservable不进行处理（既不订阅执行也不对其进行别的操作符运算），
+     * 就有可能出现内存泄露。因此，如果你对某个GroupedObservable不进行处理，最好是对其使用操作符take(0)处理。
      */
     public void group_by() {
         subscription = Observable.range(1, 6).groupBy(new Func1<Integer, Integer>() {
