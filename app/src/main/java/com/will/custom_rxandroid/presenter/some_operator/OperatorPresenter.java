@@ -14,6 +14,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.observables.GroupedObservable;
 import rx.observables.SyncOnSubscribe;
 import rx.schedulers.Schedulers;
@@ -290,4 +291,29 @@ public class OperatorPresenter extends BasePresenter {
             }
         });
     }
+
+    /**
+     * 可以对数据进行包裹,并且会把上次返回的数据进行发送
+     * 例如:下面call函数中 s为上次返回的字符串 s2为当前的字符串
+     * 如果Observable.just中写入的是int值,那么我们可以利用这个函数进行求和运算(只是举个例子)
+     */
+    public void scan() {
+        subscription = Observable.just("weixinjie", "zhangrui").scan(new Func2<String, String, String>() {
+            @Override
+            public String call(String s, String s2) {
+                if (s != null)
+                    LogUtils.e("-----以前的字符串为" + s);
+                if (s2 != null)
+                    LogUtils.e("-----当前的字符串为" + s2);
+                return s2;
+            }
+        }).subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                LogUtils.e(s);
+            }
+        });
+    }
+
+
 }
