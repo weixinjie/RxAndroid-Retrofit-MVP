@@ -1,6 +1,8 @@
 package com.will.custom_rxandroid.presenter.some_operator;
 
 
+import android.telephony.SubscriptionInfo;
+
 import com.andview.refreshview.utils.LogUtils;
 import com.will.custom_rxandroid.presenter.base.BasePresenter;
 
@@ -380,4 +382,26 @@ public class OperatorPresenter extends BasePresenter {
     }
 
 
+    /**
+     * 对重复的数据进行清理
+     */
+    public void distinct() {
+        subscription = Observable.just(1, 2, 3, 4, 2, 1, 5).distinct()
+                .subscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.e("onComplete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        LogUtils.e(String.valueOf(integer));
+                    }
+                });
+    }
 }
