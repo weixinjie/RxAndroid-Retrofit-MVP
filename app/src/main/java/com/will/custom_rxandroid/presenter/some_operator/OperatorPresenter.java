@@ -429,7 +429,7 @@ public class OperatorPresenter extends BasePresenter {
     }
 
     /**
-     * 对数据进行过滤,满足条件的元素才会传递给订阅者
+     * filter操作符是对源Observable产生的结果按照指定条件进行过滤，只有满足条件的结果才会提交给订阅者，
      */
     public void filter() {
         subscription = Observable.just("baidu", "tencent", "alibaba").filter(new Func1<String, Boolean>() {
@@ -446,5 +446,6 @@ public class OperatorPresenter extends BasePresenter {
             }
         });
     }
+
 
 }
