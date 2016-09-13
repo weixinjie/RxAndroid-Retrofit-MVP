@@ -428,5 +428,23 @@ public class OperatorPresenter extends BasePresenter {
         });
     }
 
+    /**
+     * 对数据进行过滤,满足条件的元素才会传递给订阅者
+     */
+    public void filter() {
+        subscription = Observable.just("baidu", "tencent", "alibaba").filter(new Func1<String, Boolean>() {
+            @Override
+            public Boolean call(String s) {
+                if (s.contains("ali"))
+                    return true;
+                return false;
+            }
+        }).subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                LogUtils.e(s);
+            }
+        });
+    }
 
 }
