@@ -390,6 +390,10 @@ public class OperatorPresenter extends BasePresenter {
      * 可以对数据进行包裹,并且会把上次返回的数据进行发送
      * 例如:下面call函数中 s为上次返回的字符串 s2为当前的字符串
      * 如果Observable.just中写入的是int值,那么我们可以利用这个函数进行求和运算(只是举个例子)
+     * <p>
+     * scan操作符通过遍历源Observable产生的结果，
+     * 依次对每一个结果项按照指定规则进行运算，计算后的结果作为下一个迭代项参数，
+     * 每一次迭代项都会把计算结果输出给订阅者。
      */
     public void scan() {
         subscription = Observable.just("weixinjie", "zhangrui").scan(new Func2<String, String, String>() {
