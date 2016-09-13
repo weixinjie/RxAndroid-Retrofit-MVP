@@ -14,6 +14,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.functions.Func1;
+import rx.observables.GroupedObservable;
 import rx.observables.SyncOnSubscribe;
 import rx.schedulers.Schedulers;
 
@@ -158,6 +159,8 @@ public class OperatorPresenter extends BasePresenter {
         });
     }
 
+    //---------------------------Transforming Observables(以下为变换操作符)--------------------------//
+
     /**
      * buffer操作符是分批将数据一次性的发送出去,例如下面的例子就会打印出:{1,2,3},{4,5}两组
      */
@@ -202,4 +205,89 @@ public class OperatorPresenter extends BasePresenter {
 //        });
     }
 
+    /**
+     * FlatMap将一个发射数据的Observable变换为多个Observables，然后将它们发射的数据合并后放进一个单独的Observable
+     */
+    public void flatmap() {
+        subscription = Observable.just(1, 2, 3, 4, 5, 6).flatMap(new Func1<Integer, Observable<String>>() {
+            @Override
+            public Observable<String> call(Integer integer) {
+                return Observable.just(String.valueOf(integer));
+            }
+        }).subscribe(new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(String s) {
+                LogUtils.e(s);
+            }
+        });
+    }
+
+    /**
+     * 分组
+     */
+    public void group_by() {
+        subscription = Observable.range(1, 6).groupBy(new Func1<Integer, Integer>() {
+            @Override
+            public Integer call(Integer integer) {
+                return integer % 2;
+            }
+        }).subscribe(new Subscriber<GroupedObservable<Integer, Integer>>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("大的onCommplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(final GroupedObservable<Integer, Integer> integerIntegerGroupedObservable) {
+                integerIntegerGroupedObservable.subscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.e("小的onComplete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        LogUtils.e("group: " + integerIntegerGroupedObservable.getKey() + "number: " + String.valueOf(integer));
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * 进行map转化
+     */
+    public void map() {
+        subscription = Observable.just(1, 2, 3, 4, 5).map(new Func1<Integer, String>() {
+            @Override
+            public String call(Integer integer) {
+                return String.valueOf("integer: " + integer);
+            }
+        }).subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                LogUtils.e(s);
+            }
+        });
+    }
 }

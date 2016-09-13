@@ -32,7 +32,8 @@ public class OperatorActivity extends BaseActivity {
 
     @OnClick({R.id.just, R.id.from, R.id.defer,
             R.id.inteveal, R.id.repeat, R.id.repeat_when,
-            R.id.buffer})
+            R.id.buffer, R.id.flatmap, R.id.group_by,
+            R.id.map})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.just:
@@ -55,6 +56,15 @@ public class OperatorActivity extends BaseActivity {
                 break;
             case R.id.buffer:
                 operatorPresenter.buffer();
+                break;
+            case R.id.flatmap:
+                operatorPresenter.flatmap();
+                break;
+            case R.id.group_by:
+                operatorPresenter.group_by();
+                break;
+            case R.id.map:
+                operatorPresenter.map();
                 break;
         }
     }

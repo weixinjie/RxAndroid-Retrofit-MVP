@@ -1,51 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_operator"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.will.custom_rxandroid.ui.some_operator.OperatorActivity">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/just"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="just" />
+    <LinearLayout
+        android:id="@+id/activity_operator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.will.custom_rxandroid.ui.some_operator.OperatorActivity">
 
-    <Button
-        android:id="@+id/from"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="from" />
+        <Button
+            android:id="@+id/just"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="just" />
 
-    <Button
-        android:id="@+id/defer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="defer" />
+        <Button
+            android:id="@+id/from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="from" />
 
-    <Button
-        android:id="@+id/inteveal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="inteveal" />
+        <Button
+            android:id="@+id/defer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="defer" />
 
-    <Button
-        android:id="@+id/repeat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="repeat" />
+        <Button
+            android:id="@+id/inteveal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="inteveal" />
 
-    <Button
-        android:id="@+id/repeat_when"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="repeat_when" />
+        <Button
+            android:id="@+id/repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="repeat" />
 
-    <Button
-        android:id="@+id/buffer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="buffer" />
-</LinearLayout>
+        <Button
+            android:id="@+id/repeat_when"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="repeat_when" />
+
+        <Button
+            android:id="@+id/buffer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="buffer" />
+
+        <Button
+            android:id="@+id/flatmap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="flatmap" />
+
+        <Button
+            android:id="@+id/group_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="group_by" />
+
+        <Button
+            android:id="@+id/map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="map" />
+    </LinearLayout>
+</ScrollView>
