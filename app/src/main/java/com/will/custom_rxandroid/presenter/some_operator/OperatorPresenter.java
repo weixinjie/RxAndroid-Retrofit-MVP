@@ -414,7 +414,9 @@ public class OperatorPresenter extends BasePresenter {
     }
 
     /**
-     * Window is similar to Buffer(没搞懂,请补充)
+     * window操作符非常类似于buffer操作符，
+     * 区别在于buffer操作符产生的结果是一个List缓存，
+     * 而window操作符产生的结果是一个Observable，订阅者可以对这个结果Observable重新进行订阅处理。
      */
     public void window() {
         subscription = Observable.interval(1, TimeUnit.SECONDS).take(12)
