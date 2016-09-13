@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.functions.Func1;
@@ -404,4 +405,28 @@ public class OperatorPresenter extends BasePresenter {
                     }
                 });
     }
+
+    /**
+     * elementAt操作符在源Observable产生的结果中，仅仅把指定"索引"的结果提交给订阅者，索引是从0开始的
+     */
+    public void elementat() {
+        subscription = Observable.just("weixinjie", "zhangrui", "hehe").elementAt(2).subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                LogUtils.e(s);
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        }, new Action0() {
+            @Override
+            public void call() {
+                LogUtils.e("onComplete");
+            }
+        });
+    }
+
+
 }
