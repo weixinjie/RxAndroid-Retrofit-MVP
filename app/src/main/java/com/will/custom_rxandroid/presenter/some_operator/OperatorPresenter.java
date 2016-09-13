@@ -463,6 +463,7 @@ public class OperatorPresenter extends BasePresenter {
 
     /**
      * first操作符是把源Observable产生的结果的第一个提交给订阅者，first操作符可以使用elementAt(0)和take(1)替代
+     * 需要注意的是如果first取不到数据则会抛出异常NoSuchElement
      */
     public void first() {
         subscription = Observable.create(new Observable.OnSubscribe<Integer>() {
@@ -591,6 +592,104 @@ public class OperatorPresenter extends BasePresenter {
                            }
 
                 );
+    }
+
+    /**
+     * skip操作符针对源Observable产生的结果，跳过前面n个不进行处理，而把后面的结果提交给订阅者处理
+     */
+    public void skip() {
+        subscription = Observable.just(1, 2, 3, 4, 5, 6).skip(3).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    /**
+     * skipLast操作符针对源Observable产生的结果，忽略Observable最后产生的n个结果，而把前面产生的结果提交给订阅者处理，
+     * 值得注意的是，skipLast操作符提交满足条件的结果给订阅者是存在延迟效果的
+     */
+    public void skipLast() {
+        subscription = Observable.range(1, 6).skipLast(3).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    /**
+     * take操作符是把源Observable产生的结果，提取前面的n个提交给订阅者，而忽略后面的结果
+     */
+    public void take() {
+        subscription = Observable.range(1, 6).take(3).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    /**
+     * takeFirst操作符类似于take操作符，同时也类似于first操作符，
+     * 都是获取源Observable产生的结果列表中符合指定条件的前一个或多个，
+     * 与first操作符不同的是，first操作符如果获取不到数据，则会抛出NoSuchElementException异常，
+     * 而takeFirst则会返回一个空的Observable，该Observable只有onCompleted通知而没有onNext通知。
+     */
+    public void takeFirst() {
+        subscription = Observable.range(1, 6).takeFirst(new Func1<Integer, Boolean>() {
+            @Override
+            public Boolean call(Integer integer) {
+                if (integer > 3 && integer < 4) return true;
+                return false;
+            }
+        }).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
     }
 
 }
