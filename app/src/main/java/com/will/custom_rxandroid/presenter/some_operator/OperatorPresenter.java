@@ -310,6 +310,80 @@ public class OperatorPresenter extends BasePresenter {
     }
 
     /**
+     * 上面三种运算符的比较(下面为log输出)
+     * switchMap Next:30
+     * 09-13 17:56:58.824 1646-1646/com.will.custom_rxandroid I/System.out: switchMap Next:30
+     * 09-13 17:56:58.824 1646-1646/com.will.custom_rxandroid I/System.out: switchMap Next:15
+     * 09-13 17:56:58.859 1646-1646/com.will.custom_rxandroid E/OperatorPresenter$19.call(L:348): concatMap: 10
+     * 09-13 17:56:58.860 1646-1646/com.will.custom_rxandroid E/OperatorPresenter$19.call(L:348): concatMap: 5
+     * 09-13 17:56:59.045 1646-1646/com.will.custom_rxandroid E/OperatorPresenter$19.call(L:348): concatMap: 20
+     * 09-13 17:56:59.046 1646-1646/com.will.custom_rxandroid E/OperatorPresenter$19.call(L:348): concatMap: 10
+     * 09-13 17:56:59.222 1646-1646/com.will.custom_rxandroid E/OperatorPresenter$19.call(L:348): concatMap: 30
+     * 09-13 17:56:59.222 1646-1646/com.will.custom_rxandroid E/OperatorPresenter$19.call(L:348): concatMap: 15
+     * 09-13 17:57:00.437 1646-1646/com.will.custom_rxandroid I/System.out: flatMap Next:20
+     * 09-13 17:57:00.437 1646-1646/com.will.custom_rxandroid I/System.out: flatMap Next:30
+     * 09-13 17:57:00.437 1646-1646/com.will.custom_rxandroid I/System.out: flatMap Next:15
+     * 09-13 17:57:00.437 1646-1646/com.will.custom_rxandroid I/System.out: flatMap Next:10
+     * 09-13 17:57:00.635 1646-1646/com.will.custom_rxandroid I/System.out: flatMap Next:10
+     * 09-13 17:57:00.635 1646-1646/com.will.custom_rxandroid I/System.out: flatMap Next:5
+     */
+    public void compare() {
+        //flatMap操作符的运行结果
+        Observable.just(10, 20, 30).flatMap(new Func1<Integer, Observable<Integer>>() {
+            @Override
+            public Observable<Integer> call(Integer integer) {
+                //10的延迟执行时间为200毫秒、20和30的延迟执行时间为180毫秒
+                int delay = 2000;
+                if (integer > 10)
+                    delay = 1800;
+
+                return Observable.from(new Integer[]{integer, integer / 2}).delay(delay, TimeUnit.MILLISECONDS);
+            }
+        }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                System.out.println("flatMap Next:" + integer);
+            }
+        });
+
+        //concatMap操作符的运行结果
+        Observable.just(10, 20, 30).concatMap(new Func1<Integer, Observable<Integer>>() {
+            @Override
+            public Observable<Integer> call(Integer integer) {
+                //10的延迟执行时间为200毫秒、20和30的延迟执行时间为180毫秒
+                int delay = 200;
+                if (integer > 10)
+                    delay = 180;
+
+                return Observable.from(new Integer[]{integer, integer / 2}).delay(delay, TimeUnit.MILLISECONDS);
+            }
+        }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                LogUtils.e("concatMap: " + integer);
+            }
+        });
+
+        //switchMap操作符的运行结果
+        Observable.just(10, 20, 30).switchMap(new Func1<Integer, Observable<Integer>>() {
+            @Override
+            public Observable<Integer> call(Integer integer) {
+                //10的延迟执行时间为200毫秒、20和30的延迟执行时间为180毫秒
+                int delay = 200;
+                if (integer > 10)
+                    delay = 180;
+
+                return Observable.from(new Integer[]{integer, integer / 2}).delay(delay, TimeUnit.MILLISECONDS);
+            }
+        }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                System.out.println("switchMap Next:" + integer);
+            }
+        });
+    }
+
+    /**
      * groupBy操作符是对源Observable产生的结果进行分组，形成一个类型为GroupedObservable的结果集，
      * GroupedObservable中存在一个方法为getKey()，可以通过该方法获取结果集的Key值（类似于HashMap的key)。
      * 值得注意的是，由于结果集中的GroupedObservable是把分组结果缓存起来，

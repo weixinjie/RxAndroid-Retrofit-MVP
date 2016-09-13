@@ -37,7 +37,8 @@ public class OperatorActivity extends BaseActivity {
             , R.id.distinct, R.id.elementat, R.id.filter, R.id.oftype
             , R.id.first, R.id.single, R.id.last, R.id.ignoreelements
             , R.id.sample, R.id.skip, R.id.skiplast, R.id.take,
-            R.id.take_first, R.id.take_last, R.id.contact_map, R.id.switch_map, R.id.cast})
+            R.id.take_first, R.id.take_last, R.id.contact_map,
+            R.id.switch_map, R.id.cast, R.id.compare})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.just:
@@ -129,6 +130,9 @@ public class OperatorActivity extends BaseActivity {
                 break;
             case R.id.cast:
                 operatorPresenter.cast();
+                break;
+            case R.id.compare:
+                operatorPresenter.compare();
                 break;
         }
     }

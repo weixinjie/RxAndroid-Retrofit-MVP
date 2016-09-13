@@ -79,6 +79,12 @@
             android:text="switch map" />
 
         <Button
+            android:id="@+id/compare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="switch map,contact map,flat map对比" />
+
+        <Button
             android:id="@+id/group_by"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
