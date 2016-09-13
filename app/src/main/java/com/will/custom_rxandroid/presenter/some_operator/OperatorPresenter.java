@@ -9,6 +9,7 @@ import com.will.custom_rxandroid.presenter.base.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -550,4 +551,46 @@ public class OperatorPresenter extends BasePresenter {
             }
         });
     }
+
+    /**
+     * sample操作符定期扫描源Observable产生的结果，在指定的时间间隔范围内对源Observable产生的结果进行采样
+     * 即达到sample指定的时间后才会发送数据
+     */
+    public void sample() {
+        subscription = Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                try {
+                    for (int i = 0; i < 9; i++) {
+                        subscriber.onNext(i);
+                        Thread.sleep(1000);
+                    }
+                    Thread.sleep(2000);
+                    subscriber.onNext(9);
+                    subscriber.onCompleted();
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+            }
+        }).sample(2200, TimeUnit.MILLISECONDS)
+                .subscribe(new Subscriber<Integer>() {
+                               @Override
+                               public void onCompleted() {
+                                   LogUtils.e("onComplete");
+                               }
+
+                               @Override
+                               public void onError(Throwable e) {
+                                   e.printStackTrace();
+                               }
+
+                               @Override
+                               public void onNext(Integer integer) {
+                                   LogUtils.e(String.valueOf(integer));
+                               }
+                           }
+
+                );
+    }
+
 }
