@@ -225,7 +225,11 @@ public class OperatorPresenter extends BasePresenter {
     }
 
     /**
-     * FlatMap将一个发射数据的Observable变换为多个Observables，然后将它们发射的数据合并后放进一个单独的Observable
+     * flatMap操作符是把Observable产生的结果转换成多个Observable，然后把这多个Observable“扁平化”成一个Observable，并依次提交产生的结果给订阅者。
+     * flatMap操作符通过传入一个函数作为参数转换源Observable，在这个函数中，
+     * 你可以自定义转换规则，最后在这个函数中返回一个新的Observable，
+     * 然后flatMap操作符通过合并这些Observable结果成一个Observable，并依次提交结果给订阅者。
+     * 值得注意的是，flatMap操作符在合并Observable结果时，有可能存在交叉的情况
      */
     public void flatmap() {
         subscription = Observable.just(1, 2, 3, 4, 5, 6).flatMap(new Func1<Integer, Observable<String>>() {
