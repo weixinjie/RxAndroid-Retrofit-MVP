@@ -482,6 +482,18 @@ public class OperatorPresenter extends BasePresenter {
     }
 
     /**
+     * last操作符把源Observable产生的结果的最后一个提交给订阅者，last操作符可以使用takeLast(1)替代。
+     */
+    public void last() {
+        subscription = Observable.range(1, 6).last().subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    /**
      * single操作符是对源Observable的结果进行判断，
      * 如果产生的结果满足指定条件的数量不为1，则抛出异常，否则把满足条件的结果提交给订阅者
      */

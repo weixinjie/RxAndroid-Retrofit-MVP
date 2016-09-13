@@ -127,6 +127,12 @@
             android:text="first" />
 
         <Button
+            android:id="@+id/last"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="last" />
+
+        <Button
             android:id="@+id/single"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -35,7 +35,7 @@ public class OperatorActivity extends BaseActivity {
             R.id.buffer, R.id.flatmap, R.id.group_by,
             R.id.map, R.id.scan, R.id.window, R.id.debounce
             , R.id.distinct, R.id.elementat, R.id.filter, R.id.oftype
-            , R.id.first, R.id.single})
+            , R.id.first, R.id.single, R.id.last})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.just:
@@ -94,6 +94,9 @@ public class OperatorActivity extends BaseActivity {
                 break;
             case R.id.single:
                 operatorPresenter.single();
+                break;
+            case R.id.last:
+                operatorPresenter.last();
                 break;
         }
     }
