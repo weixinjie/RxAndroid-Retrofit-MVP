@@ -2,6 +2,7 @@ package com.will.custom_rxandroid.presenter.some_operator;
 
 
 import android.telephony.SubscriptionInfo;
+import android.util.Log;
 
 import com.andview.refreshview.utils.LogUtils;
 import com.will.custom_rxandroid.presenter.base.BasePresenter;
@@ -440,6 +441,18 @@ public class OperatorPresenter extends BasePresenter {
                 return false;
             }
         }).subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                LogUtils.e(s);
+            }
+        });
+    }
+
+    /**
+     * ofType操作符类似于filter操作符，区别在于ofType操作符是按照类型对结果进行过滤
+     */
+    public void oftype() {
+        subscription = Observable.just("baidu", 1, "tencent", 1.888).ofType(String.class).subscribe(new Action1<String>() {
             @Override
             public void call(String s) {
                 LogUtils.e(s);
