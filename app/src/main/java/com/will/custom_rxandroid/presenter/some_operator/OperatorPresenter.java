@@ -460,5 +460,25 @@ public class OperatorPresenter extends BasePresenter {
         });
     }
 
+    /**
+     * first操作符是把源Observable产生的结果的第一个提交给订阅者，first操作符可以使用elementAt(0)和take(1)替代
+     */
+    public void first() {
+        subscription = Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                subscriber.onNext(1);
+                subscriber.onNext(2);
+                subscriber.onNext(3);
+            }
+        })
+                .first()
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        LogUtils.e(String.valueOf(integer));
+                    }
+                });
+    }
 
 }
