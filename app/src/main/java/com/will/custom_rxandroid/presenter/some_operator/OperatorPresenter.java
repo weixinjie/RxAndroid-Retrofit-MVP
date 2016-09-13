@@ -1,6 +1,8 @@
 package com.will.custom_rxandroid.presenter.some_operator;
 
 
+import android.util.Log;
+
 import com.andview.refreshview.utils.LogUtils;
 import com.will.custom_rxandroid.presenter.base.BasePresenter;
 
@@ -354,7 +356,7 @@ public class OperatorPresenter extends BasePresenter {
     }
 
     /**
-     * 进行map转化
+     * map操作符是把源Observable产生的结果，通过映射规则转换成另一个结果集，并提交给订阅者进行处理。
      */
     public void map() {
         subscription = Observable.just(1, 2, 3, 4, 5).map(new Func1<Integer, String>() {
@@ -366,6 +368,20 @@ public class OperatorPresenter extends BasePresenter {
             @Override
             public void call(String s) {
                 LogUtils.e(s);
+            }
+        });
+    }
+
+    /**
+     * cast操作符类似于map操作符，不同的地方在于map操作符可以通过自定义规则，
+     * 把一个值A1变成另一个值A2，A1和A2的类型可以一样也可以不一样；而cast操作符主要是做类型转换的，
+     * 传入参数为类型class，如果源Observable产生的结果不能转成指定的class，则会抛出ClassCastException运行时异常。
+     */
+    public void cast() {
+        subscription = Observable.just(1, 2, 3).cast(Integer.class).subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
             }
         });
     }
