@@ -73,6 +73,12 @@
             android:text="contact map" />
 
         <Button
+            android:id="@+id/switch_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="switch map" />
+
+        <Button
             android:id="@+id/group_by"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
