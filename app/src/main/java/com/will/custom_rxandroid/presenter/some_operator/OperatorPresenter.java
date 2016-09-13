@@ -663,7 +663,7 @@ public class OperatorPresenter extends BasePresenter {
 
     /**
      * takeFirst操作符类似于take操作符，同时也类似于first操作符，
-     * 都是获取源Observable产生的结果列表中符合指定条件的前一个或多个，
+     * 都是获取源Observable产生的结果列表中符合指定条件的前一个，
      * 与first操作符不同的是，first操作符如果获取不到数据，则会抛出NoSuchElementException异常，
      * 而takeFirst则会返回一个空的Observable，该Observable只有onCompleted通知而没有onNext通知。
      */
@@ -671,7 +671,8 @@ public class OperatorPresenter extends BasePresenter {
         subscription = Observable.range(1, 6).takeFirst(new Func1<Integer, Boolean>() {
             @Override
             public Boolean call(Integer integer) {
-                if (integer > 3 && integer < 4) return true;
+//                if (integer > 3 && integer < 4) return true;
+                if (integer > 2) return true;
                 return false;
             }
         }).subscribe(new Subscriber<Integer>() {
@@ -692,4 +693,25 @@ public class OperatorPresenter extends BasePresenter {
         });
     }
 
+    /**
+     * takeLast操作符是把源Observable产生的结果的后n项提交给订阅者，提交时机是Observable发布onCompleted通知之时
+     */
+    public void takeLast() {
+        subscription = Observable.range(1, 6).takeLast(3).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
 }

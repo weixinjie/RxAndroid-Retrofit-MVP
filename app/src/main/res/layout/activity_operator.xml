@@ -173,5 +173,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="take first" />
+
+        <Button
+            android:id="@+id/take_last"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="take last" />
     </LinearLayout>
 </ScrollView>
