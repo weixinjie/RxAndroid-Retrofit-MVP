@@ -30,7 +30,9 @@ public class OperatorActivity extends BaseActivity {
         operatorPresenter.detachView();
     }
 
-    @OnClick({R.id.just, R.id.from, R.id.defer})
+    @OnClick({R.id.just, R.id.from, R.id.defer,
+            R.id.inteveal, R.id.repeat, R.id.repeat_when,
+            R.id.buffer})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.just:
@@ -41,6 +43,18 @@ public class OperatorActivity extends BaseActivity {
                 break;
             case R.id.defer:
                 operatorPresenter.defer();
+                break;
+            case R.id.inteveal:
+                operatorPresenter.interval();
+                break;
+            case R.id.repeat:
+                operatorPresenter.repeat();
+                break;
+            case R.id.repeat_when:
+                operatorPresenter.repeat_when();
+                break;
+            case R.id.buffer:
+                operatorPresenter.buffer();
                 break;
         }
     }

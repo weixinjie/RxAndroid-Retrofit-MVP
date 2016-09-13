@@ -1,17 +1,21 @@
 package com.will.custom_rxandroid.presenter.some_operator;
 
-import android.util.Log;
 
 import com.andview.refreshview.utils.LogUtils;
 import com.will.custom_rxandroid.presenter.base.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func0;
+import rx.functions.Func1;
+import rx.observables.SyncOnSubscribe;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by will on 16/9/12.
@@ -102,4 +106,100 @@ public class OperatorPresenter extends BasePresenter {
         }
 
     }
+
+    /**
+     * 发送一个可观测的序列(根据初始值跟数量)
+     */
+    public void interval() {
+        subscription = Observable.range(1, 5).subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    /**
+     * 多次发送同一组数据(repeat(int)中的int值为重复几次,并且没有时间延迟)
+     */
+    public void repeat() {
+        subscription = Observable.range(1, 5).repeat(5, AndroidSchedulers.mainThread()).subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    /**
+     * 同上,不过repeat_when代表的是多次订阅信息
+     */
+    public void repeat_when() {
+        subscription = Observable.range(1, 5).repeatWhen(new Func1<Observable<? extends Void>, Observable<?>>() {
+            @Override
+            public Observable<?> call(Observable<? extends Void> observable) {
+                return Observable.timer(5, TimeUnit.SECONDS);
+            }
+        }).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    /**
+     * buffer操作符是分批将数据一次性的发送出去,例如下面的例子就会打印出:{1,2,3},{4,5}两组
+     */
+    public void buffer() {
+
+        subscription = Observable.range(1, 5)
+                .buffer(3)
+                .subscribe(new Subscriber<List<Integer>>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.e("onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(List<Integer> integers) {
+                        LogUtils.e(String.valueOf(integers));
+                    }
+                });
+
+        /**
+         * 下面的函数没有搞懂,请补充
+         */
+//        subscription = Observable.range(1, 6).buffer(new Func0<Observable<List<Integer>>>() {
+//            @Override
+//            public Observable<List<Integer>> call() {
+//                List<Integer> data = new ArrayList<Integer>();
+//                for (int i = 0; i < 3; i++) {
+//                    data.add(i);
+//                }
+//                return Observable.just(data);
+//            }
+//        }).subscribe(new Action1<List<Integer>>() {
+//            @Override
+//            public void call(List<Integer> integers) {
+//
+//            }
+//        });
+    }
+
 }

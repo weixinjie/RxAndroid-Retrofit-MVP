@@ -24,4 +24,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="defer" />
+
+    <Button
+        android:id="@+id/inteveal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="inteveal" />
+
+    <Button
+        android:id="@+id/repeat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="repeat" />
+
+    <Button
+        android:id="@+id/repeat_when"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="repeat_when" />
+
+    <Button
+        android:id="@+id/buffer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="buffer" />
 </LinearLayout>
