@@ -481,4 +481,31 @@ public class OperatorPresenter extends BasePresenter {
                 });
     }
 
+    /**
+     * single操作符是对源Observable的结果进行判断，
+     * 如果产生的结果满足指定条件的数量不为1，则抛出异常，否则把满足条件的结果提交给订阅者
+     */
+    public void single() {
+        subscription = Observable.just(1, 2, 3, 4, 5, 6, 6).single(new Func1<Integer, Boolean>() {
+            @Override
+            public Boolean call(Integer integer) {
+                return integer < 3 && integer > 2;
+            }
+        }).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
 }
