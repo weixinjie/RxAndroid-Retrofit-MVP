@@ -1,15 +1,12 @@
 package com.will.custom_rxandroid.presenter.some_operator;
 
 
-import android.telephony.SubscriptionInfo;
-import android.util.Log;
-
 import com.andview.refreshview.utils.LogUtils;
 import com.will.custom_rxandroid.presenter.base.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -20,8 +17,8 @@ import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
+import rx.internal.operators.CompletableOnSubscribeMergeDelayErrorArray;
 import rx.observables.GroupedObservable;
-import rx.observables.SyncOnSubscribe;
 import rx.schedulers.Schedulers;
 
 /**
@@ -168,29 +165,44 @@ public class OperatorPresenter extends BasePresenter {
     //---------------------------Transforming Observables(以下为变换操作符)--------------------------//
 
     /**
-     * buffer操作符是分批将数据一次性的发送出去,例如下面的例子就会打印出:{1,2,3},{4,5}两组
-     * 即将数据分割成data.size/3组(如果不整除则为data.size/3+1)
+     * buffer操作符周期性地收集源Observable产生的结果到列表中，并把这个列表提交给订阅者，
+     * 订阅者处理后，清空buffer列表，同时接收下一次收集的结果并提交给订阅者，周而复始。
+     * 需要注意的是，一旦源Observable在产生结果的过程中出现异常，
+     * 即使buffer已经存在收集到的结果，订阅者也会马上收到这个异常
      */
     public void buffer() {
-
-        subscription = Observable.range(1, 5)
-                .buffer(3)
-                .subscribe(new Subscriber<List<Integer>>() {
-                    @Override
-                    public void onCompleted() {
-                        LogUtils.e("onCompleted");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
+        final String[] messages = new String[]{"baidu", "alibaba", "tencent"};
+        subscription = Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                Random random = new Random();
+                while (true) {
+                    try {
+                        String message = messages[random.nextInt(messages.length)];
+                        subscriber.onNext(message);
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        subscriber.onError(e);
                         e.printStackTrace();
                     }
+                }
+            }
+        }).subscribeOn(Schedulers.io()).buffer(3, TimeUnit.SECONDS).subscribe(new Subscriber<List<String>>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
 
-                    @Override
-                    public void onNext(List<Integer> integers) {
-                        LogUtils.e(String.valueOf(integers));
-                    }
-                });
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(List<String> strings) {
+                LogUtils.e(String.valueOf(strings));
+            }
+        });
 
         /**
          * 下面的函数没有搞懂,请补充
