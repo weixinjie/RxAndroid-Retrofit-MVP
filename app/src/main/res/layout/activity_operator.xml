@@ -47,6 +47,13 @@
             android:layout_height="wrap_content"
             android:text="repeat_when" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="以下为转换操作符"
+            android:textColor="@color/colorAccent" />
+
         <Button
             android:id="@+id/buffer"
             android:layout_width="wrap_content"
@@ -58,6 +65,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="flatmap" />
+
+        <Button
+            android:id="@+id/contact_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="contact map" />
 
         <Button
             android:id="@+id/group_by"

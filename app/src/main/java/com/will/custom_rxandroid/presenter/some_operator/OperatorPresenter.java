@@ -235,7 +235,7 @@ public class OperatorPresenter extends BasePresenter {
         subscription = Observable.just(1, 2, 3, 4, 5, 6).flatMap(new Func1<Integer, Observable<String>>() {
             @Override
             public Observable<String> call(Integer integer) {
-                return Observable.just(String.valueOf(integer));
+                return Observable.just(String.valueOf("加入flatmap label后: " + integer));
             }
         }).subscribe(new Subscriber<String>() {
             @Override
@@ -254,6 +254,38 @@ public class OperatorPresenter extends BasePresenter {
             }
         });
     }
+
+    /**
+     * cancatMap操作符与flatMap操作符类似，都是把Observable产生的结果转换成多个Observable，
+     * 然后把这多个Observable“扁平化”成一个Observable，并依次提交产生的结果给订阅者。
+     * 与flatMap操作符不同的是，concatMap操作符在处理产生的Observable时，
+     * 采用的是“连接(concat)”的方式，而不是“合并(merge)”的方式，这就能保证产生结果的顺序性，
+     * 也就是说提交给订阅者的结果是按照顺序提交的，不会存在交叉的情况。
+     */
+    public void concatMap() {
+        subscription = Observable.just(1, 2, 3, 4, 5, 6).concatMap(new Func1<Integer, Observable<String>>() {
+            @Override
+            public Observable<String> call(Integer integer) {
+                return Observable.just(String.valueOf("加入label: " + integer));
+            }
+        }).subscribe(new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(String s) {
+                LogUtils.e(s);
+            }
+        });
+    }
+
 
     /**
      * 分组
