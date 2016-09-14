@@ -9,6 +9,7 @@ import com.will.custom_rxandroid.utils.LogUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -1236,5 +1237,317 @@ public class OperatorPresenter extends BasePresenter {
         });
     }
 
+    /**
+     * startWith操作符是在源Observable提交结果之前，插入指定的某些数据
+     */
+    public void startWith() {
+        subscription = Observable.just(1, 2, 3, 4).startWith(5555).subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    /**
+     * switchOnNext操作符是把一组Observable转换成一个Observable，转换规则为：
+     * 对于这组Observable中的每一个Observable所产生的结果，
+     * 如果在同一个时间内存在两个或多个Observable提交的结果，
+     * 只取最后一个Observable提交的结果给订阅者
+     */
+    public void switchOnNext() {
+        Observable<Observable<Long>> observable = Observable
+                .interval(500, TimeUnit.MILLISECONDS) //每隔2S产生一个Observable
+                .map(new Func1<Long, Observable<Long>>() {
+                    @Override
+                    public Observable<Long> call(Long aLong) {
+                        return Observable
+                                .interval(200, TimeUnit.MILLISECONDS) //每隔1S产生一个数据
+                                .map(new Func1<Long, Long>() {
+                                    @Override
+                                    public Long call(Long aLong) {
+                                        return aLong * 10;
+                                    }
+                                }).take(5);
+                    }
+                }).take(2);
+
+
+        subscription = Observable
+                .switchOnNext(observable)
+                .subscribe(new Subscriber<Long>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.e("onComplete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        LogUtils.e(String.valueOf(aLong));
+                    }
+                });
+    }
+
+    /**
+     * zip操作符是把两个observable提交的结果，严格按照顺序进行合并
+     * <p>
+     * 09-14 14:51:35.021 28749-28831/com.will.custom_rxandroid E/----: along: 0 along2: 0
+     * 09-14 14:51:35.021 28749-28831/com.will.custom_rxandroid E/----: 0
+     * 09-14 14:51:37.021 28749-28831/com.will.custom_rxandroid E/----: along: 5 along2: 10
+     * 09-14 14:51:37.021 28749-28831/com.will.custom_rxandroid E/----: 15
+     * 09-14 14:51:39.022 28749-28831/com.will.custom_rxandroid E/----: along: 10 along2: 20
+     * 09-14 14:51:39.022 28749-28831/com.will.custom_rxandroid E/----: 30
+     * 09-14 14:51:41.020 28749-28831/com.will.custom_rxandroid E/----: along: 15 along2: 30
+     * 09-14 14:51:41.020 28749-28831/com.will.custom_rxandroid E/----: 45
+     * 09-14 14:51:43.020 28749-28831/com.will.custom_rxandroid E/----: along: 20 along2: 40
+     * 09-14 14:51:43.020 28749-28831/com.will.custom_rxandroid E/----: 60
+     */
+    public void zip() {
+        Observable<Long> observable1 = Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
+                .map(new Func1<Long, Long>() {
+                    @Override
+                    public Long call(Long aLong) {
+                        return aLong * 5;
+                    }
+                }).take(5);
+
+        Observable<Long> observable2 = Observable.interval(500, 2000, TimeUnit.MILLISECONDS)
+                .map(new Func1<Long, Long>() {
+                    @Override
+                    public Long call(Long aLong) {
+                        return aLong * 10;
+                    }
+                }).take(6);
+
+        subscription = Observable.zip(observable1, observable2, new Func2<Long, Long, Long>() {
+            @Override
+            public Long call(Long aLong, Long aLong2) {
+                LogUtils.e("along: " + aLong + " along2: " + aLong2);
+                return aLong + aLong2;
+            }
+        }).subscribe(new Action1<Long>() {
+            @Override
+            public void call(Long aLong) {
+                LogUtils.e(String.valueOf(aLong));
+            }
+        });
+    }
+
+    //---------------------------Error Handling Operators(Observable的错误处理操作符)--------------------------//
+
+    /**
+     * onErrorReturn操作符是在Observable发生错误或异常的时候（即将回调oError方法时），
+     * 拦截错误并执行指定的逻辑，返回一个跟源Observable相同类型的结果，最后回调订阅者的onComplete方法
+     * <p>
+     * 09-14 14:59:34.739 3699-3699/com.will.custom_rxandroid E/----: 0
+     * 09-14 14:59:34.739 3699-3699/com.will.custom_rxandroid E/----: 1
+     * 09-14 14:59:34.739 3699-3699/com.will.custom_rxandroid E/----: 2
+     * 09-14 14:59:34.739 3699-3699/com.will.custom_rxandroid E/----: 3
+     * 09-14 14:59:34.740 3699-3699/com.will.custom_rxandroid E/----: 502
+     * 09-14 14:59:34.740 3699-3699/com.will.custom_rxandroid E/----: onComplete
+     */
+    public void onErrorReturn() {
+        subscription = Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                try {
+                    for (int i = 0; i < 5; i++) {
+                        if (i == 4) {
+                            throw new Exception("custom error");
+                        }
+                        subscriber.onNext(i);
+                    }
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+            }
+        }).onErrorReturn(new Func1<Throwable, Integer>() {
+            @Override
+            public Integer call(Throwable throwable) {
+                return 502;
+            }
+        }).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                LogUtils.e(e.getMessage());
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    /**
+     * onErrorResumeNext操作符跟onErrorReturn类似，只不过onErrorReturn只能在错误或异常发生时只返回一个和源Observable相同类型的结果，
+     * 而onErrorResumeNext操作符是在错误或异常发生时返回一个Observable，也就是说可以返回多个和源Observable相同类型的结果
+     * <p>
+     * 09-14 15:12:25.076 14706-14706/com.will.custom_rxandroid E/----: 0
+     * 09-14 15:12:25.076 14706-14706/com.will.custom_rxandroid E/----: 1
+     * 09-14 15:12:25.076 14706-14706/com.will.custom_rxandroid E/----: 2
+     * 09-14 15:12:25.076 14706-14706/com.will.custom_rxandroid E/----: 3
+     * 09-14 15:12:25.076 14706-14706/com.will.custom_rxandroid E/----: 301
+     * 09-14 15:12:25.076 14706-14706/com.will.custom_rxandroid E/----: 404
+     * 09-14 15:12:25.076 14706-14706/com.will.custom_rxandroid E/----: 502
+     */
+    public void onErrorResumeNext() {
+        subscription = Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                try {
+                    for (int i = 0; i < 5; i++) {
+                        if (i == 4) {
+                            throw new Exception("custom error");
+                        }
+                        subscriber.onNext(i);
+                    }
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+            }
+        }).onErrorResumeNext(new Func1<Throwable, Observable<? extends Integer>>() {
+            @Override
+            public Observable<? extends Integer> call(Throwable throwable) {
+                return Observable.just(301, 404, 502);
+            }
+        }).subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    /**
+     * onExceptionResumeNext操作符和onErrorResumeNext操作符类似，
+     * 不同的地方在于onErrorResumeNext操作符是当Observable发生错误或异常时触发，而onExceptionResumeNext是当Observable发生异常时才触发。
+     * 这里要普及一个概念就是，java的异常分为错误（error）和异常（exception）两种，它们都是继承于Throwable类。
+     * 错误（error）一般是比较严重的系统问题，比如我们经常遇到的OutOfMemoryError、StackOverflowError等都是错误。
+     * 错误一般继承于Error类，而Error类又继承于Throwable类，如果需要捕获错误，需要使用try..catch(Error e)或者try..catch(Throwable e)句式。使用try..catch(Exception e)句式无法捕获错误
+     * 异常（Exception）也是继承于Throwable类，一般是根据实际处理业务抛出的异常，分为运行时异常（RuntimeException）和普通异常。
+     * 普通异常直接继承于Exception类，如果方法内部没有通过try..catch句式进行处理，必须通过throws关键字把异常抛出外部进行处理（即checked异常）；
+     * 而运行时异常继承于RuntimeException类，如果方法内部没有通过try..catch句式进行处理，不需要显式通过throws关键字抛出外部，如IndexOutOfBoundsException、NullPointerException、ClassCastException等都是运行时异常，
+     * 当然RuntimeException也是继承于Exception类，因此是可以通过try..catch(Exception e)句式进行捕获处理的。
+     */
+    public void onExceptionResumeNext() {
+
+    }
+
+    /**
+     * retry操作符是当Observable发生错误或者异常时，重新尝试执行Observable的逻辑，
+     * 如果经过n次重新尝试执行后仍然出现错误或者异常，
+     * 则最后回调执行onError方法；当然如果源Observable没有错误或者异常出现，则按照正常流程执行。
+     * <p>
+     * 09-14 15:36:26.114 684-684/com.will.custom_rxandroid E/----: 0
+     * 09-14 15:36:26.114 684-684/com.will.custom_rxandroid E/----: 1
+     * 09-14 15:36:26.114 684-684/com.will.custom_rxandroid E/----: 0
+     * 09-14 15:36:26.115 684-684/com.will.custom_rxandroid E/----: 1
+     * 09-14 15:36:26.115 684-684/com.will.custom_rxandroid E/----: 0
+     * 09-14 15:36:26.115 684-684/com.will.custom_rxandroid E/----: 1
+     * 09-14 15:36:26.115 684-684/com.will.custom_rxandroid E/----: 0
+     * 09-14 15:36:26.115 684-684/com.will.custom_rxandroid E/----: 1
+     * 09-14 15:36:26.115 684-684/com.will.custom_rxandroid W/System.err: java.lang.Exception: custom error
+     */
+    public void retry() {
+        subscription = Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                try {
+                    for (int i = 0; i < 3; i++) {
+                        if (i == 2) {
+                            throw new Exception("custom error");
+                        }
+                        subscriber.onNext(i);
+                    }
+                    subscriber.onCompleted();
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+            }
+        }).retry(3).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    /**
+     * retryWhen操作符类似于retry操作符，都是在源observable出现错误或者异常时，
+     * 重新尝试执行源observable的逻辑，不同在于retryWhen操作符是在源Observable出现错误或者异常时，
+     * 通过回调第二个Observable来判断是否重新尝试执行源Observable的逻辑，
+     * 如果第二个Observable没有错误或者异常出现，则就会重新尝试执行源Observable的逻辑，否则就会直接回调执行订阅者的onError方法。
+     * <p>
+     * 09-14 17:24:25.065 32014-32014/com.will.custom_rxandroid E/----: 开始订阅
+     * 09-14 17:24:25.065 32014-32014/com.will.custom_rxandroid E/----: 2333
+     * <p>(如果retryWhen中的Func1中的call方法中改成  subscriber.onError(new Throwable("retry when error"));)
+     * E/----: onError
+     * W/System.err: java.lang.Throwable: retry when error
+     */
+    int result = -1;
+
+    public void retryWhen() {
+        Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                LogUtils.e("开始订阅");
+                if (result > 0) {
+                    subscriber.onNext(2333);
+                } else {
+                    subscriber.onError(new Throwable("call error"));
+                }
+
+            }
+        }).retryWhen(new Func1<Observable<? extends Throwable>, Observable<?>>() {
+            @Override
+            public Observable<?> call(Observable<? extends Throwable> observable) {
+                return Observable.create(new Observable.OnSubscribe<Integer>() {
+                    @Override
+                    public void call(Subscriber<? super Integer> subscriber) {
+//                        result = 100;
+                        subscriber.onError(new Throwable("retry when error"));
+                    }
+                });
+            }
+        }).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                LogUtils.e("onError");
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
 
 }

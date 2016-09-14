@@ -39,7 +39,10 @@ public class OperatorActivity extends BaseActivity {
             , R.id.sample, R.id.skip, R.id.skiplast, R.id.take,
             R.id.take_first, R.id.take_last, R.id.contact_map,
             R.id.switch_map, R.id.cast, R.id.compare, R.id.combine_latest
-            , R.id.join, R.id.group_join, R.id.merge, R.id.mergeDelayError})
+            , R.id.join, R.id.group_join, R.id.merge, R.id.mergeDelayError
+            , R.id.start_with, R.id.switch_on_next, R.id.zip
+            , R.id.onerror_return, R.id.on_error_resume_next, R.id.retry,
+            R.id.retry_when})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.just:
@@ -149,6 +152,27 @@ public class OperatorActivity extends BaseActivity {
                 break;
             case R.id.mergeDelayError:
                 operatorPresenter.mergeDelayError();
+                break;
+            case R.id.start_with:
+                operatorPresenter.startWith();
+                break;
+            case R.id.switch_on_next:
+                operatorPresenter.switchOnNext();
+                break;
+            case R.id.zip:
+                operatorPresenter.zip();
+                break;
+            case R.id.onerror_return:
+                operatorPresenter.onErrorReturn();
+                break;
+            case R.id.on_error_resume_next:
+                operatorPresenter.onErrorResumeNext();
+                break;
+            case R.id.retry:
+                operatorPresenter.retry();
+                break;
+            case R.id.retry_when:
+                operatorPresenter.retryWhen();
                 break;
         }
     }

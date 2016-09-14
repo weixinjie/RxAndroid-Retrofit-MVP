@@ -248,5 +248,54 @@
             android:layout_height="wrap_content"
             android:text="mergeDeleyError" />
 
+        <Button
+            android:id="@+id/start_with"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="start with" />
+
+        <Button
+            android:id="@+id/switch_on_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="switch on next" />
+
+        <Button
+            android:id="@+id/zip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="zip" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="以下为错误操作符"
+            android:textColor="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/onerror_return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="on error return" />
+
+        <Button
+            android:id="@+id/on_error_resume_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="on error resume next" />
+
+        <Button
+            android:id="@+id/retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="retry" />
+
+        <Button
+            android:id="@+id/retry_when"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="retry when" />
+
     </LinearLayout>
 </ScrollView>
