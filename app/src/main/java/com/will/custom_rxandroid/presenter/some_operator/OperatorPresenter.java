@@ -4,6 +4,7 @@ package com.will.custom_rxandroid.presenter.some_operator;
 import android.util.Log;
 
 import com.andview.refreshview.utils.LogUtils;
+import com.bumptech.glide.util.LogTime;
 import com.will.custom_rxandroid.presenter.base.BasePresenter;
 
 import java.util.ArrayList;
@@ -932,6 +933,75 @@ public class OperatorPresenter extends BasePresenter {
             @Override
             public void onCompleted() {
                 LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Long o) {
+                LogUtils.e(String.valueOf(o));
+            }
+        });
+    }
+
+    /**
+     * join操作符把类似于combineLatest操作符，也是两个Observable产生的结果进行合并，合并的结果组成一个新的Observable，
+     * 但是join操作符可以控制每个Observable产生结果的生命周期，在每个结果的生命周期内，可以与另一个Observable产生的结果按照一定的规则进行合并
+     * <p>
+     * 09-14 11:03:44.432 23789-23895/com.will.custom_rxandroid E/OperatorPresenter$64.call(L:985): aLong=0 aLong2=0
+     * 09-14 11:03:44.432 23789-23895/com.will.custom_rxandroid E/OperatorPresenter$61.onNext(L:1001): 0
+     * 09-14 11:03:44.920 23789-23894/com.will.custom_rxandroid E/OperatorPresenter$64.call(L:985): aLong=5 aLong2=0
+     * 09-14 11:03:44.920 23789-23894/com.will.custom_rxandroid E/OperatorPresenter$61.onNext(L:1001): 5
+     * 09-14 11:03:46.427 23789-23895/com.will.custom_rxandroid E/OperatorPresenter$64.call(L:985): aLong=10 aLong2=10
+     * 09-14 11:03:46.427 23789-23895/com.will.custom_rxandroid E/OperatorPresenter$61.onNext(L:1001): 20
+     * 09-14 11:03:46.921 23789-23894/com.will.custom_rxandroid E/OperatorPresenter$64.call(L:985): aLong=15 aLong2=10
+     * 09-14 11:03:46.921 23789-23894/com.will.custom_rxandroid E/OperatorPresenter$61.onNext(L:1001): 25
+     * 09-14 11:03:48.427 23789-23895/com.will.custom_rxandroid E/OperatorPresenter$64.call(L:985): aLong=20 aLong2=20
+     * 09-14 11:03:48.427 23789-23895/com.will.custom_rxandroid E/OperatorPresenter$61.onNext(L:1001): 40
+     * 09-14 11:03:48.427 23789-23895/com.will.custom_rxandroid E/OperatorPresenter$61.onCompleted(L:991): onCompleted
+     */
+    public void join() {
+        Observable<Long> observable1 = Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
+                .map(new Func1<Long, Long>() {
+                    @Override
+                    public Long call(Long aLong) {
+                        return aLong * 5;
+                    }
+                }).take(5);
+
+        Observable<Long> observable2 = Observable.interval(500, 2000, TimeUnit.MILLISECONDS)
+                .map(new Func1<Long, Long>() {
+                    @Override
+                    public Long call(Long aLong) {
+                        return aLong * 10;
+                    }
+                }).take(3);
+
+
+        subscription = observable1.join(observable2,
+                new Func1<Long, Observable<Long>>() {  //控制observable1的生命周期,这里是延时600mm发送
+                    @Override
+                    public Observable<Long> call(Long aLong) {
+                        return Observable.just(aLong).delay(600, TimeUnit.MILLISECONDS);
+                    }
+                }, new Func1<Long, Observable<Long>>() {
+                    @Override
+                    public Observable<Long> call(Long aLong) { //控制observable2的生命周期,这里是延时600mm发送
+                        return Observable.just(aLong).delay(600, TimeUnit.MILLISECONDS);
+                    }
+                }, new Func2<Long, Long, Long>() { //控制observable1与observable2的合并规则
+                    @Override
+                    public Long call(Long aLong, Long aLong2) {
+                        LogUtils.e("aLong=" + aLong + " aLong2=" + aLong2);
+                        return aLong + aLong2;
+                    }
+                }).subscribe(new Subscriber<Long>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onCompleted");
             }
 
             @Override
