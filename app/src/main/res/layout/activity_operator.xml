@@ -229,5 +229,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="join" />
+
+        <Button
+            android:id="@+id/group_join"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="group join" />
+
+        <Button
+            android:id="@+id/merge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="merge" />
+
+        <Button
+            android:id="@+id/mergeDelayError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mergeDeleyError" />
+
     </LinearLayout>
 </ScrollView>

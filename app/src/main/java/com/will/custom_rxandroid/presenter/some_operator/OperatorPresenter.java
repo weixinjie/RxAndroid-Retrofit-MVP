@@ -1,11 +1,10 @@
 package com.will.custom_rxandroid.presenter.some_operator;
 
 
-import android.util.Log;
+import android.app.AlertDialog;
 
-import com.andview.refreshview.utils.LogUtils;
-import com.bumptech.glide.util.LogTime;
 import com.will.custom_rxandroid.presenter.base.BasePresenter;
+import com.will.custom_rxandroid.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -1015,4 +1014,227 @@ public class OperatorPresenter extends BasePresenter {
             }
         });
     }
+
+    /**
+     * groupJoin操作符非常类似于join操作符，区别在于join操作符中第四个参数的传入函数不一致
+     * 通过下面的日志可以看出,分组的数量为observable1(源数据)的发送次数
+     * <p>
+     * 09-14 11:42:23.076 25687-25775/com.will.custom_rxandroid E/----: along=0 along2=0
+     * 09-14 11:42:23.076 25687-25775/com.will.custom_rxandroid E/----: 0
+     * 09-14 11:42:23.575 25687-25774/com.will.custom_rxandroid E/----: along=5 along2=0
+     * 09-14 11:42:23.575 25687-25774/com.will.custom_rxandroid E/----: 5
+     * 09-14 11:42:24.578 25687-25776/com.will.custom_rxandroid E/----: child onCompleted
+     * 09-14 11:42:25.076 25687-25775/com.will.custom_rxandroid E/----: along=5 along2=10
+     * 09-14 11:42:25.076 25687-25775/com.will.custom_rxandroid E/----: 15
+     * 09-14 11:42:25.076 25687-25775/com.will.custom_rxandroid E/----: along=10 along2=10
+     * 09-14 11:42:25.076 25687-25775/com.will.custom_rxandroid E/----: 20
+     * 09-14 11:42:25.576 25687-25774/com.will.custom_rxandroid E/----: along=15 along2=10
+     * 09-14 11:42:25.576 25687-25774/com.will.custom_rxandroid E/----: 25
+     * 09-14 11:42:25.578 25687-25774/com.will.custom_rxandroid E/----: child onCompleted
+     * 09-14 11:42:26.577 25687-25775/com.will.custom_rxandroid E/----: child onCompleted
+     * 09-14 11:42:27.079 25687-25775/com.will.custom_rxandroid E/----: along=20 along2=20
+     * 09-14 11:42:27.079 25687-25775/com.will.custom_rxandroid E/----: 40
+     * 09-14 11:42:27.079 25687-25775/com.will.custom_rxandroid E/----: along=15 along2=20
+     * 09-14 11:42:27.079 25687-25775/com.will.custom_rxandroid E/----: 35
+     * 09-14 11:42:27.576 25687-25786/com.will.custom_rxandroid E/----: child onCompleted
+     * 09-14 11:42:28.580 25687-25774/com.will.custom_rxandroid E/----: child onCompleted
+     * 09-14 11:42:33.075 25687-25775/com.will.custom_rxandroid E/----: parent onComplete
+     */
+    public void group_join() {
+
+        Observable<Long> observable1 = Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
+                .map(new Func1<Long, Long>() {
+                    @Override
+                    public Long call(Long aLong) {
+                        return aLong * 5;
+                    }
+                }).take(5);
+
+        Observable<Long> observable2 = Observable.interval(500, 2000, TimeUnit.MILLISECONDS)
+                .map(new Func1<Long, Long>() {
+                    @Override
+                    public Long call(Long aLong) {
+                        return aLong * 10;
+                    }
+                }).take(6);
+
+        observable1.groupJoin(observable2, new Func1<Long, Observable<Long>>() {
+            @Override
+            public Observable<Long> call(Long aLong) {
+                return Observable.just(aLong).delay(2, TimeUnit.SECONDS);
+            }
+        }, new Func1<Long, Observable<Long>>() {
+            @Override
+            public Observable<Long> call(Long aLong) {
+                return Observable.just(aLong).delay(1, TimeUnit.SECONDS);
+            }
+        }, new Func2<Long, Observable<Long>, Observable<Long>>() {
+            @Override
+            public Observable<Long> call(final Long aLong, Observable<Long> longObservable) {
+                return longObservable.map(new Func1<Long, Long>() {
+                    @Override
+                    public Long call(Long along2) {
+                        LogUtils.e("along=" + aLong + " along2=" + along2);
+                        return aLong + along2;
+                    }
+                });
+            }
+        }).subscribe(new Subscriber<Observable<Long>>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("parent onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Observable<Long> longObservable) {
+                longObservable.subscribe(new Subscriber<Long>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.e("child onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        LogUtils.e(String.valueOf(aLong));
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * merge操作符是按照两个Observable提交结果的时间顺序，对Observable进行合并如ObservableA每隔500毫秒产生数据为0,5,10,15,20；
+     * 而ObservableB每隔500毫秒产生数据0,10,20,30,40，其中第一个数据延迟500毫秒产生，最后合并结果为：0,0,5,10,10,20,15,30,20,40
+     * <p>
+     * 09-14 11:55:56.085 5437-5564/com.will.custom_rxandroid E/----: 第一个数列已经产生0
+     * 09-14 11:55:56.085 5437-5564/com.will.custom_rxandroid E/----: 0
+     * 09-14 11:55:56.583 5437-5565/com.will.custom_rxandroid E/----: 第二个数列已经产生0
+     * 09-14 11:55:56.583 5437-5565/com.will.custom_rxandroid E/----: 0
+     * 09-14 11:55:57.082 5437-5564/com.will.custom_rxandroid E/----: 第一个数列已经产生5
+     * 09-14 11:55:57.082 5437-5564/com.will.custom_rxandroid E/----: 5
+     * 09-14 11:55:57.082 5437-5565/com.will.custom_rxandroid E/----: 第二个数列已经产生10
+     * 09-14 11:55:57.082 5437-5565/com.will.custom_rxandroid E/----: 10
+     * 09-14 11:55:57.583 5437-5565/com.will.custom_rxandroid E/----: 第二个数列已经产生20
+     * 09-14 11:55:57.583 5437-5565/com.will.custom_rxandroid E/----: 20
+     * 09-14 11:55:58.082 5437-5564/com.will.custom_rxandroid E/----: 第一个数列已经产生10
+     * 09-14 11:55:58.082 5437-5564/com.will.custom_rxandroid E/----: 10
+     * 09-14 11:55:58.084 5437-5565/com.will.custom_rxandroid E/----: 第二个数列已经产生30
+     * 09-14 11:55:58.084 5437-5565/com.will.custom_rxandroid E/----: 30
+     * 09-14 11:55:58.582 5437-5565/com.will.custom_rxandroid E/----: 第二个数列已经产生40
+     * 09-14 11:55:58.583 5437-5565/com.will.custom_rxandroid E/----: 40
+     * 09-14 11:55:59.082 5437-5564/com.will.custom_rxandroid E/----: 第一个数列已经产生15
+     * 09-14 11:55:59.083 5437-5564/com.will.custom_rxandroid E/----: 15
+     * 09-14 11:56:00.081 5437-5564/com.will.custom_rxandroid E/----: 第一个数列已经产生20
+     * 09-14 11:56:00.081 5437-5564/com.will.custom_rxandroid E/----: 20
+     */
+    public void merge() {
+        Observable<Long> observable1 = Observable.timer(0, 1000, TimeUnit.MILLISECONDS)
+                .map(new Func1<Long, Long>() {
+                    @Override
+                    public Long call(Long aLong) {
+                        long result = aLong * 5;
+                        LogUtils.e("第一个数列已经产生" + result);
+                        return result;
+                    }
+                }).take(5);
+
+        Observable<Long> observable2 = Observable.timer(500, 500, TimeUnit.MILLISECONDS)
+                .map(new Func1<Long, Long>() {
+                    @Override
+                    public Long call(Long aLong) {
+                        long result = aLong * 10;
+                        LogUtils.e("第二个数列已经产生" + result);
+                        return aLong * 10;
+                    }
+                }).take(5);
+
+        Observable.merge(observable1, observable2).subscribe(new Action1<Long>() {
+            @Override
+            public void call(Long aLong) {
+                LogUtils.e(String.valueOf(aLong));
+            }
+        });
+    }
+
+
+    /**
+     * 从merge操作符的流程图可以看出，一旦合并的某一个Observable中出现错误，
+     * 就会马上停止合并，并对订阅者回调执行onError方法，
+     * 而mergeDelayError操作符会把错误放到所有结果都合并完成之后才执行
+     * 而对于已经出现错误的observable则会停止发送数据,只会最后发送error
+     * <p>
+     * 09-14 14:09:33.381 23321-23321/com.will.custom_rxandroid E/----: 第一个数列已经产生0
+     * 09-14 14:09:33.382 23321-23321/com.will.custom_rxandroid E/----: 0
+     * 09-14 14:09:34.383 23321-23321/com.will.custom_rxandroid E/----: 第一个数列已经产生1
+     * 09-14 14:09:34.383 23321-23321/com.will.custom_rxandroid E/----: 1
+     * 09-14 14:09:35.385 23321-23321/com.will.custom_rxandroid E/----: 第一个数列已经产生2
+     * 09-14 14:09:35.385 23321-23321/com.will.custom_rxandroid E/----: 2
+     * 09-14 14:09:36.889 23321-23974/com.will.custom_rxandroid E/----: 第二个数列已经产生0
+     * 09-14 14:09:36.889 23321-23974/com.will.custom_rxandroid E/----: 0
+     * 09-14 14:09:37.888 23321-23974/com.will.custom_rxandroid E/----: 第二个数列已经产生10
+     * 09-14 14:09:37.888 23321-23974/com.will.custom_rxandroid E/----: 10
+     * 09-14 14:09:38.888 23321-23974/com.will.custom_rxandroid E/----: 第二个数列已经产生20
+     * 09-14 14:09:38.888 23321-23974/com.will.custom_rxandroid E/----: 20
+     * 09-14 14:09:39.890 23321-23974/com.will.custom_rxandroid E/----: 第二个数列已经产生30
+     * 09-14 14:09:39.890 23321-23974/com.will.custom_rxandroid E/----: 30
+     * 09-14 14:09:40.888 23321-23974/com.will.custom_rxandroid E/----: 第二个数列已经产生40
+     * 09-14 14:09:40.888 23321-23974/com.will.custom_rxandroid E/----: 40
+     * 09-14 14:09:40.888 23321-23974/com.will.custom_rxandroid W/System.err: java.lang.Throwable: custom error
+     */
+    public void mergeDelayError() {
+        Observable<Long> observable1 = Observable.create(new Observable.OnSubscribe<Long>() {
+            @Override
+            public void call(Subscriber<? super Long> subscriber) {
+                for (int i = 0; i < 3; i++) {
+                    LogUtils.e("第一个数列已经产生" + i);
+                    subscriber.onNext(Long.parseLong(String.valueOf(i)));
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                subscriber.onError(new Throwable("custom error"));
+            }
+        });
+
+        Observable<Long> observable2 = Observable.timer(500, 1000, TimeUnit.MILLISECONDS)
+                .map(new Func1<Long, Long>() {
+                    @Override
+                    public Long call(Long aLong) {
+                        long result = aLong * 10;
+                        LogUtils.e("第二个数列已经产生" + result);
+                        return aLong * 10;
+                    }
+                }).take(5);
+
+        Observable.mergeDelayError(observable1, observable2).subscribe(new Subscriber<Long>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Long aLong) {
+                LogUtils.e(String.valueOf(aLong));
+            }
+        });
+    }
+
+
 }

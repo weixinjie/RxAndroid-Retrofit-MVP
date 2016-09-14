@@ -39,7 +39,7 @@ public class OperatorActivity extends BaseActivity {
             , R.id.sample, R.id.skip, R.id.skiplast, R.id.take,
             R.id.take_first, R.id.take_last, R.id.contact_map,
             R.id.switch_map, R.id.cast, R.id.compare, R.id.combine_latest
-            , R.id.join})
+            , R.id.join, R.id.group_join, R.id.merge, R.id.mergeDelayError})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.just:
@@ -140,6 +140,15 @@ public class OperatorActivity extends BaseActivity {
                 break;
             case R.id.join:
                 operatorPresenter.join();
+                break;
+            case R.id.group_join:
+                operatorPresenter.group_join();
+                break;
+            case R.id.merge:
+                operatorPresenter.merge();
+                break;
+            case R.id.mergeDelayError:
+                operatorPresenter.mergeDelayError();
                 break;
         }
     }
