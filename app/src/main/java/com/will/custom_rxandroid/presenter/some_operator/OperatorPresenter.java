@@ -19,7 +19,6 @@ import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
-import rx.internal.operators.CompletableOnSubscribeMergeDelayErrorArray;
 import rx.observables.GroupedObservable;
 import rx.schedulers.Schedulers;
 
@@ -533,7 +532,7 @@ public class OperatorPresenter extends BasePresenter {
             }
         })
                 .subscribeOn(Schedulers.io())
-                .debounce(4, TimeUnit.SECONDS)
+                .debounce(2, TimeUnit.SECONDS)
                 .subscribe(new Subscriber<Integer>() {
                     @Override
                     public void onCompleted() {
@@ -879,6 +878,70 @@ public class OperatorPresenter extends BasePresenter {
             @Override
             public void onNext(Integer integer) {
                 LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    //---------------------------Combining Observables(Observable的组合操作符)--------------------------//
+
+    /**
+     * combineLatest操作符把两个Observable产生的结果进行合并，合并的结果组成一个新的Observable。
+     * 这两个Observable中任意一个Observable产生的结果，
+     * 都和另一个Observable最后产生的结果，按照一定的规则进行合并。
+     * 图解:http://reactivex.io/documentation/operators/combinelatest.html
+     * <p>
+     * 09-14 10:19:45.150 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$58.call(L:912): -----aLong=0aLong2=0
+     * 09-14 10:19:45.150 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$57.onNext(L:928): 0
+     * 09-14 10:19:46.152 16574-16675/com.will.custom_rxandroid E/OperatorPresenter$58.call(L:912): -----aLong=1aLong2=0
+     * 09-14 10:19:46.152 16574-16675/com.will.custom_rxandroid E/OperatorPresenter$57.onNext(L:928): 1
+     * 09-14 10:19:48.149 16574-16675/com.will.custom_rxandroid E/OperatorPresenter$58.call(L:912): -----aLong=2aLong2=0
+     * 09-14 10:19:48.150 16574-16675/com.will.custom_rxandroid E/OperatorPresenter$57.onNext(L:928): 2
+     * 09-14 10:19:48.151 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$58.call(L:912): -----aLong=2aLong2=2
+     * 09-14 10:19:48.154 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$57.onNext(L:928): 4
+     * 09-14 10:19:50.150 16574-16675/com.will.custom_rxandroid E/OperatorPresenter$58.call(L:912): -----aLong=3aLong2=2
+     * 09-14 10:19:50.150 16574-16675/com.will.custom_rxandroid E/OperatorPresenter$57.onNext(L:928): 5
+     * 09-14 10:19:51.152 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$58.call(L:912): -----aLong=3aLong2=4
+     * 09-14 10:19:51.152 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$57.onNext(L:928): 7
+     * 09-14 10:19:54.150 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$58.call(L:912): -----aLong=3aLong2=6
+     * 09-14 10:19:54.150 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$57.onNext(L:928): 9
+     * 09-14 10:19:54.151 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$57.onCompleted(L:918): onComplete
+     */
+    public void combineLatest() {
+        Observable observable1 = Observable.interval(2, TimeUnit.SECONDS).flatMap(new Func1<Long, Observable<Long>>() {
+            @Override
+            public Observable<Long> call(Long aLong) {
+                return Observable.just(aLong);
+            }
+        }).take(4);
+
+        Observable observable2 = Observable.interval(3, TimeUnit.SECONDS).flatMap(new Func1<Long, Observable<Long>>() {
+            @Override
+            public Observable<Long> call(Long aLong) {
+                return Observable.just(aLong * 2);
+            }
+        }).take(4);
+
+        subscription = Observable.combineLatest(observable1, observable2, new Func2<Long, Long, Long>() {
+
+            @Override
+            public Long call(Long aLong, Long aLong2) {
+                LogUtils.e("-----aLong=" + aLong + "aLong2=" + aLong2);
+                return aLong + aLong2;
+            }
+        }).subscribe(new Subscriber<Long>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Long o) {
+                LogUtils.e(String.valueOf(o));
             }
         });
     }

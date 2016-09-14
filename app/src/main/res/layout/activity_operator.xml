@@ -210,5 +210,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="take last" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="以下为组合操作符"
+            android:textColor="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/combine_latest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="combine latest" />
     </LinearLayout>
 </ScrollView>
