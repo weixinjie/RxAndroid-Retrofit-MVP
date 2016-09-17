@@ -1663,4 +1663,31 @@ public class OperatorPresenter extends BasePresenter {
                 });
     }
 
+    /**
+     * subscrieOn用来指定被观察者的线程
+     * observeOn用来指定观察者的线程
+     */
+    public void thread() {
+        subscription = Observable.just(1, 3, 5)
+                .map(new Func1<Integer, Integer>() {
+                    @Override
+                    public Integer call(Integer integer) {
+                        try {
+                            Thread.sleep(2000);
+                            LogUtils.e("current thread: " + Thread.currentThread().getName());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        return integer;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        LogUtils.e("current thread:" + Thread.currentThread().getName());
+                    }
+                });
+    }
 }
