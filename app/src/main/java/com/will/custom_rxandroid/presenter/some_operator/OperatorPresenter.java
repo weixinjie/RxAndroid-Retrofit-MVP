@@ -1,15 +1,11 @@
 package com.will.custom_rxandroid.presenter.some_operator;
 
-
-import android.app.AlertDialog;
-
 import com.will.custom_rxandroid.presenter.base.BasePresenter;
 import com.will.custom_rxandroid.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -22,6 +18,7 @@ import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.observables.GroupedObservable;
 import rx.schedulers.Schedulers;
+import rx.subjects.Subject;
 
 /**
  * Created by will on 16/9/12.
@@ -1549,5 +1546,27 @@ public class OperatorPresenter extends BasePresenter {
             }
         });
     }
+
+    //---------------------------Observable Utility Operators(Observable的功能性操作符)--------------------------//
+
+    /**
+     * 顾名思义，Delay操作符就是让发射数据的时机延后一段时间，这样所有的数据都会依次延后一段时间发射。
+     * 在Rxjava中将其实现为Delay和DelaySubscription。不同之处在于Delay是延时数据的发射，
+     * 而DelaySubscription是延时注册Subscriber。
+     */
+    public void delay() {
+        final long current_time = System.currentTimeMillis();
+        subscription = Observable
+                .just(1, 2, 3).delay(2, TimeUnit.SECONDS)
+                .delaySubscription(4, TimeUnit.SECONDS).subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        LogUtils.e(String.valueOf(integer));
+                        LogUtils.e("use time: " + String.valueOf(System.currentTimeMillis() - current_time) + "mm");
+                    }
+                });
+    }
+
+
 
 }

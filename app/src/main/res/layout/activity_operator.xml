@@ -297,5 +297,17 @@
             android:layout_height="wrap_content"
             android:text="retry when" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="以下为功能性操作符"
+            android:textColor="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/delay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="delay" />
     </LinearLayout>
 </ScrollView>

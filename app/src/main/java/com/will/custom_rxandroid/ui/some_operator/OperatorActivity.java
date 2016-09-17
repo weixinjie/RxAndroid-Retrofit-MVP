@@ -42,7 +42,7 @@ public class OperatorActivity extends BaseActivity {
             , R.id.join, R.id.group_join, R.id.merge, R.id.mergeDelayError
             , R.id.start_with, R.id.switch_on_next, R.id.zip
             , R.id.onerror_return, R.id.on_error_resume_next, R.id.retry,
-            R.id.retry_when})
+            R.id.retry_when, R.id.delay})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.just:
@@ -173,6 +173,9 @@ public class OperatorActivity extends BaseActivity {
                 break;
             case R.id.retry_when:
                 operatorPresenter.retryWhen();
+                break;
+            case R.id.delay:
+                operatorPresenter.delay();
                 break;
         }
     }
