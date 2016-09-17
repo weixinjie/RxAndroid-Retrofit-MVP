@@ -43,7 +43,8 @@ public class OperatorActivity extends BaseActivity {
             , R.id.start_with, R.id.switch_on_next, R.id.zip
             , R.id.onerror_return, R.id.on_error_resume_next, R.id.retry,
             R.id.retry_when, R.id.delay, R.id.do_sth, R.id.materialize, R.id.thread
-            , R.id.time_out, R.id.using, R.id.time_interval, R.id.time_stamp
+            , R.id.time_out, R.id.using, R.id.time_interval, R.id.time_stamp, R.id.all
+            , R.id.exists, R.id.contains, R.id.sequence_equal
     })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -199,6 +200,18 @@ public class OperatorActivity extends BaseActivity {
                 break;
             case R.id.time_stamp:
                 operatorPresenter.timeStamp();
+                break;
+            case R.id.all:
+                operatorPresenter.all();
+                break;
+            case R.id.exists:
+                operatorPresenter.exists();
+                break;
+            case R.id.contains:
+                operatorPresenter.contains();
+                break;
+            case R.id.sequence_equal:
+                operatorPresenter.sequenceEqual();
                 break;
         }
     }

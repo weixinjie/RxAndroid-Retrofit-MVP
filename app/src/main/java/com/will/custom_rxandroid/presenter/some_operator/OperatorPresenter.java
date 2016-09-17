@@ -1875,5 +1875,83 @@ public class OperatorPresenter extends BasePresenter {
         }
     }
 
+    //---------------------------Conditional and Boolean Operators(条件/布尔操作)--------------------------//
+
+    /**
+     * 判断所有的数据项是否满足某个条件，内部通过OperatorAll实现。
+     * <p>
+     * 09-17 22:24:48.364 23874-23874/com.will.custom_rxandroid E/----: true
+     * 09-17 22:24:48.364 23874-23874/com.will.custom_rxandroid E/----: onComplete
+     */
+    public void all() {
+        subscription = Observable.range(1, 6).all(new Func1<Integer, Boolean>() {
+            @Override
+            public Boolean call(Integer integer) {
+                return integer > 0;
+            }
+        }).subscribe(new Subscriber<Boolean>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Boolean aBoolean) {
+                LogUtils.e(String.valueOf(aBoolean));
+            }
+        });
+    }
+
+    /**
+     * 过滤所有数据,判断是否存在数据项满足某个条件。内部通过OperatorAny实现。
+     * <p>
+     * 09-17 22:28:28.600 26903-26903/com.will.custom_rxandroid E/----: false
+     */
+    public void exists() {
+        subscription = Observable.just(1, 2, 3).exists(new Func1<Integer, Boolean>() {
+            @Override
+            public Boolean call(Integer integer) {
+                return integer > 3;
+            }
+        }).subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                LogUtils.e(String.valueOf(aBoolean));
+            }
+        });
+    }
+
+    /**
+     * 判断在发射的所有数据项中是否包含指定的数据，内部调用的其实是exists
+     * <p>
+     * 09-17 22:30:30.691 28951-28951/com.will.custom_rxandroid E/----: true
+     */
+    public void contains() {
+        subscription = Observable.just(1, 2, 3).contains(1).subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                LogUtils.e(String.valueOf(aBoolean));
+            }
+        });
+    }
+
+    /**
+     * 用于判断两个Observable发射的数据是否相同（数据，发射顺序，终止状态）。
+     * <p>
+     * 09-17 22:35:46.278 1074-1074/com.will.custom_rxandroid E/----: true
+     */
+    public void sequenceEqual() {
+        subscription = Observable.sequenceEqual(Observable.just(1, 2, 3), Observable.just(1, 2, 3)).subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                LogUtils.e(String.valueOf(aBoolean));
+            }
+        });
+    }
 
 }
