@@ -327,5 +327,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="thread" />
+
+        <Button
+            android:id="@+id/time_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="time out" />
     </LinearLayout>
 </ScrollView>

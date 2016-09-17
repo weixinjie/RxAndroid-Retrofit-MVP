@@ -62,12 +62,14 @@ public class OperatorPresenter extends BasePresenter {
         for (int i = 0; i < 5; i++) {
             datas.add(i);
         }
-        subscription = Observable.from(datas).subscribe(new Action1<Integer>() {
-            @Override
-            public void call(Integer integer) {
-                LogUtils.e("------from" + integer);
-            }
-        });
+        subscription = Observable.from(datas).subscribe(
+
+                new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        LogUtils.e("------from" + integer);
+                    }
+                });
     }
 
     /**
@@ -1687,6 +1689,35 @@ public class OperatorPresenter extends BasePresenter {
                     @Override
                     public void call(Integer integer) {
                         LogUtils.e("current thread:" + Thread.currentThread().getName());
+                    }
+                });
+    }
+
+    /**
+     * Timeout操作符给Observable加上超时时间，每发射一个数据后就重置计时器，
+     * 当超过预定的时间还没有发射下一个数据，就抛出一个超时的异常。
+     * Rxjava将Timeout实现为很多不同功能的操作符，
+     * 比如说超时后用一个备用的Observable继续发射数据等。
+     */
+    public void timeOut() {
+        subscription = Observable.range(1, 5)
+                .delay(3, TimeUnit.SECONDS)
+                .timeout(1, TimeUnit.SECONDS,
+                        Observable.just(500))
+                .subscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.e("onComplete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        LogUtils.e(String.valueOf(integer));
                     }
                 });
     }
