@@ -19,6 +19,8 @@ import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.observables.GroupedObservable;
 import rx.schedulers.Schedulers;
+import rx.schedulers.TimeInterval;
+import rx.schedulers.Timestamped;
 import rx.subjects.Subject;
 
 /**
@@ -1665,6 +1667,77 @@ public class OperatorPresenter extends BasePresenter {
                 });
     }
 
+
+    /**
+     * TimeInterval会拦截发射出来的数据，取代为前后两个发射两个数据的间隔时间。对于第一个发射的数据，其时间间隔为订阅后到首次发射的间隔。
+     * <p>
+     * 09-17 22:03:29.160 6572-6645/com.will.custom_rxandroid E/----: timeInterval: 0times: 2
+     * 09-17 22:03:30.163 6572-6645/com.will.custom_rxandroid E/----: timeInterval: 1times: 1003
+     * 09-17 22:03:32.164 6572-6645/com.will.custom_rxandroid E/----: timeInterval: 2times: 2002
+     * 09-17 22:03:35.167 6572-6645/com.will.custom_rxandroid E/----: timeInterval: 3times: 3003
+     * 09-17 22:03:39.169 6572-6645/com.will.custom_rxandroid E/----: timeInterval: 4times: 4002
+     */
+    public void timeInterval() {
+        subscription = Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                try {
+                    for (int i = 0; i < 5; i++) {
+                        Thread.sleep(i * 1000);
+                        subscriber.onNext(i);
+                    }
+                    subscriber.onCompleted();
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .timeInterval()
+                .subscribe(new Action1<TimeInterval<Integer>>() {
+                    @Override
+                    public void call(TimeInterval<Integer> integerTimeInterval) {
+                        LogUtils.e("timeInterval: " + integerTimeInterval.getValue() + "times: " + integerTimeInterval.getIntervalInMilliseconds());
+                    }
+                });
+    }
+
+    /**
+     * TimeStamp会将每个数据项给重新包装一下，加上了一个时间戳来标明每次发射的时间
+     * <p>
+     * 09-17 22:11:09.407 11665-11792/com.will.custom_rxandroid E/----: currentTime: 1474121469406
+     * 09-17 22:11:09.407 11665-11792/com.will.custom_rxandroid E/----: timeStamp: 2  timeStampMillis: 1474121469406
+     * 09-17 22:11:12.409 11665-11792/com.will.custom_rxandroid E/----: currentTime: 1474121472409
+     * 09-17 22:11:12.409 11665-11792/com.will.custom_rxandroid E/----: timeStamp: 3  timeStampMillis: 1474121472409
+     * 09-17 22:11:16.410 11665-11792/com.will.custom_rxandroid E/----: currentTime: 1474121476410
+     * 09-17 22:11:16.410 11665-11792/com.will.custom_rxandroid E/----: timeStamp: 4  timeStampMillis: 1474121476410
+     */
+    public void timeStamp() {
+        subscription = Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                try {
+                    for (int i = 2; i < 5; i++) {
+                        Thread.sleep(i * 1000);
+                        subscriber.onNext(i);
+                    }
+                    subscriber.onCompleted();
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .timestamp()
+                .subscribe(new Action1<Timestamped<Integer>>() {
+                    @Override
+                    public void call(Timestamped<Integer> integerTimestamped) {
+                        LogUtils.e("currentTime: " + System.currentTimeMillis());
+                        LogUtils.e("timeStamp: " + integerTimestamped.getValue() + "  timeStampMillis: " + integerTimestamped.getTimestampMillis());
+                    }
+                });
+    }
+
     /**
      * subscrieOn用来指定被观察者的线程
      * observeOn用来指定观察者的线程
@@ -1698,6 +1771,9 @@ public class OperatorPresenter extends BasePresenter {
      * 当超过预定的时间还没有发射下一个数据，就抛出一个超时的异常。
      * Rxjava将Timeout实现为很多不同功能的操作符，
      * 比如说超时后用一个备用的Observable继续发射数据等。
+     * <p>
+     * 09-17 20:49:13.477 15425-19675/com.will.custom_rxandroid E/----: 500
+     * 09-17 20:49:13.477 15425-19675/com.will.custom_rxandroid E/----: onComplete
      */
     public void timeOut() {
         subscription = Observable.range(1, 5)
@@ -1721,4 +1797,83 @@ public class OperatorPresenter extends BasePresenter {
                     }
                 });
     }
+
+    /**
+     * Using操作符创建一个在Observable生命周期内存活的资源，
+     * 也可以这样理解：我们创建一个资源并使用它，
+     * 用一个Observable来限制这个资源的使用时间，当这个Observable终止的时候，这个资源就会被销毁。
+     * <p>
+     * 09-17 21:46:20.798 23652-23725/com.will.custom_rxandroid E/----: func0
+     * 09-17 21:46:20.798 23652-23725/com.will.custom_rxandroid E/----: func1
+     * 09-17 21:46:22.800 23652-23652/com.will.custom_rxandroid E/----: People{name='weixinjie'}
+     * (点击了返回按钮,subscription调用了unsubscribe函数之后打印如下)
+     * 09-17 21:46:26.821 23652-23652/com.will.custom_rxandroid E/----: action1
+     */
+    public void using() {
+        subscription = Observable.using(new Func0<People>() {
+            @Override
+            public People call() {
+                LogUtils.e("func0");
+                return new People("weixinjie");
+            }
+        }, new Func1<People, Observable<People>>() {
+            @Override
+            public Observable<People> call(final People people) {
+                LogUtils.e("func1");
+                return Observable.create(new Observable.OnSubscribe<People>() {
+                    @Override
+                    public void call(Subscriber<? super People> subscriber) {
+                        try {
+                            Thread.sleep(2000);
+                            subscriber.onNext(people);
+                        } catch (InterruptedException e) {
+                            subscriber.onError(e);
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }, new Action1<People>() {
+            @Override
+            public void call(People people) {
+                LogUtils.e("action1");
+                people = null;
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<People>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.e("onComplete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(People people) {
+                        LogUtils.e(String.valueOf(people));
+                    }
+                });
+    }
+
+    class People {
+        private String name;
+
+        public People(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return "People{" +
+                    "name='" + name + '\'' +
+                    '}';
+        }
+    }
+
+
 }

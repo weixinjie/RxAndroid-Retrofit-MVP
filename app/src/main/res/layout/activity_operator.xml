@@ -323,6 +323,18 @@
             android:text="materialize" />
 
         <Button
+            android:id="@+id/time_interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="time interval" />
+
+        <Button
+            android:id="@+id/time_stamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="time stamp" />
+
+        <Button
             android:id="@+id/thread"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -333,5 +345,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="time out" />
+
+        <Button
+            android:id="@+id/using"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="using" />
+
+
     </LinearLayout>
 </ScrollView>
