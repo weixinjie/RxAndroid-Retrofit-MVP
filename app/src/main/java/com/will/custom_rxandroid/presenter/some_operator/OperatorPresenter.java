@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import rx.Notification;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -1567,6 +1568,99 @@ public class OperatorPresenter extends BasePresenter {
                 });
     }
 
+    /**
+     * Do操作符就是给Observable的生命周期的各个阶段加上一系列的回调监听，
+     * 当Observable执行到这个阶段的时候，这些回调就会被触发。在Rxjava实现了很多的doxxx操作符。
+     */
+    public void do_sth() {
+        subscription = Observable.range(1, 6)
+                .doOnEach(new Action1<Notification<? super Integer>>() {
+                    @Override
+                    public void call(Notification<? super Integer> notification) {
+                        LogUtils.e("DoOnEach可以给Observable加上这样的样一个回调：" +
+                                "Observable每发射一个数据的时候就会触发这个回调，" +
+                                "不仅包括onNext还包括onError和onCompleted。");
+                    }
+                })
+                .doOnNext(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        LogUtils.e("DoOnNext则只有onNext的时候才会被触发。");
+                    }
+                })
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        LogUtils.e("doOnSubscribe在Subscriber进行订阅的时候触发");
+                    }
+                })
+                .doOnUnsubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        LogUtils.e("doOnUnsubscribe在解除订阅的时候触发," +
+                                "当一个Observable通过OnError或者OnCompleted结束的时候，会反订阅所有的Subscriber。 ");
+                    }
+                })
+                .doOnError(new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        LogUtils.e("DoOnError会在OnError发生的时候触发回调，" +
+                                "并将Throwable对象作为参数传进回调函数里；");
+                    }
+                })
+                .doOnCompleted(new Action0() {
+                    @Override
+                    public void call() {
+                        LogUtils.e("DoOnComplete会在OnCompleted发生的时候触发回调。 ");
+                    }
+                })
+                .doOnTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        LogUtils.e("DoOnTerminate会在Observable结束前触发回调，无论是正常还是异常终止");
+                    }
+                })
+                .subscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.e("onComplete");
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        LogUtils.e("onNext: " + integer);
+                    }
+                });
+    }
+
+    /**
+     * Meterialize操作符将OnNext/OnError/OnComplete都转化为一个Notification对象并按照原来的顺序发射出来，
+     * 而DeMeterialize则是执行相反的过程。
+     */
+    public void materialize() {
+        subscription = Observable.range(1, 6)
+                .materialize()
+                .subscribe(new Subscriber<Notification<Integer>>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.e("onComplete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Notification<Integer> integerNotification) {
+                        LogUtils.e("onNext: " + String.valueOf(integerNotification.getValue()));
+                    }
+                });
+    }
 
 }

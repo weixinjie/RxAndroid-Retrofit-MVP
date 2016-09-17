@@ -309,5 +309,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="delay" />
+
+        <Button
+            android:id="@+id/do_sth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="do" />
+
+        <Button
+            android:id="@+id/materialize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="materialize" />
     </LinearLayout>
 </ScrollView>
