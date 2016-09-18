@@ -1,5 +1,7 @@
 package com.will.custom_rxandroid.presenter.some_operator;
 
+import android.app.AlertDialog;
+
 import com.will.custom_rxandroid.presenter.base.BasePresenter;
 import com.will.custom_rxandroid.utils.LogUtils;
 
@@ -7,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -21,11 +22,11 @@ import rx.functions.Action2;
 import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
+import rx.observables.ConnectableObservable;
 import rx.observables.GroupedObservable;
 import rx.schedulers.Schedulers;
 import rx.schedulers.TimeInterval;
 import rx.schedulers.Timestamped;
-import rx.subjects.Subject;
 
 /**
  * Created by will on 16/9/12.
@@ -2382,6 +2383,94 @@ public class OperatorPresenter extends BasePresenter {
                 LogUtils.e(String.valueOf(stringCollectionMap));
             }
         });
+    }
+
+    //---------------------------Connectable Observable Operators(连接操作)--------------------------//
+
+    /**
+     * 首先我们有必要来了解一下什么是Connectable Observable: 就是一种特殊的Observable对象，
+     * 并不是Subscrib的时候就发射数据，而是只有对其应用connect操作符的时候才开始发射数据，所以可以用来更灵活的控制数据发射的时机。
+     * 而Publish操作符就是用来将一个普通的Observable对象转化为一个Connectable Observable。
+     * 需要注意的是如果发射数据已经开始了再进行订阅只能接收以后发射的数据。
+     * Connect操作符就是用来触发Connectable Observable发射数据的。
+     * 应用Connect操作符后会返回一个Subscription对象，通过这个Subscription对象，我们可以调用其unsubscribe方法来终止数据的发射。
+     * 另外，如果还没有订阅者订阅的时候就应用Connect操作符也是可以使其开始发射数据的。
+     * <p>
+     * -------->>>>><<<<<<<-------
+     * RefCount操作符就是将一个Connectable Observable 对象再重新转化为一个普通的Observable对象，这时候如果由订阅者进行订阅将会触发数据的发射。
+     * -------->>>>><<<<<<<-------
+     * <p>
+     * 09-18 14:59:51.559 13584-13848/com.will.custom_rxandroid E/----: sleep time: 3000
+     * 09-18 14:59:51.579 13584-13902/com.will.custom_rxandroid E/----: 0
+     * 09-18 14:59:53.571 13584-13902/com.will.custom_rxandroid E/----: 1
+     * 09-18 14:59:54.552 13584-13849/com.will.custom_rxandroid E/----: unsubscribe
+     */
+    public void publish_() {
+        final ConnectableObservable<Long> connectableObservable = Observable
+                .interval(0, 2, TimeUnit.SECONDS)
+                .publish();
+
+        subscription = connectableObservable.subscribe(new Action1<Long>() {
+            @Override
+            public void call(Long aLong) {
+                LogUtils.e(String.valueOf(aLong));
+            }
+        });
+
+        //3s后订阅
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    long current_time = System.currentTimeMillis();
+                    sleep(3000);
+                    LogUtils.e("sleep time: " + (System.currentTimeMillis() - current_time));
+                    connectableObservable.connect();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+        //6s之后取消订阅,此时不会再打印
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    sleep(6000);
+                    subscription.unsubscribe();
+                    LogUtils.e("unsubscribe");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * Replay操作符返回一个Connectable Observable 对象并且可以缓存其发射过的数据，这样即使有订阅者在其发射数据之后进行订阅也能收到其之前发射过的数据。
+     * 不过使用Replay操作符我们最好还是限定其缓存的大小，否则缓存的数据太多了可会占用很大的一块内存。对缓存的控制可以从空间和时间两个方面来实现。
+     * 下面打印的0 1 2是一下子打印出来的,因为这是缓存的内容
+     * 09-18 15:37:38.130 15408-17624/com.will.custom_rxandroid E/----: 0
+     * 09-18 15:37:38.130 15408-17624/com.will.custom_rxandroid E/----: 1
+     * 09-18 15:37:38.130 15408-17624/com.will.custom_rxandroid E/----: 2
+     * 09-18 15:37:39.121 15408-17623/com.will.custom_rxandroid E/----: 3
+     */
+    public void replay() {
+        final ConnectableObservable<Long> connectableObservable = Observable
+                .interval(0, 1, TimeUnit.SECONDS)
+                .replay(2, TimeUnit.SECONDS);
+        connectableObservable.connect();
+        subscription = connectableObservable
+                .delaySubscription(2, TimeUnit.SECONDS)
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        LogUtils.e(String.valueOf(aLong));
+                    }
+                });
     }
 
 }

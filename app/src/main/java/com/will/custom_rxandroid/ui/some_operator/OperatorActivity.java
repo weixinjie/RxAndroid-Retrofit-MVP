@@ -46,7 +46,8 @@ public class OperatorActivity extends BaseActivity {
             , R.id.time_out, R.id.using, R.id.time_interval, R.id.time_stamp, R.id.all
             , R.id.exists, R.id.contains, R.id.sequence_equal, R.id.is_empty, R.id.amb
             , R.id.switch_if_empty, R.id.default_if_empty, R.id.take_until, R.id.take_while, R.id.skip_until, R.id.skip_while, R.id.reduce
-            , R.id.collect, R.id.concat, R.id.count, R.id.to_list, R.id.to_sort_list, R.id.to_map, R.id.to_multi_map
+            , R.id.collect, R.id.concat, R.id.count, R.id.to_list, R.id.to_sort_list, R.id.to_map, R.id.to_multi_map, R.id.publish
+            , R.id.replay
     })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -262,6 +263,12 @@ public class OperatorActivity extends BaseActivity {
                 break;
             case R.id.to_multi_map:
                 operatorPresenter.toMultiMap();
+                break;
+            case R.id.publish:
+                operatorPresenter.publish_();
+                break;
+            case R.id.replay:
+                operatorPresenter.replay();
                 break;
         }
     }
