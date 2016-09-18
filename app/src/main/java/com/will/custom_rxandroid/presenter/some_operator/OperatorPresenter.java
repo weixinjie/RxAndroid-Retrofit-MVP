@@ -4,7 +4,10 @@ import com.will.custom_rxandroid.presenter.base.BasePresenter;
 import com.will.custom_rxandroid.utils.LogUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +17,7 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
+import rx.functions.Action2;
 import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
@@ -890,24 +894,20 @@ public class OperatorPresenter extends BasePresenter {
     /**
      * combineLatest操作符把两个Observable产生的结果进行合并，合并的结果组成一个新的Observable。
      * 这两个Observable中任意一个Observable产生的结果，
-     * 都和另一个Observable最后产生的结果，按照一定的规则进行合并。
+     * 都和另一个Observable最后产生的结果，按照一定的规则进行合并。(合并结果的数量为数量多的Observable)
      * 图解:http://reactivex.io/documentation/operators/combinelatest.html
      * <p>
-     * 09-14 10:19:45.150 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$58.call(L:912): -----aLong=0aLong2=0
-     * 09-14 10:19:45.150 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$57.onNext(L:928): 0
-     * 09-14 10:19:46.152 16574-16675/com.will.custom_rxandroid E/OperatorPresenter$58.call(L:912): -----aLong=1aLong2=0
-     * 09-14 10:19:46.152 16574-16675/com.will.custom_rxandroid E/OperatorPresenter$57.onNext(L:928): 1
-     * 09-14 10:19:48.149 16574-16675/com.will.custom_rxandroid E/OperatorPresenter$58.call(L:912): -----aLong=2aLong2=0
-     * 09-14 10:19:48.150 16574-16675/com.will.custom_rxandroid E/OperatorPresenter$57.onNext(L:928): 2
-     * 09-14 10:19:48.151 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$58.call(L:912): -----aLong=2aLong2=2
-     * 09-14 10:19:48.154 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$57.onNext(L:928): 4
-     * 09-14 10:19:50.150 16574-16675/com.will.custom_rxandroid E/OperatorPresenter$58.call(L:912): -----aLong=3aLong2=2
-     * 09-14 10:19:50.150 16574-16675/com.will.custom_rxandroid E/OperatorPresenter$57.onNext(L:928): 5
-     * 09-14 10:19:51.152 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$58.call(L:912): -----aLong=3aLong2=4
-     * 09-14 10:19:51.152 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$57.onNext(L:928): 7
-     * 09-14 10:19:54.150 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$58.call(L:912): -----aLong=3aLong2=6
-     * 09-14 10:19:54.150 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$57.onNext(L:928): 9
-     * 09-14 10:19:54.151 16574-16676/com.will.custom_rxandroid E/OperatorPresenter$57.onCompleted(L:918): onComplete
+     * 09-18 09:28:42.018 2576-2752/com.will.custom_rxandroid E/----: -----aLong=0aLong2=0
+     * 09-18 09:28:42.018 2576-2752/com.will.custom_rxandroid E/----: 0
+     * 09-18 09:28:43.013 2576-2751/com.will.custom_rxandroid E/----: -----aLong=1aLong2=0
+     * 09-18 09:28:43.013 2576-2751/com.will.custom_rxandroid E/----: 1
+     * 09-18 09:28:45.018 2576-2752/com.will.custom_rxandroid E/----: -----aLong=1aLong2=2
+     * 09-18 09:28:45.018 2576-2752/com.will.custom_rxandroid E/----: 3
+     * 09-18 09:28:48.018 2576-2752/com.will.custom_rxandroid E/----: -----aLong=1aLong2=4
+     * 09-18 09:28:48.018 2576-2752/com.will.custom_rxandroid E/----: 5
+     * 09-18 09:28:51.018 2576-2752/com.will.custom_rxandroid E/----: -----aLong=1aLong2=6
+     * 09-18 09:28:51.018 2576-2752/com.will.custom_rxandroid E/----: 7
+     * 09-18 09:28:51.018 2576-2752/com.will.custom_rxandroid E/----: onComplete
      */
     public void combineLatest() {
         Observable observable1 = Observable.interval(2, TimeUnit.SECONDS).flatMap(new Func1<Long, Observable<Long>>() {
@@ -915,7 +915,7 @@ public class OperatorPresenter extends BasePresenter {
             public Observable<Long> call(Long aLong) {
                 return Observable.just(aLong);
             }
-        }).take(4);
+        }).take(2);
 
         Observable observable2 = Observable.interval(3, TimeUnit.SECONDS).flatMap(new Func1<Long, Observable<Long>>() {
             @Override
@@ -1116,7 +1116,8 @@ public class OperatorPresenter extends BasePresenter {
     }
 
     /**
-     * merge操作符是按照两个Observable提交结果的时间顺序，对Observable进行合并如ObservableA每隔500毫秒产生数据为0,5,10,15,20；
+     * merge操作符是按照两个Observable提交结果的时间顺序，对Observable进行合并。
+     * 如ObservableA每隔500毫秒产生数据为0,5,10,15,20；
      * 而ObservableB每隔500毫秒产生数据0,10,20,30,40，其中第一个数据延迟500毫秒产生，最后合并结果为：0,0,5,10,10,20,15,30,20,40
      * <p>
      * 09-14 11:55:56.085 5437-5564/com.will.custom_rxandroid E/----: 第一个数列已经产生0
@@ -1241,6 +1242,12 @@ public class OperatorPresenter extends BasePresenter {
 
     /**
      * startWith操作符是在源Observable提交结果之前，插入指定的某些数据
+     * <p>
+     * 09-18 09:34:21.453 2576-2576/com.will.custom_rxandroid E/----: 5555
+     * 09-18 09:34:21.453 2576-2576/com.will.custom_rxandroid E/----: 1
+     * 09-18 09:34:21.453 2576-2576/com.will.custom_rxandroid E/----: 2
+     * 09-18 09:34:21.453 2576-2576/com.will.custom_rxandroid E/----: 3
+     * 09-18 09:34:21.453 2576-2576/com.will.custom_rxandroid E/----: 4
      */
     public void startWith() {
         subscription = Observable.just(1, 2, 3, 4).startWith(5555).subscribe(new Action1<Integer>() {
@@ -1296,18 +1303,18 @@ public class OperatorPresenter extends BasePresenter {
     }
 
     /**
-     * zip操作符是把两个observable提交的结果，严格按照顺序进行合并
+     * zip操作符是把两个observable提交的结果，严格按照顺序进行合并(这里的顺序是指产生的顺序),产生的数量为合并中数量较少的一方
      * <p>
-     * 09-14 14:51:35.021 28749-28831/com.will.custom_rxandroid E/----: along: 0 along2: 0
-     * 09-14 14:51:35.021 28749-28831/com.will.custom_rxandroid E/----: 0
-     * 09-14 14:51:37.021 28749-28831/com.will.custom_rxandroid E/----: along: 5 along2: 10
-     * 09-14 14:51:37.021 28749-28831/com.will.custom_rxandroid E/----: 15
-     * 09-14 14:51:39.022 28749-28831/com.will.custom_rxandroid E/----: along: 10 along2: 20
-     * 09-14 14:51:39.022 28749-28831/com.will.custom_rxandroid E/----: 30
-     * 09-14 14:51:41.020 28749-28831/com.will.custom_rxandroid E/----: along: 15 along2: 30
-     * 09-14 14:51:41.020 28749-28831/com.will.custom_rxandroid E/----: 45
-     * 09-14 14:51:43.020 28749-28831/com.will.custom_rxandroid E/----: along: 20 along2: 40
-     * 09-14 14:51:43.020 28749-28831/com.will.custom_rxandroid E/----: 60
+     * 09-18 09:38:27.475 11167-11278/com.will.custom_rxandroid E/----: along: 0 along2: 0
+     * 09-18 09:38:27.475 11167-11278/com.will.custom_rxandroid E/----: 0
+     * 09-18 09:38:29.474 11167-11278/com.will.custom_rxandroid E/----: along: 5 along2: 10
+     * 09-18 09:38:29.474 11167-11278/com.will.custom_rxandroid E/----: 15
+     * 09-18 09:38:31.475 11167-11278/com.will.custom_rxandroid E/----: along: 10 along2: 20
+     * 09-18 09:38:31.476 11167-11278/com.will.custom_rxandroid E/----: 30
+     * 09-18 09:38:33.476 11167-11278/com.will.custom_rxandroid E/----: along: 15 along2: 30
+     * 09-18 09:38:33.476 11167-11278/com.will.custom_rxandroid E/----: 45
+     * 09-18 09:38:35.475 11167-11278/com.will.custom_rxandroid E/----: along: 20 along2: 40
+     * 09-18 09:38:35.475 11167-11278/com.will.custom_rxandroid E/----: 60
      */
     public void zip() {
         Observable<Long> observable1 = Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
@@ -1318,7 +1325,7 @@ public class OperatorPresenter extends BasePresenter {
                     }
                 }).take(5);
 
-        Observable<Long> observable2 = Observable.interval(500, 2000, TimeUnit.MILLISECONDS)
+        Observable<Long> observable2 = Observable.interval(0, 2000, TimeUnit.MILLISECONDS)
                 .map(new Func1<Long, Long>() {
                     @Override
                     public Long call(Long aLong) {
@@ -1364,6 +1371,7 @@ public class OperatorPresenter extends BasePresenter {
                         }
                         subscriber.onNext(i);
                     }
+                    subscriber.onCompleted();
                 } catch (Exception e) {
                     subscriber.onError(e);
                 }
@@ -1950,6 +1958,428 @@ public class OperatorPresenter extends BasePresenter {
             @Override
             public void call(Boolean aBoolean) {
                 LogUtils.e(String.valueOf(aBoolean));
+            }
+        });
+    }
+
+    /**
+     * 用于判断Observable发射完毕时，有没有发射数据。有数据false，如果只收到了onComplete通知则为true。
+     */
+    public void isEmpty() {
+        subscription = Observable.range(1, 2).isEmpty().subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                LogUtils.e(String.valueOf(aBoolean));
+            }
+        });
+    }
+
+    /**
+     * 给定多个Observable，只让第一个发射数据的Observable发射全部数据，其他Observable将会被忽略。
+     * 经过测试:observable1必须要运行在其他的线程中(不可以运行在主线程)
+     */
+    public void amb() {
+        Observable observable1 = Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                try {
+                    Thread.sleep(2000);
+                    subscriber.onNext(1);
+                    subscriber.onNext(2);
+                    subscriber.onCompleted();
+                } catch (InterruptedException e) {
+                    subscriber.onError(e);
+                    e.printStackTrace();
+                }
+            }
+        }).subscribeOn(Schedulers.io());
+
+
+        Observable observable2 = Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                subscriber.onNext(33);
+                subscriber.onCompleted();
+            }
+        });
+
+
+        subscription = Observable.amb(observable1, observable2).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+
+    }
+
+    /**
+     * 如果原始Observable正常终止后仍然没有发射任何数据，就使用备用的Observable。
+     */
+    public void switchIfEmpty() {
+        subscription = Observable.empty().switchIfEmpty(Observable.just(2333)).subscribe(new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                LogUtils.e(String.valueOf(o));
+            }
+        });
+    }
+
+    /**
+     * 如果原始Observable正常终止后仍然没有发射任何数据，就发射一个默认值,内部调用的switchIfEmpty。
+     */
+    public void defaultIfEmpty() {
+        subscription = Observable.empty().defaultIfEmpty(500).subscribe(new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                LogUtils.e(String.valueOf(o));
+            }
+        });
+    }
+
+    /**
+     * 当发射的数据满足某个条件后（包含该数据），或者第二个Observable发送完毕，终止第一个Observable发送数据。
+     * <p>
+     * 09-18 11:29:14.670 24437-24437/com.will.custom_rxandroid E/----: 0
+     * 09-18 11:29:15.667 24437-24437/com.will.custom_rxandroid E/----: 1
+     * 09-18 11:29:16.666 24437-24437/com.will.custom_rxandroid E/----: 2
+     * 09-18 11:29:17.665 24437-24437/com.will.custom_rxandroid E/----: onComplete
+     */
+    public void takeUntil() {
+        // 1.使用func1来判断
+//        subscription = Observable.range(1, 6).takeUntil(new Func1<Integer, Boolean>() {
+//            @Override
+//            public Boolean call(Integer integer) {
+//                return integer > 4;
+//            }
+//        }).subscribe(new Subscriber<Integer>() {
+//            @Override
+//            public void onCompleted() {
+//                LogUtils.e("onComplete");
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                e.printStackTrace();
+//            }
+//
+//            @Override
+//            public void onNext(Integer integer) {
+//                LogUtils.e(String.valueOf(integer));
+//            }
+//        });
+
+        // 2.第二个Observable发送完毕之后终止第一个Observable发送数据
+        subscription = Observable
+                .interval(0, 1, TimeUnit.SECONDS)
+                .takeUntil(Observable.timer(3, TimeUnit.SECONDS))
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Long>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.e("onComplete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        LogUtils.e(String.valueOf(aLong));
+                    }
+                });
+    }
+
+    /**
+     * 当发射的数据不满足某个条件后（不包含该数据），终止Observable发送数据。
+     * <p>
+     * 09-18 11:30:43.572 26165-26165/com.will.custom_rxandroid E/----: 1
+     * 09-18 11:30:43.572 26165-26165/com.will.custom_rxandroid E/----: 2
+     * 09-18 11:30:43.572 26165-26165/com.will.custom_rxandroid E/----: 3
+     * 09-18 11:30:43.572 26165-26165/com.will.custom_rxandroid E/----: onComplete
+     */
+    public void takeWhile() {
+        subscription = Observable.just(1, 2, 3, 4, 5).takeWhile(new Func1<Integer, Boolean>() {
+            @Override
+            public Boolean call(Integer integer) {
+                return integer != 4;
+            }
+        }).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onComplete");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Integer aLong) {
+                LogUtils.e(String.valueOf(aLong));
+            }
+        });
+    }
+
+    /**
+     * 丢弃Observable发射的数据，直到第二个Observable发送数据。（丢弃条件数据）
+     * <p>
+     * 09-18 11:36:16.234 28978-29058/com.will.custom_rxandroid E/----: 3
+     * 09-18 11:36:17.233 28978-29058/com.will.custom_rxandroid E/----: 4
+     * 09-18 11:36:18.234 28978-29058/com.will.custom_rxandroid E/----: 5
+     * 09-18 11:36:19.235 28978-29058/com.will.custom_rxandroid E/----: 6
+     */
+    public void skipUntil() {
+        subscription = Observable
+                .interval(0, 1, TimeUnit.SECONDS)
+                .skipUntil(Observable.timer(3, TimeUnit.SECONDS))
+                .subscribe(new Subscriber<Long>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.e("onComplete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        LogUtils.e(String.valueOf(aLong));
+                    }
+                });
+    }
+
+    /**
+     * 丢弃Observable发射的数据，直到一个指定的条件不成立（不丢弃条件数据）
+     * <p>
+     * 09-18 11:41:44.395 975-1231/com.will.custom_rxandroid E/----: 4
+     * 09-18 11:41:45.393 975-1231/com.will.custom_rxandroid E/----: 5
+     * 09-18 11:41:46.394 975-1231/com.will.custom_rxandroid E/----: 6
+     * 09-18 11:41:47.393 975-1231/com.will.custom_rxandroid E/----: 7
+     * 09-18 11:41:48.394 975-1231/com.will.custom_rxandroid E/----: 8
+     * 09-18 11:41:49.394 975-1231/com.will.custom_rxandroid E/----: 9
+     */
+    public void skipWhile() {
+        subscription = Observable
+                .interval(0, 1, TimeUnit.SECONDS)
+                .skipWhile(new Func1<Long, Boolean>() {
+                    @Override
+                    public Boolean call(Long aLong) {
+                        return aLong != 4;
+                    }
+                })
+                .subscribe(new Subscriber<Long>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.e("onComplete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        LogUtils.e(String.valueOf(aLong));
+                    }
+                });
+    }
+
+    //---------------------------Mathematical and Aggregate Operators(综合操作)--------------------------//
+
+    /**
+     * Reduce操作符应用一个函数接收Observable发射的数据和函数的计算结果作为下次计算的参数，输出最后的结果。
+     * 跟前面我们了解过的scan操作符很类似，只是scan会输出每次计算的结果，而reduce只会输出最后的结果。
+     * <p>
+     * 09-18 11:56:47.800 14959-14959/com.will.custom_rxandroid E/----: integer: 1 integer2: 2
+     * 09-18 11:56:47.800 14959-14959/com.will.custom_rxandroid E/----: integer: 3 integer2: 3
+     * 09-18 11:56:47.801 14959-14959/com.will.custom_rxandroid E/----: 6
+     */
+    public void reduce() {
+        subscription = Observable.range(1, 3).reduce(new Func2<Integer, Integer, Integer>() {
+            @Override
+            public Integer call(Integer integer, Integer integer2) {
+                LogUtils.e("integer: " + integer + " integer2: " + integer2);
+                return integer + integer2;
+            }
+        }).subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    /**
+     * Collect操作符类似于Reduce，但是其目的不同，collect用来将源Observable发射的数据给收集到一个数据结构里面，需要使用两个参数：
+     * 1.一个产生收集数据结构的函数。
+     * 2.一个接收第一个函数产生的数据结构和源Observable发射的数据作为参数的函数。
+     * <p>
+     * 09-18 12:02:45.243 20130-20130/com.will.custom_rxandroid E/----: [1, 2, 3]
+     * 09-18 12:02:45.243 20130-20130/com.will.custom_rxandroid E/----: onCompleted
+     */
+    public void collect() {
+        subscription = Observable.range(1, 3).collect(new Func0<List<Integer>>() {
+            @Override
+            public List<Integer> call() {
+                return new ArrayList<Integer>();
+            }
+        }, new Action2<List<Integer>, Integer>() {
+            @Override
+            public void call(List<Integer> integers, Integer integer) {
+                integers.add(integer);
+            }
+        }).subscribe(new Subscriber<List<Integer>>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(List<Integer> integers) {
+                LogUtils.e(String.valueOf(integers));
+            }
+        });
+    }
+
+    /**
+     * 09-18 12:52:14.138 24470-24470/com.will.custom_rxandroid E/----: 1
+     * 09-18 12:52:14.138 24470-24470/com.will.custom_rxandroid E/----: 2
+     */
+    public void concat() {
+        Observable.concat(Observable.just(1), Observable.just(2)).subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    /**
+     * 记录Observable发送的数量
+     */
+    public void count() {
+        subscription = Observable.just(1, 3, 4).count().subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                LogUtils.e(String.valueOf(integer));
+            }
+        });
+    }
+
+    //---------------------------Operators to Convert Observables(转换操作)--------------------------//
+
+    /**
+     * 收集原始Observable发射的所有数据到一个列表，然后返回这个列表.
+     * <p>
+     * 09-18 13:38:24.607 22740-22740/com.will.custom_rxandroid E/----: [1, 2, 3]
+     */
+    public void toList() {
+        subscription = Observable.range(1, 3).toList().subscribe(new Action1<List<Integer>>() {
+            @Override
+            public void call(List<Integer> integers) {
+                LogUtils.e(String.valueOf(integers));
+            }
+        });
+    }
+
+    /**
+     * toSortedList： 收集原始Observable发射的所有数据到一个有序列表，然后返回这个列表。
+     * <p>
+     * 09-18 13:49:45.142 32464-32464/com.will.custom_rxandroid E/----: integer: 3 integer2: 6
+     * 09-18 13:49:45.142 32464-32464/com.will.custom_rxandroid E/----: integer: 5 integer2: 3
+     * 09-18 13:49:45.142 32464-32464/com.will.custom_rxandroid E/----: integer: 5 integer2: 3
+     * 09-18 13:49:45.142 32464-32464/com.will.custom_rxandroid E/----: integer: 5 integer2: 6
+     * 09-18 13:49:45.142 32464-32464/com.will.custom_rxandroid E/----: integer: 7 integer2: 5
+     * 09-18 13:49:45.142 32464-32464/com.will.custom_rxandroid E/----: integer: 7 integer2: 6
+     * 09-18 13:49:45.142 32464-32464/com.will.custom_rxandroid E/----: integer: 4 integer2: 5
+     * 09-18 13:49:45.142 32464-32464/com.will.custom_rxandroid E/----: integer: 4 integer2: 3
+     * 09-18 13:49:45.142 32464-32464/com.will.custom_rxandroid E/----: integer: 2 integer2: 5
+     * 09-18 13:49:45.142 32464-32464/com.will.custom_rxandroid E/----: integer: 2 integer2: 3
+     * 09-18 13:49:45.142 32464-32464/com.will.custom_rxandroid E/----: [7, 6, 5, 4, 3, 2]
+     */
+    public void toSortList() {
+        subscription = Observable.just(6, 3, 5, 7, 4, 2)
+                .toSortedList(new Func2<Integer, Integer, Integer>() {
+                    @Override
+                    public Integer call(Integer integer, Integer integer2) {
+                        return integer2 - integer; //integer2-integer代表倒序排序,integer-integer2代表正序排序
+                    }
+                })
+                .subscribe(new Action1<List<Integer>>() {
+                    @Override
+                    public void call(List<Integer> integers) {
+                        LogUtils.e(String.valueOf(integers));
+                    }
+                });
+    }
+
+    /**
+     * 将序列数据转换为一个Map。我们可以根据数据项生成key和生成value。
+     * <p>
+     * 9-18 14:05:00.741 10714-10714/com.will.custom_rxandroid E/----: {key:4=40, key:2=20, key:1=10, key:3=30}
+     */
+    public void toMap() {
+        subscription = Observable.range(1, 4).toMap(new Func1<Integer, String>() {
+            @Override
+            public String call(Integer integer) {
+                return String.valueOf("key:" + integer); //根据数据项生成的key
+            }
+        }, new Func1<Integer, Integer>() {
+            @Override
+            public Integer call(Integer integer) {
+                return integer * 10; //根据数据项生成的value
+            }
+        }).subscribe(new Action1<Map<String, Integer>>() {
+            @Override
+            public void call(Map<String, Integer> stringIntegerMap) {
+                LogUtils.e(String.valueOf(stringIntegerMap));
+            }
+        });
+    }
+
+    /**
+     * 类似于toMap，不同的地方在于map的value是一个集合。
+     * <p>
+     * {key:4=[value:4], key:2=[value:2], key:1=[value:1], key:3=[value:3]}
+     */
+    public void toMultiMap() {
+        subscription = Observable.range(1, 4).toMultimap(new Func1<Integer, String>() {
+            @Override
+            public String call(Integer integer) {
+                return String.valueOf("key:" + integer);
+            }
+        }, new Func1<Integer, String>() {
+            @Override
+            public String call(Integer integer) {
+                return String.valueOf("value:" + integer);
+            }
+        }).subscribe(new Action1<Map<String, Collection<String>>>() {
+            @Override
+            public void call(Map<String, Collection<String>> stringCollectionMap) {
+                LogUtils.e(String.valueOf(stringCollectionMap));
             }
         });
     }

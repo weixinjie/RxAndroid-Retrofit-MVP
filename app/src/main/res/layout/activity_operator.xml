@@ -382,5 +382,108 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="sequence equal" />
+
+        <Button
+            android:id="@+id/is_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="is empty" />
+
+        <Button
+            android:id="@+id/amb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="amb" />
+
+        <Button
+            android:id="@+id/switch_if_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="switch if empty" />
+
+        <Button
+            android:id="@+id/default_if_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="default if empty" />
+
+        <Button
+            android:id="@+id/take_until"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="take until" />
+
+        <Button
+            android:id="@+id/take_while"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="take while" />
+
+        <Button
+            android:id="@+id/skip_until"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="skip until" />
+
+        <Button
+            android:id="@+id/skip_while"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="skip while" />
+
+        <Button
+            android:id="@+id/reduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="reduce" />
+
+        <Button
+            android:id="@+id/collect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="collect" />
+
+        <Button
+            android:id="@+id/concat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="concat" />
+
+        <Button
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="count" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="以下为转换操作符"
+            android:textColor="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/to_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="to list" />
+
+        <Button
+            android:id="@+id/to_sort_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="to sort list" />
+
+        <Button
+            android:id="@+id/to_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="to map" />
+
+        <Button
+            android:id="@+id/to_multi_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="to multi map" />
     </LinearLayout>
 </ScrollView>

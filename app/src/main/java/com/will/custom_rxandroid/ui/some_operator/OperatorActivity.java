@@ -44,7 +44,9 @@ public class OperatorActivity extends BaseActivity {
             , R.id.onerror_return, R.id.on_error_resume_next, R.id.retry,
             R.id.retry_when, R.id.delay, R.id.do_sth, R.id.materialize, R.id.thread
             , R.id.time_out, R.id.using, R.id.time_interval, R.id.time_stamp, R.id.all
-            , R.id.exists, R.id.contains, R.id.sequence_equal
+            , R.id.exists, R.id.contains, R.id.sequence_equal, R.id.is_empty, R.id.amb
+            , R.id.switch_if_empty, R.id.default_if_empty, R.id.take_until, R.id.take_while, R.id.skip_until, R.id.skip_while, R.id.reduce
+            , R.id.collect, R.id.concat, R.id.count, R.id.to_list, R.id.to_sort_list, R.id.to_map, R.id.to_multi_map
     })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -212,6 +214,54 @@ public class OperatorActivity extends BaseActivity {
                 break;
             case R.id.sequence_equal:
                 operatorPresenter.sequenceEqual();
+                break;
+            case R.id.is_empty:
+                operatorPresenter.isEmpty();
+                break;
+            case R.id.amb:
+                operatorPresenter.amb();
+                break;
+            case R.id.switch_if_empty:
+                operatorPresenter.switchIfEmpty();
+                break;
+            case R.id.default_if_empty:
+                operatorPresenter.defaultIfEmpty();
+                break;
+            case R.id.take_until:
+                operatorPresenter.takeUntil();
+                break;
+            case R.id.take_while:
+                operatorPresenter.takeWhile();
+                break;
+            case R.id.skip_until:
+                operatorPresenter.skipUntil();
+                break;
+            case R.id.skip_while:
+                operatorPresenter.skipWhile();
+                break;
+            case R.id.reduce:
+                operatorPresenter.reduce();
+                break;
+            case R.id.collect:
+                operatorPresenter.collect();
+                break;
+            case R.id.concat:
+                operatorPresenter.concat();
+                break;
+            case R.id.count:
+                operatorPresenter.count();
+                break;
+            case R.id.to_list:
+                operatorPresenter.toList();
+                break;
+            case R.id.to_sort_list:
+                operatorPresenter.toSortList();
+                break;
+            case R.id.to_map:
+                operatorPresenter.toMap();
+                break;
+            case R.id.to_multi_map:
+                operatorPresenter.toMultiMap();
                 break;
         }
     }
