@@ -9,6 +9,7 @@ import android.view.View;
 import com.will.custom_rxandroid.R;
 import com.will.custom_rxandroid.presenter.cache.CachePresenter;
 import com.will.custom_rxandroid.ui.cache.CacheActivity;
+import com.will.custom_rxandroid.ui.custom_view.CustomViewActivity;
 import com.will.custom_rxandroid.ui.elementary.ElementaryActivity;
 import com.will.custom_rxandroid.ui.map.MapActivity;
 import com.will.custom_rxandroid.ui.some_operator.OperatorActivity;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.bt_elementary, R.id.bt_map, R.id.bt_zip, R.id.bt_token
-            , R.id.bt_token_avanced, R.id.bt_cache, R.id.bt_time, R.id.bt_operator, R.id.bt_subject})
+            , R.id.bt_token_avanced, R.id.bt_cache, R.id.bt_time, R.id.bt_operator, R.id.bt_subject, R.id.bt_customview})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_elementary:
@@ -64,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_subject:
                 startActivity(new Intent(this, SubjectActivity.class));
+                break;
+            case R.id.bt_customview:
+                startActivity(new Intent(this, CustomViewActivity.class));
                 break;
         }
     }

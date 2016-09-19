@@ -6,6 +6,7 @@ import com.will.custom_rxandroid.pojo.elementary.ZhuangBiImage;
 import com.will.custom_rxandroid.pojo.map.GankBean;
 import com.will.custom_rxandroid.presenter.base.BasePresenter;
 import com.will.custom_rxandroid.presenter.map.GankResult2GankBeanUtils;
+import com.will.custom_rxandroid.utils.LogUtils;
 
 import java.util.List;
 

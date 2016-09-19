@@ -30,7 +30,8 @@
         <activity android:name=".ui.cache.CacheActivity" />
         <activity android:name=".ui.time.TimeActivity" />
         <activity android:name=".ui.some_operator.OperatorActivity" />
-        <activity android:name=".ui.subject.SubjectActivity"></activity>
+        <activity android:name=".ui.subject.SubjectActivity" />
+        <activity android:name=".ui.custom_view.CustomViewActivity"></activity>
     </application>
 
 </manifest>

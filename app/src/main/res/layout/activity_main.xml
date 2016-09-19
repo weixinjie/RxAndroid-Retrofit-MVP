@@ -82,5 +82,27 @@
             android:layout_marginTop="10dp"
             android:text="Subject" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="以下为Android基础部分"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:gravity="left"
+            android:text="以下为自定义View"
+            android:textColor="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/bt_customview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Custom View" />
     </LinearLayout>
 </ScrollView>

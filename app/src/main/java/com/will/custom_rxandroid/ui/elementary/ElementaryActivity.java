@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * basic function
+ * Rxjava与Retrofit的基本使用
  */
 public class ElementaryActivity extends BaseActivity implements ElementaryView {
 
