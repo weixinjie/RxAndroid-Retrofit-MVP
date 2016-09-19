@@ -4,12 +4,23 @@
     android:id="@+id/activity_custom_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context="com.will.custom_rxandroid.ui.custom_view.CustomViewActivity">
 
     <com.will.custom_rxandroid.ui.custom_view.CustomView
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@drawable/xrefresh_ok" />
+
+    <com.will.custom_rxandroid.ui.custom_view.ClickView
+        android:id="@+id/click_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp" />
+
+    <Button
+        android:id="@+id/bt_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="clear" />
 </LinearLayout>
