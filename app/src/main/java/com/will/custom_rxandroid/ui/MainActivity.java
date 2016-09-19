@@ -1,6 +1,7 @@
 package com.will.custom_rxandroid.ui;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,9 @@ import com.will.custom_rxandroid.ui.token.TokenActivity;
 import com.will.custom_rxandroid.ui.token_avanced.TokenAvancedActivity;
 import com.will.custom_rxandroid.ui.token_avanced.TokenAvancedActivity_ViewBinding;
 import com.will.custom_rxandroid.ui.zip.ZipActivity;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

@@ -30,6 +30,7 @@ public class TokenAvancedPresenter extends BasePresenter<TokenAvancedView> {
     public TokenAvancedPresenter(TokenAvancedView tokenAvancedView) {
         this.mvpView = tokenAvancedView;
         virtualApi = new VirtualApi();
+
     }
 
     public void load_data() {
