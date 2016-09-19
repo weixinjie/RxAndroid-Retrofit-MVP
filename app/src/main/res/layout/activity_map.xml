@@ -4,7 +4,7 @@
     android:id="@+id/activity_map"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.will.custom_rxandroid.ui.map.MapActivity">
+    tools:context="com.will.custom_rxandroid.ui.rx.map.MapActivity">
 
     <include layout="@layout/recyclerview_with_refresh_layout" />
 

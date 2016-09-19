@@ -1,4 +1,4 @@
-package com.will.custom_rxandroid.ui.cache;
+package com.will.custom_rxandroid.ui.rx.cache;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;

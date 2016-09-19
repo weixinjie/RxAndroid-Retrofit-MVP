@@ -1,27 +1,21 @@
 package com.will.custom_rxandroid.ui;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.will.custom_rxandroid.R;
-import com.will.custom_rxandroid.presenter.cache.CachePresenter;
-import com.will.custom_rxandroid.ui.cache.CacheActivity;
+import com.will.custom_rxandroid.ui.rx.cache.CacheActivity;
 import com.will.custom_rxandroid.ui.custom_view.CustomViewActivity;
-import com.will.custom_rxandroid.ui.elementary.ElementaryActivity;
-import com.will.custom_rxandroid.ui.map.MapActivity;
-import com.will.custom_rxandroid.ui.some_operator.OperatorActivity;
-import com.will.custom_rxandroid.ui.subject.SubjectActivity;
-import com.will.custom_rxandroid.ui.time.TimeActivity;
-import com.will.custom_rxandroid.ui.token.TokenActivity;
-import com.will.custom_rxandroid.ui.token_avanced.TokenAvancedActivity;
-import com.will.custom_rxandroid.ui.token_avanced.TokenAvancedActivity_ViewBinding;
-import com.will.custom_rxandroid.ui.zip.ZipActivity;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.will.custom_rxandroid.ui.rx.elementary.ElementaryActivity;
+import com.will.custom_rxandroid.ui.rx.map.MapActivity;
+import com.will.custom_rxandroid.ui.rx.some_operator.OperatorActivity;
+import com.will.custom_rxandroid.ui.rx.subject.SubjectActivity;
+import com.will.custom_rxandroid.ui.rx.time.TimeActivity;
+import com.will.custom_rxandroid.ui.rx.token.TokenActivity;
+import com.will.custom_rxandroid.ui.rx.token_avanced.TokenAvancedActivity;
+import com.will.custom_rxandroid.ui.rx.zip.ZipActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

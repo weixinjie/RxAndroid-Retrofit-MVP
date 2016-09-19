@@ -1,4 +1,4 @@
-package com.will.custom_rxandroid.ui.map;
+package com.will.custom_rxandroid.ui.rx.map;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;

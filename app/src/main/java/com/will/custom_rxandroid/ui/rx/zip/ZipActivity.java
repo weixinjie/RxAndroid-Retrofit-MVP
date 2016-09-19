@@ -1,4 +1,4 @@
-package com.will.custom_rxandroid.ui.zip;
+package com.will.custom_rxandroid.ui.rx.zip;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;

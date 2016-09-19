@@ -1,4 +1,4 @@
-package com.will.custom_rxandroid.ui.some_operator;
+package com.will.custom_rxandroid.ui.rx.some_operator;
 
 import android.os.Bundle;
 import android.view.View;

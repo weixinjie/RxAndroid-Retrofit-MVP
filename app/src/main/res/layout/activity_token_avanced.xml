@@ -5,7 +5,7 @@
     android:id="@+id/activity_token_avanced"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.will.custom_rxandroid.ui.token_avanced.TokenAvancedActivity">
+    tools:context="com.will.custom_rxandroid.ui.rx.token_avanced.TokenAvancedActivity">
 
     <com.andview.refreshview.XRefreshView
         android:id="@+id/refresh_view"
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            tools:context="com.will.custom_rxandroid.ui.token.TokenActivity">
+            tools:context="com.will.custom_rxandroid.ui.rx.token.TokenActivity">
 
             <TextView
                 android:id="@+id/tv_token"

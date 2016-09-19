@@ -1,4 +1,4 @@
-package com.will.custom_rxandroid.ui.subject;
+package com.will.custom_rxandroid.ui.rx.subject;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

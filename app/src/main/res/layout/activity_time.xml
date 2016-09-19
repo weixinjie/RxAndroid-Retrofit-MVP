@@ -4,7 +4,7 @@
     android:id="@+id/activity_time"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.will.custom_rxandroid.ui.time.TimeActivity">
+    tools:context="com.will.custom_rxandroid.ui.rx.time.TimeActivity">
 
     <Button
         android:id="@+id/bt_start"

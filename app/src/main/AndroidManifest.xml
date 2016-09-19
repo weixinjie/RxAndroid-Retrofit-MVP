@@ -20,17 +20,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.elementary.ElementaryActivity"
+            android:name=".ui.rx.elementary.ElementaryActivity"
             android:label="@string/title_activity_base"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.map.MapActivity" />
-        <activity android:name=".ui.zip.ZipActivity" />
-        <activity android:name=".ui.token.TokenActivity" />
-        <activity android:name=".ui.token_avanced.TokenAvancedActivity" />
-        <activity android:name=".ui.cache.CacheActivity" />
-        <activity android:name=".ui.time.TimeActivity" />
-        <activity android:name=".ui.some_operator.OperatorActivity" />
-        <activity android:name=".ui.subject.SubjectActivity" />
+        <activity android:name=".ui.rx.map.MapActivity" />
+        <activity android:name=".ui.rx.zip.ZipActivity" />
+        <activity android:name=".ui.rx.token.TokenActivity" />
+        <activity android:name=".ui.rx.token_avanced.TokenAvancedActivity" />
+        <activity android:name=".ui.rx.cache.CacheActivity" />
+        <activity android:name=".ui.rx.time.TimeActivity" />
+        <activity android:name=".ui.rx.some_operator.OperatorActivity" />
+        <activity android:name=".ui.rx.subject.SubjectActivity" />
         <activity android:name=".ui.custom_view.CustomViewActivity"></activity>
     </application>
 

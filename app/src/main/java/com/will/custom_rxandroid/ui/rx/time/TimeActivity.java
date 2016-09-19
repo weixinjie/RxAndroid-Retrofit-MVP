@@ -1,4 +1,4 @@
-package com.will.custom_rxandroid.ui.time;
+package com.will.custom_rxandroid.ui.rx.time;
 
 import android.os.Bundle;
 import android.view.View;

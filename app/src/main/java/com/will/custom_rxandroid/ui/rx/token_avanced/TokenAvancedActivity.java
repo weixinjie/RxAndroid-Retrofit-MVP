@@ -1,4 +1,4 @@
-package com.will.custom_rxandroid.ui.token_avanced;
+package com.will.custom_rxandroid.ui.rx.token_avanced;
 
 import android.os.Bundle;
 import android.view.View;

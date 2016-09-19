@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.will.custom_rxandroid.ui.some_operator.OperatorActivity">
+        tools:context="com.will.custom_rxandroid.ui.rx.some_operator.OperatorActivity">
 
         <Button
             android:id="@+id/just"

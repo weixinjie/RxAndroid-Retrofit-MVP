@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.will.custom_rxandroid.ui.cache.CacheActivity">
+    tools:context="com.will.custom_rxandroid.ui.rx.cache.CacheActivity">
 
     <TextView
         android:id="@+id/tv_load_message"
