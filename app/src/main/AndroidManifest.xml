@@ -31,7 +31,8 @@
         <activity android:name=".ui.rx.time.TimeActivity" />
         <activity android:name=".ui.rx.some_operator.OperatorActivity" />
         <activity android:name=".ui.rx.subject.SubjectActivity" />
-        <activity android:name=".ui.custom_view.CustomViewActivity"></activity>
+        <activity android:name=".ui.custom_view.CustomViewActivity" />
+        <activity android:name=".ui.drawable_test.DrawableActivity"></activity>
     </application>
 
 </manifest>

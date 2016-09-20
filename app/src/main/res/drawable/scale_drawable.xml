@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?><!--drawable:Drawable 资源。必须的。引用一个drawable资源。--><!--scaleGravity:指定缩放后gravity的位置 必须是下面的一个或多个值（多个值之间用”|“分隔），下面的值和描述和上一篇的ClipDrawable一样。
+值	描述
+top	Put the object at the top of its container, not changing its size.
+bottom	Put the object at the bottom of its container, not changing its size.
+left	Put the object at the left edge of its container, not changing its size. This is thedefault.
+right	Put the object at the right edge of its container, not changing its size.
+center_vertical	Place object in the vertical center of its container, not changing its size.
+fill_vertical	Grow the vertical size of the object if needed so it completely fills its container.
+center_horizontal	Place object in the horizontal center of its container, not changing its size.
+fill_horizontal	Grow the horizontal size of the object if needed so it completely fills its container.
+center	Place the object in the center of its container in both the vertical and horizontal axis, notchanging its size.
+fill	Grow the horizontal and vertical size of the object if needed so it completely fills itscontainer.
+clip_vertical	Additional option that can be set to have the top and/or bottom edges of the child clipped toits container's bounds. The clip is based on the vertical gravity: a top gravity clips thebottom edge, a bottom gravity clips the top edge, and neither clips both edges.
+clip_horizontal	Additional option that can be set to have the left and/or right edges of the child clipped toits container's bounds. The clip is based on the horizontal gravity: a left gravity clipsthe right edge, a right gravity clips the left edge, and neither clips both edges.--><!--scaleHeight:缩放的高度,用百分比的形式例如100%,80%代表从高度的80%开始缩放 level=0表示不可见--><!--scaleWidth:缩放的宽度,同scaleHeight--><!--leveal为0-10000用java代码setleveal来控制当前的leveal-->
+<scale xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_launcher"
+    android:scaleGravity="left"
+    android:scaleHeight="80%"
+    android:scaleWidth="80%" />

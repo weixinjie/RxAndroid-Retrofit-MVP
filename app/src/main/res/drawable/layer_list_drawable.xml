@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?><!--LayerDrawable 管理一组drawable，每个drawable都处于不同的层，当它们被绘制的时候，按照顺序全部都绘制到画布上。虽然这些drawable会有交差或者重叠的区域，但是它们是位于不同的层，彼此之间不会影响。
+        在xml文件中使用layer-list作为根节点来定义LayerDrawable，通过item子节点定义每一层的drawable，layer-list没有属性节点，只包含item子节点。-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:left="20dp"
+        android:right="20dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="10dp" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/colorAccent" />
+            <gradient
+                android:centerColor="@color/colorAccent"
+                android:endColor="@color/colorPrimary"
+                android:startColor="@color/colorCenter" />
+        </shape>
+    </item>
+    <item
+        android:left="20dp"
+        android:right="20dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:centerColor="@android:color/white"
+                android:startColor="@android:color/holo_red_light"
+                android:type="sweep" />
+            <corners android:radius="80dp" />
+        </shape>
+    </item>
+</layer-list>

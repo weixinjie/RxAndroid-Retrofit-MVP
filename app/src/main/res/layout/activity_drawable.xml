@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/activity_drawable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.will.custom_rxandroid.ui.drawable_test.DrawableActivity">
+
+        <ImageView
+            android:id="@+id/iv_clip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/clip_drawable" />
+
+        <ImageView
+            android:id="@+id/iv_scale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/scale_drawable" />
+
+        <ImageView
+            android:id="@+id/iv_rotate"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/rotate_drawable" />
+
+        <ImageView
+            android:id="@+id/iv_animation_list"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/animation_list_drawable" />
+
+        <ImageView
+            android:id="@+id/iv_level_list"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/level_list_drawable" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_drawable"
+            android:text="weixinjie"
+            android:textColor="@color/color_select" />
+
+        <Button
+            android:id="@+id/bt_translate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="translate"
+            android:textColor="@color/color_select" />
+
+        <ImageView
+            android:id="@+id/iv_transition"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/transition_drawable" />
+    </LinearLayout>
+</ScrollView>

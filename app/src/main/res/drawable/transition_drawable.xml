@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?><!--transition其实是继承自layer-list的，只是，transition只能管理两层drawable，另外提供了两层drawable之间切换的方法，切换时还会有淡入淡出的动画效果。-->
+<transition xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/xrefresh_ok" />
+    <item android:drawable="@drawable/ic_launcher" />
+</transition>

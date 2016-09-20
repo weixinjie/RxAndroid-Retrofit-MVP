@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!-- ClipDrawable 是对一个Drawable进行剪切操作，可以控制这个drawable的剪切区域，
+以及相相对于容器的对齐方式，android中的进度条就是使用一个ClipDrawable实现效果的，
+它根据level的属性值，决定剪切区域的大小。在xml文件中使用clip作为根节点定义ClipDrawable。
+需要注意的是ClipDrawable是根据level的大小控制图片剪切操作的，官方文档的note中提到：The drawable is clipped completely and not visible when the level is 0 and fully revealed when the level is 10,000。也就是level的大小从0到10000，level为0时完全不显示，为10000时完全显示。是用Drawable提供的setLevel（int level）方法来设置剪切区域。-->
+<clip xmlns:android="http://schemas.android.com/apk/res/android"
+    android:clipOrientation="vertical"
+    android:drawable="@drawable/ic_launcher"
+    android:gravity="right"></clip>

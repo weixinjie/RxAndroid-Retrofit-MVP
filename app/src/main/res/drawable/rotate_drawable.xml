@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><!--android:drawable
+Drawable 资源。必须的。引用一个drawable资源。
+android:visible
+Boolean。是否可见。
+android:fromDegrees
+整形。  从多少的角度开始旋转
+android:toDegrees
+整形。  到多少的角度结束旋转
+android:pivotX
+百分比。  旋转的中心在图片X轴的百分比
+android:visible
+百分比。  旋转的中心在图片Y轴的百分比
+
+注意这个不是动画,不存在旋转速度这一说,leveal最大为10000,在java代码可以设置当前的leveal-->
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/shape_drawable"
+    android:fromDegrees="0"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:toDegrees="180"
+    android:visible="true">
+
+</rotate>

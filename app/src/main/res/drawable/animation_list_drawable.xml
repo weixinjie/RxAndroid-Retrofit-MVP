@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><!--oneshot:是否播放一次就结束--><!--variablePadding: 选择true时，drawable的内边距会根据状态的变化而变化，设置为true时，你必须为不同的状态配置layout，但是通常不建议这么做。选择false时，内边距保持一致，所有状态中最大的内边距。默认为false -->
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true"
+    android:variablePadding="true">
+
+    <item
+        android:drawable="@drawable/loading_0"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/loading_1"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/loading_2"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/loading_3"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/loading_4"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/loading_5"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/loading_6"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/loading_7"
+        android:duration="100" />
+</animation-list>

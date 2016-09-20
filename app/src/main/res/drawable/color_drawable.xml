@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+ ColorDrawable 是最简单的Drawable，它实际上是代表了单色可绘制区域，
+ 它包装了一种固定的颜色，当ColorDrawable被绘制到画布的时候会使用颜色填充Paint，
+ 在画布上绘制一块单色的区域。-->
+<color xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/colorAccent" />

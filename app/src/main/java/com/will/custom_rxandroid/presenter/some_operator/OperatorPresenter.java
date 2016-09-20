@@ -1,7 +1,5 @@
 package com.will.custom_rxandroid.presenter.some_operator;
 
-import android.app.AlertDialog;
-
 import com.will.custom_rxandroid.presenter.base.BasePresenter;
 import com.will.custom_rxandroid.utils.LogUtils;
 

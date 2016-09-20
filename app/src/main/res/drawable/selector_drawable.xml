@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><!--selector标签，可以添加一个或多个item子标签，而相应的状态是在item标签中定义的。定义的xml文件可以作为两种资源使用：drawable和color。作为drawable资源使用时，一般和shape一样放于drawable目录下，item必须指定android:drawable属性；作为color资源使用时，则放于color目录下，item必须指定android:color属性。-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--android:state_enabled: 设置触摸或点击事件是否可用状态，一般只在false时设置该属性，表示不可用状态
+android:state_pressed: 设置是否按压状态，一般在true时设置该属性，表示已按压状态，默认为false
+android:state_selected: 设置是否选中状态，true表示已选中，false表示未选中
+android:state_checked: 设置是否勾选状态，主要用于CheckBox和RadioButton，true表示已被勾选，false表示未被勾选
+android:state_checkable: 设置勾选是否可用状态，类似state_enabled，只是state_enabled会影响触摸或点击事件，而state_checkable影响勾选事件
+android:state_focused: 设置是否获得焦点状态，true表示获得焦点，默认为false，表示未获得焦点
+android:state_window_focused: 设置当前窗口是否获得焦点状态，true表示获得焦点，false表示未获得焦点，例如拉下通知栏或弹出对话框时，当前界面就会失去焦点；另外，ListView的ListItem获得焦点时也会触发true状态，可以理解为当前窗口就是ListItem本身
+android:state_activated: 设置是否被激活状态，true表示被激活，false表示未激活，API Level 11及以上才支持，可通过代码调用控件的setActivated(boolean)方法设置是否激活该控件
+android:state_hovered: 设置是否鼠标在上面滑动的状态，true表示鼠标在上面滑动，默认为false，API Level 14及以上才支持-->
+    <item android:drawable="@drawable/loading_0" android:state_enabled="true" />
+    <item android:drawable="@drawable/ic_launcher" android:state_pressed="true" />
+    <item android:drawable="@drawable/shape_drawable" android:state_selected="true" />
+    <item android:drawable="@color/colorCenter" android:state_checked="true" />
+    <item android:drawable="@android:color/holo_red_dark" android:state_checkable="true" />
+    <item android:drawable="@android:color/holo_red_light" android:state_focused="true" />
+    <item android:drawable="@color/colorAccent" android:state_window_focused="true" />
+    <item android:drawable="@android:color/background_dark" android:state_active="true" />
+    <item android:drawable="@android:color/darker_gray" android:state_hovered="true" />
+</selector>
