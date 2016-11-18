@@ -19,7 +19,7 @@ import com.will.custom_rxandroid.R;
 
 public class PullableLayout extends ViewGroup {
 
-    private int maxScrollDis = 200; //最大滑动距离
+    private int maxScrollDis = 0; //最大滑动距离
 
     View mHeader;
     View mFooter;
@@ -27,12 +27,15 @@ public class PullableLayout extends ViewGroup {
     TextView tv_header;
     TextView tv_footer;
 
+    Scroller scroller;
+
     public PullableLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         mHeader = LayoutInflater.from(context).inflate(R.layout.header, null);
         mFooter = LayoutInflater.from(context).inflate(R.layout.footer, null);
         tv_header = (TextView) mHeader.findViewById(R.id.tv_head);
         tv_footer = (TextView) mHeader.findViewById(R.id.tv_head);
+        scroller = new Scroller(context);
     }
 
     @Override
@@ -53,6 +56,8 @@ public class PullableLayout extends ViewGroup {
             View child = getChildAt(i);
             if (child == mHeader) { //header view 进行布局的时候要隐藏
                 child.layout(0, 0 - child.getMeasuredHeight(), child.getMeasuredWidth(), 0);
+                maxScrollDis = child.getMeasuredHeight();
+
             } else if (child == mFooter) { //footer view 进行布局的时候要隐藏
                 child.layout(0, mLayoutContentHeight, child.getMeasuredWidth(), mLayoutContentHeight + child.getMeasuredHeight());
             } else {
@@ -91,12 +96,25 @@ public class PullableLayout extends ViewGroup {
                     tv_header.setText("松开刷新");
                     tv_footer.setText("松开刷新");
                 }
-
                 break;
-            case MotionEvent.ACTION_UP:
-
+            case MotionEvent.ACTION_UP: //手指放开的时候
+                if (Math.abs(getScrollY()) < maxScrollDis) { //如果滑动的距离小于最大滑动的距离
+                    scroller.startScroll(0, getScrollY(), 0, -getScrollY());
+                } else {
+                    scroller.startScroll(0, getScrollY(), 0, -(getScrollY() + maxScrollDis));
+                }
+                invalidate();
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void computeScroll() {
+        // 第三步，重写computeScroll()方法，并在其内部完成平滑滚动的逻辑
+        if (scroller.computeScrollOffset()) {
+            scrollTo(scroller.getCurrX(), scroller.getCurrY());
+            invalidate();
+        }
     }
 }
