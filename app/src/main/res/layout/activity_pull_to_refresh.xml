@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.will.custom_rxandroid.ui.pull_to_refresh.PullableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_pull_to_refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.will.custom_rxandroid.ui.pull_to_refresh.PullToRefreshActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Google" />
+</com.will.custom_rxandroid.ui.pull_to_refresh.PullableLayout>

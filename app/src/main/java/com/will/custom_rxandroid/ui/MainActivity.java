@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.will.custom_rxandroid.R;
 import com.will.custom_rxandroid.ui.drawable_test.DrawableActivity;
+import com.will.custom_rxandroid.ui.pull_to_refresh.PullToRefreshActivity;
 import com.will.custom_rxandroid.ui.rx.cache.CacheActivity;
 import com.will.custom_rxandroid.ui.custom_view.CustomViewActivity;
 import com.will.custom_rxandroid.ui.rx.elementary.ElementaryActivity;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick({R.id.bt_elementary, R.id.bt_map, R.id.bt_zip, R.id.bt_token
             , R.id.bt_token_avanced, R.id.bt_cache, R.id.bt_time, R.id.bt_operator,
-            R.id.bt_subject, R.id.bt_customview, R.id.bt_drawable})
+            R.id.bt_subject, R.id.bt_customview, R.id.bt_drawable, R.id.bt_custom_pull})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_elementary:
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_drawable:
                 startActivity(new Intent(this, DrawableActivity.class));
+                break;
+            case R.id.bt_custom_pull:
+                startActivity(new Intent(this, PullToRefreshActivity.class));
                 break;
         }
     }

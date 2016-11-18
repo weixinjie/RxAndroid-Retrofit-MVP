@@ -111,5 +111,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="drawable test" />
+
+        <Button
+            android:id="@+id/bt_custom_pull"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="自定义下拉刷新" />
     </LinearLayout>
 </ScrollView>
