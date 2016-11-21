@@ -31,18 +31,10 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
 
-    List<Bitmap> bitmaps;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        bitmaps = new ArrayList<>();
-        for (int i = 0; i < 1000000; i++) {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-            bitmaps.add(bitmap);
-        }
     }
 
     @OnClick({R.id.bt_elementary, R.id.bt_map, R.id.bt_zip, R.id.bt_token
