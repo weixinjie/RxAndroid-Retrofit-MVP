@@ -1,6 +1,8 @@
 package com.will.custom_rxandroid.ui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,16 +21,28 @@ import com.will.custom_rxandroid.ui.rx.token.TokenActivity;
 import com.will.custom_rxandroid.ui.rx.token_avanced.TokenAvancedActivity;
 import com.will.custom_rxandroid.ui.rx.zip.ZipActivity;
 
+import java.lang.ref.SoftReference;
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
 
+    List<Bitmap> bitmaps;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        bitmaps = new ArrayList<>();
+        for (int i = 0; i < 1000000; i++) {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+            bitmaps.add(bitmap);
+        }
     }
 
     @OnClick({R.id.bt_elementary, R.id.bt_map, R.id.bt_zip, R.id.bt_token
