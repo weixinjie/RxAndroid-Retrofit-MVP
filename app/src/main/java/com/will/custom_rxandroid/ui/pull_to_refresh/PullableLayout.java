@@ -12,6 +12,7 @@ import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.will.custom_rxandroid.R;
+import com.will.custom_rxandroid.utils.LogUtils;
 
 /**
  * Created by will on 2016/11/17.
@@ -20,6 +21,7 @@ import com.will.custom_rxandroid.R;
 public class PullableLayout extends ViewGroup {
 
     private int maxScrollDis = 0; //最大滑动距离
+    double damp = 0.1; //阻尼系数
 
     View mHeader;
     View mFooter;
@@ -91,7 +93,7 @@ public class PullableLayout extends ViewGroup {
             case MotionEvent.ACTION_MOVE:
                 int dis = mLayoutY - current_y;
                 if (Math.abs(getScrollY()) < maxScrollDis) { //如果滑动的距离小于最大滑动距离
-                    scrollBy(0, dis);
+                    scrollBy(0, (int) (dis * damp));
                 } else {
                     tv_header.setText("松开刷新");
                     tv_footer.setText("松开刷新");
@@ -101,7 +103,8 @@ public class PullableLayout extends ViewGroup {
                 if (Math.abs(getScrollY()) < maxScrollDis) { //如果滑动的距离小于最大滑动的距离
                     scroller.startScroll(0, getScrollY(), 0, -getScrollY());
                 } else {
-                    scroller.startScroll(0, getScrollY(), 0, -(getScrollY() + maxScrollDis));
+                    LogUtils.e("Action up");
+                    scroller.startScroll(0, getScrollY(), 0, -(getScrollY()));
                 }
                 invalidate();
                 break;

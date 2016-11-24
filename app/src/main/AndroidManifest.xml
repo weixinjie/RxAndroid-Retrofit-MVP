@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".BaseApp"
@@ -33,7 +34,9 @@
         <activity android:name=".ui.rx.subject.SubjectActivity" />
         <activity android:name=".ui.custom_view.CustomViewActivity" />
         <activity android:name=".ui.drawable_test.DrawableActivity" />
-        <activity android:name=".ui.pull_to_refresh.PullToRefreshActivity"></activity>
+        <activity android:name=".ui.pull_to_refresh.PullToRefreshActivity" />
+        <activity android:name=".ui.http.HttpActivity" />
+        <activity android:name=".ui.http.DownLoadActivity"></activity>
     </application>
 
 </manifest>

@@ -118,5 +118,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="自定义下拉刷新" />
+
+
+        <Button
+            android:id="@+id/bt_http"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="多线程断点续传" />
     </LinearLayout>
 </ScrollView>
