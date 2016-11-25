@@ -22,27 +22,33 @@ import java.util.concurrent.Executors;
 import rx.functions.Action1;
 
 /**
- * 进行http的断点续传
+ * 进行http的多线程下载(采用了线程池)
  */
 public class HttpActivity extends AppCompatActivity {
 
     File file;
     String download_url = "http://d3.yqdown.net/y9/hdd/mdyyg.apk";
+
     URL url;
     HttpURLConnection urlConnection = null;
-    long content_length = 1;
+    int fileSize = 0; //需要下载的文件长度
     ExecutorService downPool;
-    int threadCount = 6; //默认的下载线程为6
-    DownLoadProgress progress;
-    long down_size_all = 5;
+    int threadCount = 9; //默认的下载线程为6
+    DownLoadProgress progress; //负责监听下载进度的接口
+    int down_size_all = 0; //当前下载的总长度
+
     TextView tv_progress;
-    RxPermissions rxPermissions = null;
+    RxPermissions rxPermissions = null; //用来获取6.0权限的RxPermissions
 
     Handler handler = new Handler() {
         @Override
         public void dispatchMessage(Message msg) {
-            float progress = (float) msg.obj;
-            tv_progress.setText(progress + "%");
+            int current_progress = (int) msg.obj;
+
+            float temp = (float) current_progress
+                    / (float) fileSize;
+
+            tv_progress.setText((int) (temp * 100) + "%");
         }
     };
 
@@ -70,19 +76,15 @@ public class HttpActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
-                downPool = Executors.newSingleThreadExecutor();
+                downPool = Executors.newCachedThreadPool();
                 file = getCacheFile();
                 try {
                     url = new URL(download_url);
                     urlConnection = (HttpURLConnection) url.openConnection();
-                    content_length = urlConnection.getContentLength();
+                    fileSize = urlConnection.getContentLength();
 
-                    double last = content_length % threadCount;
-                    if (last != 0) {
-                        threadCount += 1;
-                    }
-
-                    long down_size_for_everythread = content_length / threadCount;
+                    long down_size_for_everythread = (fileSize % threadCount) == 0 ? fileSize / threadCount
+                            : fileSize / threadCount + 1;
 
                     for (int i = 1; i <= threadCount; i++) {
                         CustomDownRunnable customDownRunnable = new CustomDownRunnable(url,
@@ -109,12 +111,23 @@ public class HttpActivity extends AppCompatActivity {
     class DownLoadProgress implements IDownLoadProgress {
 
         @Override
-        public void onDownLoad(String threadID, long progress) {
+        public void onDownLoad(String threadID, int progress) {
+            add(threadID, progress);
+
+        }
+
+        /**
+         * 一定注意，多线程条件下，这个方法一定要经过同步
+         *
+         * @param threadID
+         * @param progress
+         */
+        private synchronized void add(String threadID, int progress) {
             down_size_all += progress;
             Message msg = handler.obtainMessage();
-            msg.obj = ((float) down_size_all / content_length) * 100;
+            msg.obj = down_size_all;
             handler.sendMessage(msg);
-            LogUtils.e("-----threadID " + threadID + " end " + down_size_all + "-------总共 " + content_length);
+            LogUtils.e("-----threadID " + threadID + " end " + down_size_all + "-------总共 " + fileSize);
         }
     }
 }

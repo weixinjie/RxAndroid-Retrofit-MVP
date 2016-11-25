@@ -45,9 +45,6 @@ public class CustomDownRunnable implements Runnable {
         try {
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.addRequestProperty("Range", "bytes=" + startDownLoadLocation + "-" + endDownLocaLocation);
-            LogUtils.e("-----threadID " + threadID + "bytes=" + startDownLoadLocation + "-" + endDownLocaLocation);
-            int contentLength = httpURLConnection.getContentLength();
-            LogUtils.e("-----thread ID " + threadID + "----contentLength " + contentLength);
             inputStream = httpURLConnection.getInputStream();
             byte[] buffer = new byte[1024];
             bufferedInputStream = new BufferedInputStream(inputStream);
@@ -55,7 +52,7 @@ public class CustomDownRunnable implements Runnable {
             int len;
             while ((len = bufferedInputStream.read(buffer, 0, 1024)) != -1) {
                 randomAccessFile.write(buffer, 0, len);
-                iDownLoadProgress.onDownLoad(threadID, len); //实现接口回掉通知进度
+                iDownLoadProgress.onDownLoad(threadID, len); //实现接口回调通知进度
             }
 
         } catch (Exception e) {

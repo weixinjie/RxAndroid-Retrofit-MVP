@@ -5,5 +5,5 @@ package com.will.custom_rxandroid.ui.http;
  */
 
 public interface IDownLoadProgress {
-    void onDownLoad(String threadID, long progress);
+    void onDownLoad(String threadID, int progress);
 }
