@@ -24,7 +24,7 @@ import rx.functions.Action1;
 /**
  * 进行http的多线程下载(采用了线程池)
  */
-public class HttpActivity extends AppCompatActivity {
+public class DownLoadByThreadPoolActivity extends AppCompatActivity {
 
     File file;
     String download_url = "http://d3.yqdown.net/y9/hdd/mdyyg.apk";

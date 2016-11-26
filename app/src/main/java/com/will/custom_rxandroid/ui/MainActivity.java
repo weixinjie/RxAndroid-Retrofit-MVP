@@ -1,16 +1,13 @@
 package com.will.custom_rxandroid.ui;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.will.custom_rxandroid.R;
 import com.will.custom_rxandroid.ui.drawable_test.DrawableActivity;
-import com.will.custom_rxandroid.ui.http.DownLoadActivity;
-import com.will.custom_rxandroid.ui.http.HttpActivity;
+import com.will.custom_rxandroid.ui.http.DownLoadByThreadPoolActivity;
 import com.will.custom_rxandroid.ui.pull_to_refresh.PullToRefreshActivity;
 import com.will.custom_rxandroid.ui.rx.cache.CacheActivity;
 import com.will.custom_rxandroid.ui.custom_view.CustomViewActivity;
@@ -22,10 +19,6 @@ import com.will.custom_rxandroid.ui.rx.time.TimeActivity;
 import com.will.custom_rxandroid.ui.rx.token.TokenActivity;
 import com.will.custom_rxandroid.ui.rx.token_avanced.TokenAvancedActivity;
 import com.will.custom_rxandroid.ui.rx.zip.ZipActivity;
-
-import java.lang.ref.SoftReference;
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -82,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, PullToRefreshActivity.class));
                 break;
             case R.id.bt_http:
-                startActivity(new Intent(this, HttpActivity.class));
+                startActivity(new Intent(this, DownLoadByThreadPoolActivity.class));
                 break;
         }
     }
