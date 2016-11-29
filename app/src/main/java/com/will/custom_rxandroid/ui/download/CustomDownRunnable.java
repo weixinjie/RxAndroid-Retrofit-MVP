@@ -1,11 +1,8 @@
-package com.will.custom_rxandroid.ui.http;
-
-import com.will.custom_rxandroid.utils.LogUtils;
+package com.will.custom_rxandroid.ui.download;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;

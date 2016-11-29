@@ -2,6 +2,7 @@ package com.will.custom_rxandroid;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
 
 import com.andview.refreshview.utils.LogUtils;
 import com.squareup.leakcanary.LeakCanary;
@@ -27,18 +28,33 @@ public class BaseApp extends Application {
         LogUtils.allowW = false;
         LogUtils.allowWtf = false;
 
+        initStrictMode();
+
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not init your app in this process.
             return;
         }
-        LeakCanary.install(this);
+        refWatcher = LeakCanary.install(this);
     }
 
-    private RefWatcher refWatcher;
+    private static RefWatcher refWatcher;
 
-    public static RefWatcher getRefWatcher(Context context) {
-        BaseApp application = (BaseApp) context.getApplicationContext();
-        return application.refWatcher;
+    public static synchronized RefWatcher getRefWatcher() {
+        return refWatcher;
+    }
+
+    /**
+     * 开启严格模式
+     */
+    public void initStrictMode() {
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskWrites().detectDiskReads().penaltyLog().build());
+
+//        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+//                .detectLeakedSqlLiteObjects()
+//                .detectLeakedClosableObjects()
+//                .penaltyLog()
+//                .penaltyDeath()
+//                .build());
     }
 }

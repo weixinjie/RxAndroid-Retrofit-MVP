@@ -1,4 +1,4 @@
-package com.will.custom_rxandroid.ui.http;
+package com.will.custom_rxandroid.ui.download;
 
 import android.Manifest;
 import android.os.Environment;
@@ -55,7 +55,7 @@ public class DownLoadByThreadPoolActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_http);
+        setContentView(R.layout.activity_down);
         rxPermissions = new RxPermissions(this);
 
         rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE,

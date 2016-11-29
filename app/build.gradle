@@ -39,7 +39,8 @@ dependencies {
     androidTestCompile 'com.android.support:support-annotations:24.2.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.0@aar'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+    /*注意 最新版的1.5不好用*/
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
 }

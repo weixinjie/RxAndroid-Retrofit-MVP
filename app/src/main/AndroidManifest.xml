@@ -35,8 +35,12 @@
         <activity android:name=".ui.custom_view.CustomViewActivity" />
         <activity android:name=".ui.drawable_test.DrawableActivity" />
         <activity android:name=".ui.pull_to_refresh.PullToRefreshActivity" />
-        <activity android:name=".ui.http.DownLoadByThreadPoolActivity" />
-        <activity android:name=".ui.http.DownLoadActivity"></activity>
+        <activity android:name=".ui.download.DownLoadByThreadPoolActivity" />
+        <activity android:name=".ui.download.DownLoadActivity" />
+        <activity android:name=".ui.exception.OOMActivity" />
+        <activity android:name=".ui.web.WebActivity" />
+        <activity android:name=".ui.exception.ANRActivity" />
+        <activity android:name=".ui.http.HttpActivity"></activity>
     </application>
 
 </manifest>

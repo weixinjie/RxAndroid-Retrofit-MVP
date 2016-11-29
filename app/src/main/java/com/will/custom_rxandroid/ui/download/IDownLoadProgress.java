@@ -1,4 +1,4 @@
-package com.will.custom_rxandroid.ui.http;
+package com.will.custom_rxandroid.ui.download;
 
 /**
  * Created by will on 2016/11/23.

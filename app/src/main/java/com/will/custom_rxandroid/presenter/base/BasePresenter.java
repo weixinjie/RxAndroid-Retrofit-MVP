@@ -1,6 +1,8 @@
 package com.will.custom_rxandroid.presenter.base;
 
 
+import com.will.custom_rxandroid.BaseApp;
+
 import rx.Subscription;
 
 /**
@@ -13,6 +15,9 @@ public class BasePresenter<V> implements Presenter<V> {
     @Override
     public void attachView(V mvpView) {
         this.mvpView = mvpView;
+
+        BaseApp.getRefWatcher().watch(mvpView);
+        BaseApp.getRefWatcher().watch(subscription);
     }
 
 
