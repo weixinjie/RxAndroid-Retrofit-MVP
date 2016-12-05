@@ -47,7 +47,7 @@ public class CustomView extends View {
             case MotionEvent.ACTION_MOVE:
                 int offset_x = current_x - lastX;
                 int offset_y = current_y - lastY;
-                ((View) getParent()).scrollBy(-offset_x, -offset_y); //开始滑动
+                ((View) getParent()).scrollBy(offset_x, offset_y); //开始滑动
                 break;
             case MotionEvent.ACTION_UP:
                 View parent = (View) getParent();

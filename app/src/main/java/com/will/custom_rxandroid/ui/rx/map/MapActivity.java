@@ -3,6 +3,7 @@ package com.will.custom_rxandroid.ui.rx.map;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ public class MapActivity extends BaseActivity implements MapView {
     GridLayoutManager layoutManager;
 
     int current_page = 1;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

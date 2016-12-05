@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
@@ -21,7 +23,7 @@ import com.will.custom_rxandroid.utils.LogUtils;
 public class PullableLayout extends ViewGroup {
 
     private int maxScrollDis = 0; //最大滑动距离
-    double damp = 0.1; //阻尼系数
+    double damp = 0.5; //阻尼系数
 
     View mHeader;
     View mFooter;
@@ -29,7 +31,11 @@ public class PullableLayout extends ViewGroup {
     TextView tv_header;
     TextView tv_footer;
 
+    ProgressBar pb_head;
+
     Scroller scroller;
+
+    int min; //每台设备上都有一个最小的滑动距离
 
     public PullableLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -37,7 +43,11 @@ public class PullableLayout extends ViewGroup {
         mFooter = LayoutInflater.from(context).inflate(R.layout.footer, null);
         tv_header = (TextView) mHeader.findViewById(R.id.tv_head);
         tv_footer = (TextView) mHeader.findViewById(R.id.tv_head);
+
+        pb_head = (ProgressBar) mHeader.findViewById(R.id.pb_head);
+
         scroller = new Scroller(context);
+        min = ViewConfiguration.get(getContext()).getScaledTouchSlop();
     }
 
     @Override
@@ -58,7 +68,7 @@ public class PullableLayout extends ViewGroup {
             View child = getChildAt(i);
             if (child == mHeader) { //header view 进行布局的时候要隐藏
                 child.layout(0, 0 - child.getMeasuredHeight(), child.getMeasuredWidth(), 0);
-                maxScrollDis = child.getMeasuredHeight();
+                maxScrollDis = child.getMeasuredHeight() / 6;
 
             } else if (child == mFooter) { //footer view 进行布局的时候要隐藏
                 child.layout(0, mLayoutContentHeight, child.getMeasuredWidth(), mLayoutContentHeight + child.getMeasuredHeight());
@@ -92,21 +102,44 @@ public class PullableLayout extends ViewGroup {
                 break;
             case MotionEvent.ACTION_MOVE:
                 int dis = mLayoutY - current_y;
+                int delay_dis = 0;
                 if (Math.abs(getScrollY()) < maxScrollDis) { //如果滑动的距离小于最大滑动距离
-                    scrollBy(0, (int) (dis * damp));
+                    tv_header.setText("下拉刷新");
+                    tv_footer.setText("下拉刷新");
+                    pb_head.setVisibility(View.GONE);
+
+                    delay_dis = (int) (dis * damp);
                 } else {
                     tv_header.setText("松开刷新");
                     tv_footer.setText("松开刷新");
+
+                    pb_head.setVisibility(View.VISIBLE);
+
+                    delay_dis = (int) (dis * damp);
                 }
+
+                if (Math.abs(delay_dis) > min) {
+                    scrollBy(0, delay_dis);
+                }
+
+                mLayoutY = current_y;
                 break;
             case MotionEvent.ACTION_UP: //手指放开的时候
                 if (Math.abs(getScrollY()) < maxScrollDis) { //如果滑动的距离小于最大滑动的距离
                     scroller.startScroll(0, getScrollY(), 0, -getScrollY());
+                    invalidate();
                 } else {
-                    LogUtils.e("Action up");
-                    scroller.startScroll(0, getScrollY(), 0, -(getScrollY()));
+                    scroller.startScroll(0, getScrollY(), 0, maxScrollDis);
+                    invalidate();
+                    postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            scroller.startScroll(0, getScrollY(), 0, -(getScrollY()));
+                            invalidate(); //通知重绘
+                        }
+                    }, 2000);
                 }
-                invalidate();
+
                 break;
         }
         return true;
