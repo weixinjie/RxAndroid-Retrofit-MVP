@@ -10,6 +10,7 @@ import com.will.custom_rxandroid.ui.drawable_test.DrawableActivity;
 import com.will.custom_rxandroid.ui.exception.ANRActivity;
 import com.will.custom_rxandroid.ui.download.DownLoadByThreadPoolActivity;
 import com.will.custom_rxandroid.ui.exception.OOMActivity;
+import com.will.custom_rxandroid.ui.glide.GlideActivity;
 import com.will.custom_rxandroid.ui.http.HttpActivity;
 import com.will.custom_rxandroid.ui.pull_to_refresh.PullToRefreshActivity;
 import com.will.custom_rxandroid.ui.rx.cache.CacheActivity;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick({R.id.bt_elementary, R.id.bt_map, R.id.bt_zip, R.id.bt_token
             , R.id.bt_token_avanced, R.id.bt_cache, R.id.bt_time, R.id.bt_operator,
             R.id.bt_subject, R.id.bt_customview, R.id.bt_drawable, R.id.bt_custom_pull
-            , R.id.bt_http, R.id.bt_oom, R.id.bt_web, R.id.bt_strict, R.id.bt_download})
+            , R.id.bt_http, R.id.bt_oom, R.id.bt_web, R.id.bt_strict, R.id.bt_download, R.id.bt_glide})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_elementary:
@@ -92,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_download:
                 startActivity(new Intent(this, DownLoadByThreadPoolActivity.class));
+                break;
+            case R.id.bt_glide:
+                startActivity(new Intent(this, GlideActivity.class));
                 break;
         }
     }

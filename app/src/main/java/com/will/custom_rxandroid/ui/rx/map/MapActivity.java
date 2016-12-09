@@ -57,6 +57,8 @@ public class MapActivity extends BaseActivity implements MapView {
         setContentView(R.layout.activity_map);
         ButterKnife.bind(this);
 
+        int a = 10 / 0;
+
         adapter = new MapAdapter(this);
         rc_view.setAdapter(adapter);
 

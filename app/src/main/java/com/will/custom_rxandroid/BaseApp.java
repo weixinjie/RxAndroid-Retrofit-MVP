@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.StrictMode;
 
 import com.andview.refreshview.utils.LogUtils;
+import com.bugtags.library.Bugtags;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -21,6 +22,9 @@ public class BaseApp extends Application {
 
     public void onCreate() {
         super.onCreate();
+
+        Bugtags.start("4ef9dfef20678ee5ffbf5972e0b77d00", this, Bugtags.BTGInvocationEventBubble);
+
         instance = this;
         LogUtils.allowD = false;
         LogUtils.allowI = false;

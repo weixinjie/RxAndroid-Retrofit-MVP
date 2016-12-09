@@ -40,7 +40,8 @@
         <activity android:name=".ui.exception.OOMActivity" />
         <activity android:name=".ui.web.WebActivity" />
         <activity android:name=".ui.exception.ANRActivity" />
-        <activity android:name=".ui.http.HttpActivity"></activity>
+        <activity android:name=".ui.http.HttpActivity" />
+        <activity android:name=".ui.glide.GlideActivity"></activity>
     </application>
 
 </manifest>
