@@ -1,9 +1,14 @@
 package com.will.custom_rxandroid.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.will.custom_rxandroid.R;
 import com.will.custom_rxandroid.ui.drawable_test.DrawableActivity;
@@ -23,13 +28,17 @@ import com.will.custom_rxandroid.ui.rx.time.TimeActivity;
 import com.will.custom_rxandroid.ui.rx.token.TokenActivity;
 import com.will.custom_rxandroid.ui.rx.token_avanced.TokenAvancedActivity;
 import com.will.custom_rxandroid.ui.rx.zip.ZipActivity;
+import com.will.custom_rxandroid.ui.some_layout.CoordinatorLayoutActivity;
 import com.will.custom_rxandroid.ui.web.WebActivity;
+import com.will.custom_rxandroid.utils.LogUtils;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static int width;
+    public static int height;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +46,12 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
+
     @OnClick({R.id.bt_elementary, R.id.bt_map, R.id.bt_zip, R.id.bt_token
             , R.id.bt_token_avanced, R.id.bt_cache, R.id.bt_time, R.id.bt_operator,
             R.id.bt_subject, R.id.bt_customview, R.id.bt_drawable, R.id.bt_custom_pull
-            , R.id.bt_http, R.id.bt_oom, R.id.bt_web, R.id.bt_strict, R.id.bt_download, R.id.bt_glide})
+            , R.id.bt_http, R.id.bt_oom, R.id.bt_web, R.id.bt_strict, R.id.bt_download, R.id.bt_glide
+            , R.id.bt_layout})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_elementary:
@@ -97,6 +108,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.bt_glide:
                 startActivity(new Intent(this, GlideActivity.class));
                 break;
+            case R.id.bt_layout:
+                startActivity(new Intent(this, CoordinatorLayoutActivity.class));
+                break;
         }
     }
+
 }

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
 
     <application
         android:name=".BaseApp"
@@ -41,7 +42,8 @@
         <activity android:name=".ui.web.WebActivity" />
         <activity android:name=".ui.exception.ANRActivity" />
         <activity android:name=".ui.http.HttpActivity" />
-        <activity android:name=".ui.glide.GlideActivity"></activity>
+        <activity android:name=".ui.glide.GlideActivity" />
+        <activity android:name=".ui.some_layout.CoordinatorLayoutActivity"></activity>
     </application>
 
 </manifest>
