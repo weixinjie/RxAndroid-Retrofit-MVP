@@ -16,8 +16,6 @@ public class BasePresenter<V> implements Presenter<V> {
     public void attachView(V mvpView) {
         this.mvpView = mvpView;
 
-        BaseApp.getRefWatcher().watch(mvpView);
-        BaseApp.getRefWatcher().watch(subscription);
     }
 
 

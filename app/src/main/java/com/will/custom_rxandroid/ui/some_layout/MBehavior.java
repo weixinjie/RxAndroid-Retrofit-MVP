@@ -3,7 +3,6 @@ package com.will.custom_rxandroid.ui.some_layout;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 

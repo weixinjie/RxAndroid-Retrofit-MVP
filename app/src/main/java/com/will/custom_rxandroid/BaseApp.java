@@ -3,6 +3,7 @@ package com.will.custom_rxandroid;
 import android.app.Application;
 import android.content.Context;
 import android.os.StrictMode;
+import android.widget.LinearLayout;
 
 import com.andview.refreshview.utils.LogUtils;
 import com.bugtags.library.Bugtags;
@@ -32,6 +33,7 @@ public class BaseApp extends Application {
         LogUtils.allowW = false;
         LogUtils.allowWtf = false;
 
+
         initStrictMode();
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
@@ -39,14 +41,14 @@ public class BaseApp extends Application {
             // You should not init your app in this process.
             return;
         }
-        refWatcher = LeakCanary.install(this);
+        LeakCanary.install(this);
     }
 
-    private static RefWatcher refWatcher;
+//    private static RefWatcher refWatcher;
 
-    public static synchronized RefWatcher getRefWatcher() {
-        return refWatcher;
-    }
+//    public static synchronized RefWatcher getRefWatcher() {
+//        return refWatcher;
+//    }
 
     /**
      * 开启严格模式
