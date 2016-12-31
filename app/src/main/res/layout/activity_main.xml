@@ -180,6 +180,13 @@
             android:text="测试网页加载" />
 
         <Button
+            android:id="@+id/bt_export"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="测试网页打开本地" />
+
+        <Button
             android:id="@+id/bt_glide"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

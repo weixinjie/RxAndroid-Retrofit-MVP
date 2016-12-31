@@ -43,7 +43,26 @@
         <activity android:name=".ui.exception.ANRActivity" />
         <activity android:name=".ui.http.HttpActivity" />
         <activity android:name=".ui.glide.GlideActivity" />
-        <activity android:name=".ui.some_layout.CoordinatorLayoutActivity"></activity>
+        <activity android:name=".ui.some_layout.CoordinatorLayoutActivity" />
+
+        <!--dailymasala-content://share/dad16709df3c07c6d9c5677aefe76cca-->
+        <activity
+            android:name=".ui.web.CustomRouterActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="share"
+                    android:scheme="dailymasala-content" />
+
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

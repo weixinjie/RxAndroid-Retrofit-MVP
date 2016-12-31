@@ -29,6 +29,7 @@ import com.will.custom_rxandroid.ui.rx.token.TokenActivity;
 import com.will.custom_rxandroid.ui.rx.token_avanced.TokenAvancedActivity;
 import com.will.custom_rxandroid.ui.rx.zip.ZipActivity;
 import com.will.custom_rxandroid.ui.some_layout.CoordinatorLayoutActivity;
+import com.will.custom_rxandroid.ui.web.CustomRouterActivity;
 import com.will.custom_rxandroid.ui.web.WebActivity;
 import com.will.custom_rxandroid.utils.LogUtils;
 
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             , R.id.bt_token_avanced, R.id.bt_cache, R.id.bt_time, R.id.bt_operator,
             R.id.bt_subject, R.id.bt_customview, R.id.bt_drawable, R.id.bt_custom_pull
             , R.id.bt_http, R.id.bt_oom, R.id.bt_web, R.id.bt_strict, R.id.bt_download, R.id.bt_glide
-            , R.id.bt_layout})
+            , R.id.bt_layout, R.id.bt_export})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_elementary:
@@ -110,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_layout:
                 startActivity(new Intent(this, CoordinatorLayoutActivity.class));
+                break;
+            case R.id.bt_export:
+                startActivity(new Intent(this, CustomRouterActivity.class));
                 break;
         }
     }

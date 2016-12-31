@@ -1,6 +1,7 @@
 package com.will.custom_rxandroid.adapter.zip;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -52,6 +53,7 @@ public class ZipAdapter extends Custom_BaseRecyclerAdapter<GankBean> {
 
         public ViewHolder(View view, boolean isItme) {
             super(view, isItme);
+            Log.e("-------", "执行了构造方法");
         }
 
         @Override

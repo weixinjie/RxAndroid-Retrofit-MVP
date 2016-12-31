@@ -33,7 +33,8 @@ public class ZipPresenter extends BasePresenter<ZipView> {
         mvpView.show_loading();
         subscription = Observable.zip(BaseApi.getGankApi().get_gank(10, 1)
                         .map(new GankResult2GankBeanUtils())
-                , BaseApi.getZhuangBiApi().search(search), new Func2<List<GankBean>, List<ZhuangBiImage>, List<GankBean>>() {
+                , BaseApi.getZhuangBiApi().search(search),
+                new Func2<List<GankBean>, List<ZhuangBiImage>, List<GankBean>>() {
                     @Override
                     public List<GankBean> call(List<GankBean> gankBeens, List<ZhuangBiImage> zhuangBiImages) {
                         for (ZhuangBiImage image : zhuangBiImages) {
