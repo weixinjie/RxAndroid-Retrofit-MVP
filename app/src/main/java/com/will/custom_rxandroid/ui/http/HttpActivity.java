@@ -39,6 +39,24 @@ public class HttpActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----null-----value-----HTTP/1.1 200 OK
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----Cache-Control-----value-----no-cache
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----Connection-----value-----keep-alive
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----Content-Type-----value-----text/html;charset=utf-8
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----Date-----value-----Fri, 06 Jan 2017 13:13:37 GMT
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----P3p-----value-----CP=" OTI DSP COR IVA OUR IND COM "
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----Server-----value-----bfe/1.0.8.18
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----Set-Cookie-----value-----BAIDUID=24591E936C958886A4842EE3ABBDE048:FG=1; max-age=31536000; expires=Sat, 06-Jan-18 13:13:37 GMT; domain=.baidu.com; path=/; version=1
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----Set-Cookie-----value-----H_WISE_SIDS=102065_100038_111887_100102_111910_109814_111142_114134_107800_114001_113932_110498_113461_114208_113888_112107_111463_109588_107312_112175_112134_114131_112037_114275_110085; path=/; domain=.baidu.com
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----Set-Cookie-----value-----BDSVRTM=18; path=/
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----Strict-Transport-Security-----value-----max-age=172800
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----Traceid-----value-----1483708417061753319417547699709746490165
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----X-Android-Received-Millis-----value-----1483740765308
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----X-Android-Response-Source-----value-----NETWORK 200
+     * 01-07 06:12:45.301 17534-18787/com.will.custom_rxandroid E/----: 测试response的响应头 key-----X-Android-Sent-Millis-----value-----1483740765241
+     */
+
     String name;
 
     private void testHttpRequestHeader(String path) {
