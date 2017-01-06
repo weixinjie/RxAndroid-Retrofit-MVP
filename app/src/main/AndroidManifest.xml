@@ -45,7 +45,7 @@
         <activity android:name=".ui.glide.GlideActivity" />
         <activity android:name=".ui.some_layout.CoordinatorLayoutActivity" />
 
-        <!--dailymasala-content://share/dad16709df3c07c6d9c5677aefe76cca-->
+        <!-- dailymasala-content://share/dad16709df3c07c6d9c5677aefe76cca -->
         <activity
             android:name=".ui.web.CustomRouterActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
@@ -60,9 +60,12 @@
                 <data
                     android:host="share"
                     android:scheme="dailymasala-content" />
-
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.slidefinish.SlideFinishActivity"
+            android:label="@string/title_activity_slide_finish"
+            android:theme="@android:style/Theme.Translucent" />
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.will.custom_rxandroid.ui.download;
 
 import android.Manifest;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -76,7 +77,7 @@ public class DownLoadByThreadPoolActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
-                downPool = Executors.newCachedThreadPool();
+                downPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
                 file = getCacheFile();
                 try {
                     url = new URL(download_url);

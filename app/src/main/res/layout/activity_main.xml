@@ -115,6 +115,13 @@
             android:text="drawable test" />
 
         <Button
+            android:id="@+id/bt_slidefinish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="滑动销毁" />
+
+        <Button
             android:id="@+id/bt_custom_pull"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
