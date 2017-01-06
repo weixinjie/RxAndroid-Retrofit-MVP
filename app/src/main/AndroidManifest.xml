@@ -66,6 +66,7 @@
             android:name=".ui.slidefinish.SlideFinishActivity"
             android:label="@string/title_activity_slide_finish"
             android:theme="@android:style/Theme.Translucent" />
+        <activity android:name=".ui.custome_view_viewdraphelper.ViewDragHelperTest" />
     </application>
 
 </manifest>

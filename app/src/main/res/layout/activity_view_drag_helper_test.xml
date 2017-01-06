@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.will.custom_rxandroid.ui.custome_view_viewdraphelper.CustomView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_test1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#FFFF0000" />
+
+        <View
+            android:id="@+id/tv_test2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="2dp"
+            android:background="@android:color/holo_blue_bright" />
+
+    </com.will.custom_rxandroid.ui.custome_view_viewdraphelper.CustomView>
+
+</RelativeLayout>
+

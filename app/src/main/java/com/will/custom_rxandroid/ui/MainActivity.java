@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.will.custom_rxandroid.R;
+import com.will.custom_rxandroid.ui.custome_view_viewdraphelper.ViewDragHelperTest;
 import com.will.custom_rxandroid.ui.drawable_test.DrawableActivity;
 import com.will.custom_rxandroid.ui.exception.ANRActivity;
 import com.will.custom_rxandroid.ui.download.DownLoadByThreadPoolActivity;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(this, SlideFinishActivity.class));
+        startActivity(new Intent(this, ViewDragHelperTest.class));
         ButterKnife.bind(this);
     }
 
