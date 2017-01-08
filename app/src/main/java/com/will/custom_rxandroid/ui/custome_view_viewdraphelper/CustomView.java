@@ -79,6 +79,7 @@ public class CustomView extends LinearLayout {
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
             // 当释放滑动的view时，处理最后的事情。（执行开启或关闭的动画）
+            Log.e("-------", "onViewReleased");
             super.onViewReleased(releasedChild, xvel, yvel);
         }
 

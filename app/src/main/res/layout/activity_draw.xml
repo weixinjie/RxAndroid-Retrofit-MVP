@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.will.custom_rxandroid.ui.custome_view_viewdraphelper.CustomDrawLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <!--content-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/id_content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我是侧滑栏"
+            android:textColor="@color/btg_global_black"
+            android:textSize="40sp" />
+    </RelativeLayout>
+
+    <!--menu-->
+    <FrameLayout
+        android:id="@+id/id_container_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
+
+</com.will.custom_rxandroid.ui.custome_view_viewdraphelper.CustomDrawLayout>
