@@ -1,11 +1,8 @@
 package com.will.custom_rxandroid.ui.slidefinish;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -15,7 +12,7 @@ import com.will.custom_rxandroid.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SlideFinishActivity extends Activity implements SlidingLayout.OnActivityFinishListener {
+public class SlideFinishActivity extends AppCompatActivity implements SlidingLayout.OnActivityFinishListener {
 
     private List<String> list = new ArrayList<String>();
 
@@ -23,16 +20,11 @@ public class SlideFinishActivity extends Activity implements SlidingLayout.OnAct
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Remove title bar
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        //Remove notification bar
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slide_finish);
 
         slidingLayout = (SlidingLayout) findViewById(R.id.sildingFinishLayout);
+        slidingLayout.attachActivity(this);
         slidingLayout.setOnActivityFinish(this);
 
         for (int i = 0; i <= 30; i++) {
@@ -50,7 +42,6 @@ public class SlideFinishActivity extends Activity implements SlidingLayout.OnAct
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-
             }
         });
     }
@@ -59,7 +50,6 @@ public class SlideFinishActivity extends Activity implements SlidingLayout.OnAct
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
     }
 
     @Override

@@ -65,7 +65,7 @@
         <activity
             android:name=".ui.slidefinish.SlideFinishActivity"
             android:label="@string/title_activity_slide_finish"
-            android:theme="@android:style/Theme.Translucent" />
+            android:theme="@style/style_with_translate_background2" />
         <activity android:name=".ui.custome_view_viewdraphelper.ViewDragHelperTest" />
         <activity android:name=".ui.custome_view_viewdraphelper.DrawActivity" />
     </application>

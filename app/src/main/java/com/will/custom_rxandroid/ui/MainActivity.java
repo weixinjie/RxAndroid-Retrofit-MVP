@@ -24,6 +24,7 @@ import com.will.custom_rxandroid.ui.rx.time.TimeActivity;
 import com.will.custom_rxandroid.ui.rx.token.TokenActivity;
 import com.will.custom_rxandroid.ui.rx.token_avanced.TokenAvancedActivity;
 import com.will.custom_rxandroid.ui.rx.zip.ZipActivity;
+import com.will.custom_rxandroid.ui.slidefinish.SlideFinishActivity;
 import com.will.custom_rxandroid.ui.some_layout.CoordinatorLayoutActivity;
 import com.will.custom_rxandroid.ui.web.CustomRouterActivity;
 import com.will.custom_rxandroid.ui.web.WebActivity;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(this, DrawActivity.class));
+        startActivity(new Intent(this, SlideFinishActivity.class));
         ButterKnife.bind(this);
     }
 

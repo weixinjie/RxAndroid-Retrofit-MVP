@@ -2,9 +2,11 @@ package com.will.custom_rxandroid.ui.slidefinish;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -28,6 +30,8 @@ public class SlidingLayout extends FrameLayout {
 
     private boolean isFinish = false;
 
+    private Activity mActivity;
+
     private SlidingLayout.OnActivityFinishListener onActivityFinish;
 
     public SlidingLayout(Context context, AttributeSet attrs) {
@@ -36,11 +40,23 @@ public class SlidingLayout extends FrameLayout {
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
+    public void attachActivity(Activity activity) {
+        this.mActivity = activity;
+    }
+
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         if (changed) {
-            parentView = (ViewGroup) getParent();
+            ViewGroup decor = (ViewGroup) mActivity.getWindow().getDecorView();
+            mActivity.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            mActivity.getWindow().getDecorView().setBackgroundColor(Color.TRANSPARENT);
+            View decorChild = decor.findViewById(android.R.id.content);
+            while (decorChild.getParent() != decor) {
+                decorChild = (View) decorChild.getParent();
+            }
+            parentView = (ViewGroup) decorChild;
+            parentView = decor;
             screenWidth = getWidth();
         }
     }
@@ -78,7 +94,6 @@ public class SlidingLayout extends FrameLayout {
         return isIntercept;
     }
 
-    int alpha;
 
     /**
      * 进行事件处理
