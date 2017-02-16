@@ -68,6 +68,8 @@
             android:theme="@style/style_with_translate_background2" />
         <activity android:name=".ui.custome_view_viewdraphelper.ViewDragHelperTest" />
         <activity android:name=".ui.custome_view_viewdraphelper.DrawActivity" />
+        <activity android:name=".ui.test.TestActivity" />
+        <activity android:name=".ui.test.Test2Activity"></activity>
     </application>
 
 </manifest>

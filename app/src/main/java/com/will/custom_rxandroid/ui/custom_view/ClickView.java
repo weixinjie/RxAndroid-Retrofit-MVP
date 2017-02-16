@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +15,9 @@ import com.will.custom_rxandroid.utils.LogUtils;
 
 /**
  * Created by will on 16/9/19.
- * 介绍一下getMeasureHeight跟getHeight的区别：屏幕能显示的下这个View的时候两个值是一样的，屏幕显示不下的时候getMeasureHeight = getHeight+屏幕现实不下的高度
+ * 介绍一下getMeasureHeight跟getHeight的区别：
+ * 屏幕能显示的下这个View的时候两个值是一样的，
+ * 屏幕显示不下的时候getMeasureHeight = getHeight+屏幕现实不下的高度
  */
 
 public class ClickView extends View implements View.OnClickListener {
@@ -29,6 +32,29 @@ public class ClickView extends View implements View.OnClickListener {
         setOnClickListener(this);
         paint = new Paint();
         mBounds = new Rect();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+    }
+
+    /**
+     * view已经不再页面上了
+     */
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+    }
+
+    /**
+     * 当前的view已经准备好了
+     *
+     * @param hasWindowFocus
+     */
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        super.onWindowFocusChanged(hasWindowFocus);
     }
 
     @Override
@@ -72,6 +98,7 @@ public class ClickView extends View implements View.OnClickListener {
 
         int view_width;
         int view_height;
+
 
         if (width_model == MeasureSpec.EXACTLY) { //如果模式为精准的
             view_width = getPaddingLeft() + getPaddingRight() + width_size;

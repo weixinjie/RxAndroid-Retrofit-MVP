@@ -15,7 +15,6 @@ public class WebActivity extends AppCompatActivity {
 
     String APP_CACAHE_DIRNAME = "/webcache";
 
-    @BindView(R.id.webview)
     WebView webView;
 
     @Override

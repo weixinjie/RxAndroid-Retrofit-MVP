@@ -4,6 +4,16 @@ apply plugin: 'android-apt'
 apply plugin: 'com.bugtags.library.plugin'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'masala'
+            keyPassword '222222'
+//            storeFile file('C:/Users/Administrator/Desktop/studio_key.keystore.jks')
+            storeFile file('/Users/will/Mkit/masala-android/Holga/studio_key.keystore.jks')
+            storePassword '111111'
+        }
+    }
+
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
     defaultConfig {
@@ -17,9 +27,15 @@ android {
 
 
     buildTypes {
+
         release {
-            minifyEnabled false
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }

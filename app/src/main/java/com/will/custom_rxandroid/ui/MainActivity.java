@@ -1,12 +1,14 @@
 package com.will.custom_rxandroid.ui;
 
 import android.content.Intent;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.will.custom_rxandroid.R;
-import com.will.custom_rxandroid.ui.custome_view_viewdraphelper.DrawActivity;
 import com.will.custom_rxandroid.ui.drawable_test.DrawableActivity;
 import com.will.custom_rxandroid.ui.exception.ANRActivity;
 import com.will.custom_rxandroid.ui.download.DownLoadByThreadPoolActivity;
@@ -24,20 +26,24 @@ import com.will.custom_rxandroid.ui.rx.time.TimeActivity;
 import com.will.custom_rxandroid.ui.rx.token.TokenActivity;
 import com.will.custom_rxandroid.ui.rx.token_avanced.TokenAvancedActivity;
 import com.will.custom_rxandroid.ui.rx.zip.ZipActivity;
-import com.will.custom_rxandroid.ui.slidefinish.SlideFinishActivity;
 import com.will.custom_rxandroid.ui.some_layout.CoordinatorLayoutActivity;
+import com.will.custom_rxandroid.ui.test.TestActivity;
 import com.will.custom_rxandroid.ui.web.CustomRouterActivity;
 import com.will.custom_rxandroid.ui.web.WebActivity;
+import com.will.custom_rxandroid.utils.StringUtil;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
+    String test;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(this, SlideFinishActivity.class));
+        startActivity(new Intent(this, TestActivity.class));
+
         ButterKnife.bind(this);
     }
 
