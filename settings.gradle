@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':custome_paint', ':plugin'

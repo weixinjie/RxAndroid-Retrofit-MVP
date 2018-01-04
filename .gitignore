@@ -6,3 +6,6 @@
 .DS_Store
 /build
 /captures
+custome_paint/
+plugin/
+.idea
