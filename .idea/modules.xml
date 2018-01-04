@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RxAndroid-Retrofit-MVP.iml" filepath="$PROJECT_DIR$/RxAndroid-Retrofit-MVP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/RxAndroid-Retrofit-MVP.iml" filepath="$PROJECT_DIR$/.idea/RxAndroid-Retrofit-MVP.iml" />
       <module fileurl="file://$PROJECT_DIR$/RxAndroid-Retrofit-MVP.iml" filepath="$PROJECT_DIR$/RxAndroid-Retrofit-MVP.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/custome_paint/custome_paint.iml" filepath="$PROJECT_DIR$/custome_paint/custome_paint.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugin/plugin.iml" filepath="$PROJECT_DIR$/plugin/plugin.iml" />
     </modules>
   </component>
 </project>
