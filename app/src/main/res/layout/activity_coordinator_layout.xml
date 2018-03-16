@@ -9,9 +9,7 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/btg_global_black"
         android:text="Button"
-        android:textColor="@color/btg_global_light_white"
         app:layout_behavior="com.will.custom_rxandroid.ui.some_layout.MBehavior" />
 
     <com.will.custom_rxandroid.ui.some_layout.MoveView

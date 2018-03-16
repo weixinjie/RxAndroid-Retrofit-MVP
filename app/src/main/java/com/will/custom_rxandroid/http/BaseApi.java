@@ -73,4 +73,5 @@ public class BaseApi {
         return virtualApi;
     }
 
+    public static final String a = "";
 }

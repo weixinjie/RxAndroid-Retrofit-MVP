@@ -438,7 +438,8 @@ public class OperatorPresenter extends BasePresenter {
      * map操作符是把源Observable产生的结果，通过映射规则转换成另一个结果集，并提交给订阅者进行处理。
      */
     public void map() {
-        subscription = Observable.just(1, 2, 3, 4, 5).map(new Func1<Integer, String>() {
+        subscription = Observable.just(1, 2, 3, 4, 5)
+                .map(new Func1<Integer, String>() {
             @Override
             public String call(Integer integer) {
                 return String.valueOf("integer: " + integer);

@@ -1,21 +1,11 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
 //应用 Bugtags 插件
-apply plugin: 'com.bugtags.library.plugin'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'masala'
-            keyPassword '222222'
-//            storeFile file('C:/Users/Administrator/Desktop/studio_key.keystore.jks')
-            storeFile file('/Users/will/Mkit/masala-android/Holga/studio_key.keystore.jks')
-            storePassword '111111'
-        }
-    }
+
 
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.will.custom_rxandroid"
         minSdkVersion 15
@@ -29,51 +19,34 @@ android {
     buildTypes {
 
         release {
-            buildConfigField "boolean", "LOG_DEBUG", "false"
-            debuggable false
-            minifyEnabled true
-            shrinkResources true
-            zipAlignEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
         }
     }
 }
 
-//Bugtags 插件配置
-bugtags {
-    //自动上传符号表功能配置，如果需要根据 build varint 配置，请参考帮助中心->符号表->Android 符号表->配置自动上传符号表
-    appKey "4ef9dfef20678ee5ffbf5972e0b77d00"  //这里是你的 appKey
-    appSecret "b9fc3f759a89799d230185ca49314a39"    //这里是你的 appSecret，管理员在设置页可以查看
-    mappingUploadEnabled true
 
-}
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:design:24.2.0'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.1.6'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
-    compile 'com.jakewharton:butterknife:8.4.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.huxq17.xrefreshview:xrefreshview:3.5.2'
-    testCompile 'junit:junit:4.12'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support:support-annotations:24.2.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.0@aar'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:24.2.0'
+    implementation 'com.android.support:design:24.2.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'io.reactivex:rxjava:1.1.6'
+    implementation 'com.squareup.retrofit2:converter-gson:2.0.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+    implementation 'com.jakewharton:butterknife:8.4.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.huxq17.xrefreshview:xrefreshview:3.5.2'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.0@aar'
 
     /*注意 最新版的1.5不好用*/
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.bugtags.library:bugtags-lib:latest.integration'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 }
